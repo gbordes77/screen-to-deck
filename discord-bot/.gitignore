@@ -1,0 +1,125 @@
+# 🐍 Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# 🔐 Environment & Secrets
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.key
+*.pem
+config.json
+
+# 🤖 Discord Bot Specific
+bot.log
+*.log
+temp/
+cache/
+downloads/
+uploads/
+processed_images/
+
+# 🔍 OCR & Image Processing
+tesseract_cache/
+*.png.bak
+*.jpg.bak
+*.jpeg.bak
+preprocessed_*.png
+processed_*.jpg
+
+# 📊 Data & Cache
+scryfall_cache/
+card_cache.json
+deck_cache/
+user_data/
+
+# 🧪 Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+
+# 📝 Documentation
+docs/_build/
+.sphinx-build
+
+# 🔧 Development Tools
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 🐳 Docker
+.dockerignore
+Dockerfile.dev
+
+# 💻 OS Generated
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# 🔄 Jupyter Notebooks
+.ipynb_checkpoints
+
+# 📱 PyCharm
+.idea/
+
+# 🗃️ Databases
+*.db
+*.sqlite
+*.sqlite3
+
+# 🧩 Virtual Environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+
+# 🔗 mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# 🧪 Pyre type checker
+.pyre/
+
+# 🔧 pyenv
+.python-version 

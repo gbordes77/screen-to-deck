@@ -1,0 +1,142 @@
+version: '3.8'
+
+services:
+  # 🌐 Web Application Backend API
+  web-api:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - CORS_ORIGIN=http://localhost:5173
+    volumes:
+      - ./server/logs:/app/logs
+      - ./server/uploads:/app/uploads
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - mtg-network
+
+  # 🎨 Web Application Frontend
+  web-frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://localhost:3001/api
+    depends_on:
+      - web-api
+    restart: unless-stopped
+    networks:
+      - mtg-network
+
+  # 🤖 Discord Bot
+  discord-bot:
+    build:
+      context: ./discord-bot
+      dockerfile: Dockerfile
+    environment:
+      - DISCORD_BOT_TOKEN=${DISCORD_BOT_TOKEN}
+      - API_BASE_URL=http://web-api:3001/api
+      - LOG_LEVEL=INFO
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./discord-bot/logs:/app/logs
+      - ./discord-bot/cache:/app/cache
+      - ./discord-bot/temp:/app/temp
+    restart: unless-stopped
+    depends_on:
+      - web-api
+    healthcheck:
+      test: ["CMD", "python", "-c", "import discord; print('Discord.py imported successfully')"]
+      interval: 60s
+      timeout: 30s
+      retries: 3
+    networks:
+      - mtg-network
+
+  # 📊 Redis Cache (Optional - for advanced caching)
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+    networks:
+      - mtg-network
+    command: redis-server --appendonly yes
+
+  # 🔍 Nginx Reverse Proxy (Optional - for production)
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - web-api
+      - web-frontend
+    restart: unless-stopped
+    networks:
+      - mtg-network
+
+networks:
+  mtg-network:
+    driver: bridge
+    name: mtg-scanner-network
+
+volumes:
+  redis_data:
+    driver: local
+    name: mtg-redis-data
+
+# 🔧 Development Override
+# Use: docker-compose -f docker-compose.yml -f docker-compose.dev.yml up
+---
+# docker-compose.dev.yml (embedded for reference)
+version: '3.8'
+
+services:
+  web-api:
+    build:
+      context: ./server
+      target: development
+    environment:
+      - NODE_ENV=development
+      - DEBUG=*
+    volumes:
+      - ./server/src:/app/src:ro
+      - ./server/package.json:/app/package.json:ro
+    command: npm run dev
+
+  web-frontend:
+    build:
+      context: ./client
+      target: development
+    volumes:
+      - ./client/src:/app/src:ro
+      - ./client/package.json:/app/package.json:ro
+    command: npm run dev
+
+  discord-bot:
+    build:
+      context: ./discord-bot
+      target: development
+    environment:
+      - LOG_LEVEL=DEBUG
+    volumes:
+      - ./discord-bot:/app:ro
+    command: python bot.py 

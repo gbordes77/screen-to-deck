@@ -1,0 +1,37 @@
+{
+  "name": "mtg-deck-converter",
+  "version": "1.0.0",
+  "description": "Convert MTG deck screenshots to importable deck lists",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npm run dev:server & npm run dev:client",
+    "dev:server": "cd server && npm run dev",
+    "dev:client": "cd client && npm run dev",
+    "dev:bot": "cd discord-bot && chmod +x start-bot.sh && ./start-bot.sh",
+    "dev:all": "npm run dev:server & npm run dev:client & npm run dev:bot",
+    "build": "npm run build:client && npm run build:server",
+    "build:client": "cd client && npm run build",
+    "build:server": "cd server && npm run build",
+    "build:bot": "cd discord-bot && docker build -t mtg-discord-scanner .",
+    "start": "npm run start:server",
+    "start:server": "cd server && npm run start",
+    "start:bot": "cd discord-bot && python3 bot.py",
+    "start:docker-bot": "cd discord-bot && docker run --env-file .env mtg-discord-scanner",
+    "install:all": "npm install && cd client && npm install && cd ../server && npm install && echo '✅ Web app dependencies installed'",
+    "install:bot": "cd discord-bot && python3 -m venv venv && source venv/bin/activate && pip install -r requirements.txt && echo '✅ Discord bot dependencies installed'",
+    "setup": "npm run install:all && npm run install:bot && echo '🎉 Full setup complete! Check README.md for usage.'",
+    "test": "npm run test:client && npm run test:server",
+    "test:client": "cd client && npm run test",
+    "test:server": "cd server && npm run test",
+    "test:bot": "cd discord-bot && python3 -m pytest",
+    "clean": "rm -rf client/dist server/dist client/node_modules server/node_modules discord-bot/__pycache__ discord-bot/venv",
+    "clean:bot": "cd discord-bot && rm -rf __pycache__ venv *.log cache temp"
+  },
+  "keywords": ["mtg", "magic-the-gathering", "deck", "converter", "ocr", "screenshot"],
+  "author": "MTG Deck Converter",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/mtg-deck-converter.git"
+  }
+} 
