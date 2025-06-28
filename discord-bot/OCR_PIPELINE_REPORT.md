@@ -1,3 +1,32 @@
+# Problématique actuelle et historique des tests
+
+**Problème principal :**
+- Malgré un pipeline OCR robuste et une validation Scryfall avancée, le main deck n'est pas toujours détecté (zones mal alignées, bruit OCR, etc.), alors que le sideboard l'est parfaitement.
+
+**Tout ce qui a été testé :**
+- Ajustement manuel et automatique des zones main/side (coordonnées, largeur, hauteur)
+- Morphologie, seuillage, aspect ratio, whitelist Tesseract
+- Debug visuel (rectangles, contours, logs ligne par ligne, texte OCR sur l'image)
+- Filtrage regex, post-traitement, fusion des colonnes
+- OCR global (toute l'image)
+- OCR par zones fixes (main_left, main_right, sideboard)
+- OCR avec auto-détection de colonnes (projection verticale)
+- OCR avec ajustement manuel via éditeur web interactif
+- Validation/correction Scryfall sur chaque ligne (fuzzy, suggestions, batch)
+- Exports et analyse avancée (format, stats, légalité, prix)
+
+**Constats :**
+- Le sideboard est détecté à 100% (preuve que le pipeline fonctionne)
+- Le main deck est partiellement ou mal détecté selon le screenshot
+- Les exports et l'analyse fonctionnent si la détection est bonne
+
+**Ce qu'on attend de l'expert :**
+- Une méthode universelle pour découper les zones main/side sur tous les layouts Arena
+- Des conseils pour améliorer la robustesse de l'OCR sur du bruit/règles
+- Des suggestions pour fiabiliser la séparation main/side et la validation des lignes
+
+---
+
 # Rapport d'État du Projet – Screen To Deck (STD)
 
 ## 1. Résumé du workflow utilisateur
