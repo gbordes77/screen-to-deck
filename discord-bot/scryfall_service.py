@@ -289,10 +289,12 @@ class ScryfallService:
         if self._is_cache_valid(cache_key):
             return self.cache[cache_key]
         
-        endpoint = f"/cards/named/exact"
-        params = {'name': name}
+        endpoint = f"/cards/named"
+        params = {'exact': name}
         
+        logger.info(f"[Scryfall] search_card_exact: name='{name}' (param exact)")
         result = await self._make_request(endpoint, params)
+        logger.info(f"[Scryfall] search_card_exact: response for '{name}': {result if result else 'None'}")
         self._cache_response(cache_key, result)
         
         return result
@@ -602,14 +604,29 @@ class ScryfallService:
             )
         
         # Get suggestions for failed matches
-        suggestions = await self.autocomplete_card_names(original_name[:10])
+        suggestions = await self.autocomplete_card_names(original_name[:30])
+        # Nouvelle logique : si la suggestion principale est très proche, on valide
+        if suggestions:
+            best_suggestion = suggestions[0]
+            score = fuzz.ratio(original_name.lower(), best_suggestion.lower())
+            if score > 90:
+                # On tente de récupérer la carte exacte depuis Scryfall
+                card = await self.search_card_exact(best_suggestion)
+                if card:
+                    return CardMatch(
+                        original_name=original_name,
+                        matched_name=card['name'],
+                        confidence=score/100.0,
+                        card_data=card,
+                        correction_applied=True
+                    )
         
         return CardMatch(
             original_name=original_name,
             matched_name=None,
             confidence=0.0,
             card_data=None,
-            suggestions=suggestions[:5]
+            suggestions=suggestions[:5] if suggestions else [],
         )
     
     def _calculate_match_confidence(self, original: str, matched: str) -> float:

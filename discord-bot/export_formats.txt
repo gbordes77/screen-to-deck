@@ -1,0 +1,235 @@
+🃏 Test Screen to Deck - Validation Automatique
+==================================================
+
+🎯 Test de validation pour 29 cartes...
+
+1. Testing: 'Lurrus of the Dream-Den' x1
+   ✅ FOUND: 'Lurrus of the Dream-Den'
+
+2. Testing: 'Esper Sentinel' x4
+   ✅ FOUND: 'Esper Sentinel'
+
+3. Testing: 'Ethereal Armor' x4
+   ✅ FOUND: 'Ethereal Armor'
+
+4. Testing: 'Giver of Runes' x4
+   ✅ FOUND: 'Giver of Runes'
+
+5. Testing: 'Sentinel's Eyes' x4
+   ✅ FOUND: 'Sentinel's Eyes'
+
+6. Testing: 'Shardmage's Rescue' x4
+   ✅ FOUND: 'Shardmage's Rescue'
+
+7. Testing: 'Combat Research' x4
+   ✅ FOUND: 'Combat Research'
+
+8. Testing: 'Slip Out the Back' x4
+   ✅ FOUND: 'Slip Out the Back'
+
+9. Testing: 'Wingspan Stride' x4
+   ✅ FOUND: 'Wingspan Stride'
+
+10. Testing: 'Cartouche of Zeal' x4
+   ✅ FOUND: 'Cartouche of Zeal'
+
+11. Testing: 'Sticky Fingers' x4
+   ✅ FOUND: 'Sticky Fingers'
+
+12. Testing: 'Demonic Ruckus' x4
+   ✅ FOUND: 'Demonic Ruckus'
+
+13. Testing: 'Hushbringer' x2
+   ✅ FOUND: 'Hushbringer'
+
+14. Testing: 'Kor Spiritdancer' x4
+   ✅ FOUND: 'Kor Spiritdancer'
+
+15. Testing: 'Light-Paws, Emperor's Voice' x4
+   ✅ FOUND: 'Light-Paws, Emperor's Voice'
+
+16. Testing: 'Plains' x4
+   ✅ FOUND: 'Plains'
+
+17. Testing: 'Hallowed Fountain' x4
+   ✅ FOUND: 'Hallowed Fountain'
+
+18. Testing: 'Seachrome Coast' x4
+   ✅ FOUND: 'Seachrome Coast'
+
+19. Testing: 'Sacred Foundry' x4
+   ✅ FOUND: 'Sacred Foundry'
+
+20. Testing: 'Sunbaked Canyon' x4
+   ✅ FOUND: 'Sunbaked Canyon'
+
+21. Testing: 'Mana Confluence' x4
+   ✅ FOUND: 'Mana Confluence'
+
+22. Testing: 'Starting Town' x4
+   ✅ FOUND: 'Starting Town'
+
+23. Testing: 'Lurrus of the Dream-Den' x1
+   ✅ FOUND: 'Lurrus of the Dream-Den'
+
+24. Testing: 'Fragment Reality' x4
+   ✅ FOUND: 'Fragment Reality'
+
+25. Testing: 'Slip Out the Back' x2
+   ✅ FOUND: 'Slip Out the Back'
+
+26. Testing: 'Spell Pierce' x4
+   ✅ FOUND: 'Spell Pierce'
+
+27. Testing: 'Containment Priest' x4
+   ✅ FOUND: 'Containment Priest'
+
+28. Testing: 'Hushbringer' x1
+   ✅ FOUND: 'Hushbringer'
+
+29. Testing: 'Sheltered Aerie' x1
+   ✅ FOUND: 'Sheltered Aerie'
+
+📊 RÉSULTATS:
+  • Cartes testées: 29
+  • Cartes validées: 29
+  • Auto-corrections: 0
+  • Taux de succès: 100.0%
+
+🎉 SUCCESS! Le service Scryfall fonctionne!
+
+====================
+
+# Format universel (quantité nom)
+1 Lurrus of the Dream-Den
+4 Esper Sentinel
+4 Ethereal Armor
+4 Giver of Runes
+4 Sentinel's Eyes
+4 Shardmage's Rescue
+4 Combat Research
+4 Slip Out the Back
+4 Wingspan Stride
+4 Cartouche of Zeal
+4 Sticky Fingers
+4 Demonic Ruckus
+2 Hushbringer
+4 Kor Spiritdancer
+4 Light-Paws, Emperor's Voice
+4 Plains
+4 Hallowed Fountain
+4 Seachrome Coast
+4 Sacred Foundry
+4 Sunbaked Canyon
+4 Mana Confluence
+4 Starting Town
+1 Lurrus of the Dream-Den
+4 Fragment Reality
+2 Slip Out the Back
+4 Spell Pierce
+4 Containment Priest
+1 Hushbringer
+1 Sheltered Aerie
+
+# Format MTGA (Deck + Sideboard)
+Deck
+1 Lurrus of the Dream-Den
+4 Esper Sentinel
+4 Ethereal Armor
+4 Giver of Runes
+4 Sentinel's Eyes
+4 Shardmage's Rescue
+4 Combat Research
+4 Slip Out the Back
+4 Wingspan Stride
+4 Cartouche of Zeal
+4 Sticky Fingers
+4 Demonic Ruckus
+2 Hushbringer
+4 Kor Spiritdancer
+4 Light-Paws, Emperor's Voice
+4 Plains
+4 Hallowed Fountain
+4 Seachrome Coast
+4 Sacred Foundry
+4 Sunbaked Canyon
+4 Mana Confluence
+4 Starting Town
+1 Lurrus of the Dream-Den
+4 Fragment Reality
+2 Slip Out the Back
+4 Spell Pierce
+4 Containment Priest
+1 Hushbringer
+1 Sheltered Aerie
+
+Sideboard
+1 Lurrus of the Dream-Den
+4 Fragment Reality
+2 Slip Out the Back
+4 Spell Pierce
+4 Containment Priest
+1 Hushbringer
+1 Sheltered Aerie
+
+# Format MTGO (texte simple)
+1x Lurrus of the Dream-Den
+4x Esper Sentinel
+4x Ethereal Armor
+4x Giver of Runes
+4x Sentinel's Eyes
+4x Shardmage's Rescue
+4x Combat Research
+4x Slip Out the Back
+4x Wingspan Stride
+4x Cartouche of Zeal
+4x Sticky Fingers
+4x Demonic Ruckus
+2x Hushbringer
+4x Kor Spiritdancer
+4x Light-Paws, Emperor's Voice
+4x Plains
+4x Hallowed Fountain
+4x Seachrome Coast
+4x Sacred Foundry
+4x Sunbaked Canyon
+4x Mana Confluence
+4x Starting Town
+1x Lurrus of the Dream-Den
+4x Fragment Reality
+2x Slip Out the Back
+4x Spell Pierce
+4x Containment Priest
+1x Hushbringer
+1x Sheltered Aerie
+
+# Format Moxfield (quantité x nom)
+1x Lurrus of the Dream-Den
+4x Esper Sentinel
+4x Ethereal Armor
+4x Giver of Runes
+4x Sentinel's Eyes
+4x Shardmage's Rescue
+4x Combat Research
+4x Slip Out the Back
+4x Wingspan Stride
+4x Cartouche of Zeal
+4x Sticky Fingers
+4x Demonic Ruckus
+2x Hushbringer
+4x Kor Spiritdancer
+4x Light-Paws, Emperor's Voice
+4x Plains
+4x Hallowed Fountain
+4x Seachrome Coast
+4x Sacred Foundry
+4x Sunbaked Canyon
+4x Mana Confluence
+4x Starting Town
+1x Lurrus of the Dream-Den
+4x Fragment Reality
+2x Slip Out the Back
+4x Spell Pierce
+4x Containment Priest
+1x Hushbringer
+1x Sheltered Aerie
