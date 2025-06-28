@@ -1,0 +1,28 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.13.5, pytest-8.4.1, pluggy-1.6.0 -- /Users/guillaumebordes/Documents/Screen to deck/discord-bot/venv/bin/python3.13
+cachedir: .pytest_cache
+rootdir: /Users/guillaumebordes/Documents/Screen to deck/discord-bot
+plugins: cov-6.2.1, asyncio-1.0.0
+asyncio: mode=Mode.STRICT, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 3 items
+
+tests/test_export.py::test_export_formats PASSED                         [ 33%]
+tests/test_parser.py::test_parse_single_line PASSED                      [ 66%]
+tests/test_scryfall.py::test_enhanced_card_search PASSED                 [100%]
+
+================================ tests coverage ================================
+_______________ coverage: platform darwin, python 3.13.5-final-0 _______________
+
+Name                        Stmts   Miss  Cover
+-----------------------------------------------
+bot.py                        374    374     0%
+ocr_parser.py                 292    200    32%
+scryfall_service.py           451    338    25%
+test_enhanced_features.py     183    183     0%
+test_real_deck.py              59     59     0%
+tests/test_export.py           20      0   100%
+tests/test_parser.py           20      5    75%
+tests/test_scryfall.py         22      3    86%
+-----------------------------------------------
+TOTAL                        1421   1162    18%
+============================== 3 passed in 0.39s ===============================

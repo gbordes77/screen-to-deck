@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Procédure : Lancer le bot Discord STD</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2em; background: #f8f9fa; color: #222; }
+    h1 { color: #2a4d7c; font-size: 2.2em; }
+    .badge { display: inline-block; background: #1b7c2a; color: #fff; border-radius: 12px; padding: 2px 12px; font-size: 1em; margin-right: 0.7em; vertical-align: middle; font-weight:bold; letter-spacing:1px; }
+    .icon { font-size: 1.2em; vertical-align: middle; margin-right: 0.2em; }
+    .step { background: #fff; border-left: 6px solid #2a4d7c; margin: 1.2em 0; padding: 1em 1.5em; border-radius: 8px; box-shadow: 0 2px 8px #0001; }
+    .step-title { font-size: 1.1em; color: #2a4d7c; font-weight: bold; margin-bottom: 0.3em; }
+    .tip { background: #e6f4ea; color: #1b7c2a; border-left: 5px solid #1b7c2a; padding: 0.7em 1em; border-radius: 5px; margin: 1em 0; }
+    .warn { background: #fffbe6; color: #b85c00; border-left: 5px solid #ffd700; padding: 0.7em 1em; border-radius: 5px; margin: 1em 0; }
+    .btn { display:inline-block; background:#2a4d7c; color:#fff; font-weight:bold; border-radius:8px; padding:0.7em 1.5em; margin-bottom:1.5em; text-decoration:none; font-size:1.1em; box-shadow:0 2px 6px #0001; transition:background 0.2s; vertical-align:middle; }
+    ul { margin-top: 0.5em; }
+    a { color: #1b7c2a; text-decoration: underline; font-weight: bold; }
+    footer { margin-top:3em; color:#888; font-size:0.9em; }
+  </style>
+</head>
+<body>
+  <h1><span class="icon">🤖</span>Procédure : Lancer le bot Discord <span class="badge">STD</span></h1>
+
+  <div class="step">
+    <div class="step-title"><span class="icon">1️⃣</span>Créer l'application Discord "Screen To Deck (STD)"</div>
+    <ul>
+      <li>Va sur <a href="https://discord.com/developers/applications" target="_blank">Discord Developer Portal</a></li>
+      <li>Clique sur <b>New Application</b>, nomme-la <b>Screen To Deck (STD)</b></li>
+      <li>Ajoute une icône si tu veux (ex: "STD")</li>
+    </ul>
+  </div>
+
+  <div class="step">
+    <div class="step-title"><span class="icon">2️⃣</span>Créer le bot et récupérer le token</div>
+    <ul>
+      <li>Dans l'appli, va dans <b>Bot</b> &gt; <b>Add Bot</b></li>
+      <li>Clique sur <b>Reset Token</b> puis <b>Copy</b> pour obtenir le <b>token</b> du bot</li>
+    </ul>
+    <div class="warn" style="font-size:1.15em; text-align:center; margin:1em 0 1.5em 0; padding:1em 1em; display:block;">
+      <span class="icon">⚠️</span><b>Garde ce token secret !</b>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-title"><span class="icon">3️⃣</span>Inviter le bot STD sur ton serveur Discord</div>
+    <ul>
+      <li>Va dans <b>OAuth2 &gt; URL Generator</b></li>
+      <li>Coche <b>bot</b> dans "scopes" et donne les permissions nécessaires (envoyer des messages, lire l'historique...)</li>
+      <li>Copie l'URL générée, ouvre-la dans ton navigateur, invite le bot sur ton serveur</li>
+    </ul>
+  </div>
+
+  <div class="step">
+    <div class="step-title"><span class="icon">4️⃣</span>Configurer le token dans le projet STD</div>
+    <ul>
+      <li>Dans le dossier <b>discord-bot/</b>, crée un fichier <code>.env</code> ou modifie la config pour y mettre <code>DISCORD_TOKEN=ton_token_ici</code></li>
+      <li>Vérifie que le code charge bien ce token (voir <code>bot.py</code>)</li>
+    </ul>
+  </div>
+
+  <div class="step">
+    <div class="step-title"><span class="icon">5️⃣</span>Lancer le bot STD</div>
+    <ul>
+      <li>Dans le terminal, place-toi dans <b>discord-bot/</b></li>
+      <li>Active l'environnement virtuel si besoin : <code>source venv/bin/activate</code></li>
+      <li>Lance : <code>python3 bot.py</code></li>
+      <li>Le bot doit apparaître "en ligne" sur Discord</li>
+    </ul>
+  </div>
+
+  <div class="step">
+    <div class="step-title"><span class="icon">6️⃣</span>Tester le bot STD</div>
+    <ul>
+      <li>Sur Discord, envoie une capture d'écran de deck dans un salon où le bot a accès</li>
+      <li>Le bot doit répondre avec la liste de cartes reconnues et les fichiers d'export</li>
+      <li>Teste aussi les commandes (ex: <code>!deck</code> ou <code>/deck</code> selon le code)</li>
+    </ul>
+  </div>
+
+  <div class="tip">
+    <span class="icon">💡</span><b>Astuce :</b> Si tu as une erreur, vérifie le token, les permissions, et regarde les logs du terminal.
+  </div>
+
+  <h2><span class="icon">🔗</span>Liens utiles</h2>
+  <ul>
+    <li><a href="https://discord.com/developers/applications" target="_blank"><span class="icon">🌐</span>Discord Developer Portal</a></li>
+    <li><a href="project_overview.html"><span class="icon">📄</span>Présentation STD</a></li>
+    <li><a href="guide_utilisateur.html"><span class="icon">🧑‍💻</span>Guide utilisateur STD</a></li>
+    <li><a href="README.md"><span class="icon">📘</span>README STD</a></li>
+  </ul>
+
+  <footer>
+    Un projet Screen To Deck (STD) — 2025
+  </footer>
+</body>
+</html> 

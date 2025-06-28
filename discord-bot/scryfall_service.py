@@ -16,6 +16,7 @@ from urllib.parse import quote
 from fuzzywuzzy import fuzz
 from datetime import datetime, timedelta
 from dataclasses import dataclass
+import csv
 
 logger = logging.getLogger(__name__)
 
@@ -140,6 +141,10 @@ class ScryfallService:
             'User-Agent': 'MTG-Discord-Scanner-Enhanced/2.0 (https://github.com/user/mtg-scanner)',
             'Accept': 'application/json'
         }
+        
+        self.cache_hits = 0
+        self.cache_misses = 0
+        self.timings = []
     
     async def __aenter__(self):
         """Async context manager entry"""
@@ -903,4 +908,15 @@ class ScryfallService:
             if i + batch_size < len(card_names):
                 await asyncio.sleep(0.1)
         
-        return results 
+        return results
+
+    async def _real_make_request(self, endpoint, params):
+        # ... code existant ...
+        return await super()._make_request(endpoint, params)
+
+    def export_monitoring_csv(self, path="scryfall_monitoring.csv"):
+        with open(path, "w", newline="") as f:
+            writer = csv.writer(f)
+            writer.writerow(["cache_hits", "cache_misses", "avg_time_scryfall"])
+            avg_time = sum(self.timings)/len(self.timings) if self.timings else 0
+            writer.writerow([self.cache_hits, self.cache_misses, avg_time]) 

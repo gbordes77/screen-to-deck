@@ -1,7 +1,7 @@
-🃏 Test Screen to Deck - Validation Automatique
+🎏 Test Screen To Deck (STD) - Validation Automatique
 ==================================================
 
-🎯 Test de validation pour 29 cartes...
+🎯 Test de validation pour 29 cartes avec Screen To Deck (STD)...
 
 1. Testing: 'Lurrus of the Dream-Den' x1
    ✅ FOUND: 'Lurrus of the Dream-Den'
@@ -96,7 +96,7 @@
   • Auto-corrections: 0
   • Taux de succès: 100.0%
 
-🎉 SUCCESS! Le service Scryfall fonctionne!
+🎉 SUCCESS! Le service Scryfall fonctionne avec Screen To Deck (STD)!
 
 ====================
 

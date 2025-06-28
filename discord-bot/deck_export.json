@@ -1,0 +1,21 @@
+{
+  "main": [
+    {
+      "name": "Lightning Bolt",
+      "quantity": 4,
+      "set": "2XM"
+    },
+    {
+      "name": "Counterspell",
+      "quantity": 2,
+      "set": "MH2"
+    }
+  ],
+  "sideboard": [
+    {
+      "name": "Surgical Extraction",
+      "quantity": 2,
+      "set": "NPH"
+    }
+  ]
+}

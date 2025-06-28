@@ -1,0 +1,16 @@
+total 296
+drwxr-xr-x   4 guillaumebordes  staff    128 Jun 28 05:56 __pycache__
+drwxr-xr-x  15 guillaumebordes  staff    480 Jun 28 06:31 .
+drwxr-xr-x  12 guillaumebordes  staff    384 Jun 28 04:59 ..
+-rw-r--r--   1 guillaumebordes  staff   1328 Jun 28 01:51 .gitignore
+-rw-r--r--   1 guillaumebordes  staff  33224 Jun 28 04:46 bot.py
+-rw-r--r--   1 guillaumebordes  staff      0 Jun 28 06:31 code_listing.txt
+-rw-r--r--   1 guillaumebordes  staff   1252 Jun 28 01:49 Dockerfile
+-rw-r--r--   1 guillaumebordes  staff   4802 Jun 28 06:04 export_formats.txt
+-rw-r--r--   1 guillaumebordes  staff  27739 Jun 28 04:44 ocr_parser.py
+-rw-r--r--   1 guillaumebordes  staff   1082 Jun 28 04:46 requirements.txt
+-rw-r--r--   1 guillaumebordes  staff  34342 Jun 28 05:56 scryfall_service.py
+-rwxr-xr-x   1 guillaumebordes  staff   4139 Jun 28 04:47 start-bot.sh
+-rw-r--r--   1 guillaumebordes  staff  15149 Jun 28 04:48 test_enhanced_features.py
+-rwxr-xr-x   1 guillaumebordes  staff   3907 Jun 28 06:04 test_real_deck.py
+drwxr-xr-x   7 guillaumebordes  staff    224 Jun 28 05:02 venv
