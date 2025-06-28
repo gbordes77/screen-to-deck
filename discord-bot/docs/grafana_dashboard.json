@@ -1,0 +1,62 @@
+{
+  "dashboard": {
+    "id": null,
+    "title": "Screen To Deck (STD) Monitoring",
+    "tags": ["STD", "MTG", "OCR", "Discord Bot"],
+    "timezone": "browser",
+    "schemaVersion": 36,
+    "version": 1,
+    "refresh": "30s",
+    "panels": [
+      {
+        "type": "stat",
+        "title": "Decks traités (24h)",
+        "id": 1,
+        "datasource": "Prometheus",
+        "targets": [{
+          "expr": "sum(increase(std_decks_processed_total[24h]))",
+          "legendFormat": "Decks"
+        }],
+        "fieldConfig": {"defaults": {"unit": "none", "decimals": 0}},
+        "gridPos": {"x": 0, "y": 0, "w": 6, "h": 4}
+      },
+      {
+        "type": "stat",
+        "title": "Temps de réponse moyen (s)",
+        "id": 2,
+        "datasource": "Prometheus",
+        "targets": [{
+          "expr": "avg(std_processing_duration_seconds)",
+          "legendFormat": "Secondes"
+        }],
+        "fieldConfig": {"defaults": {"unit": "s", "decimals": 2}},
+        "gridPos": {"x": 6, "y": 0, "w": 6, "h": 4}
+      },
+      {
+        "type": "gauge",
+        "title": "Taux de succès OCR (%)",
+        "id": 3,
+        "datasource": "Prometheus",
+        "targets": [{
+          "expr": "100 * (sum(std_ocr_success_total) / sum(std_ocr_attempts_total))",
+          "legendFormat": "Succès"
+        }],
+        "fieldConfig": {"defaults": {"unit": "percent", "min": 0, "max": 100}},
+        "gridPos": {"x": 0, "y": 4, "w": 6, "h": 4}
+      },
+      {
+        "type": "table",
+        "title": "Erreurs récentes",
+        "id": 4,
+        "datasource": "Prometheus",
+        "targets": [{
+          "expr": "std_errors_total{job=\"screen-to-deck\"}",
+          "legendFormat": "Erreur"
+        }],
+        "fieldConfig": {"defaults": {"unit": "none"}},
+        "gridPos": {"x": 6, "y": 4, "w": 6, "h": 4}
+      }
+    ]
+  },
+  "overwrite": false
+} 
