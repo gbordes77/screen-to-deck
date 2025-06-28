@@ -383,7 +383,7 @@ class MTGOCRParser:
         )
     
     async def _parse_cards_enhanced(self, lines: List[str], language: str) -> List[ParsedCard]:
-        """Parse les lignes extraites en cartes"""
+        """Parse les lignes extraites en cartes selon les règles OCR du projet"""
         parsed_cards = []
         
         # Patterns de parsing
@@ -391,13 +391,13 @@ class MTGOCRParser:
             (r'^(\d+)x?\s+(.+)$', lambda m: (int(m.group(1)), m.group(2))),
             (r'^(.+?)\s+x?(\d+)$', lambda m: (int(m.group(2)), m.group(1))),
             (r'^(\d+)\s+(.+)$', lambda m: (int(m.group(1)), m.group(2))),
-            (r'^(.+)$', lambda m: (1, m.group(1)))
+            (r'^(.+)$', lambda m: (1, m.group(1)))  # Règle fondamentale : si pas de nombre, quantité = 1
         ]
         
         for line in lines:
             if not line or len(line) < 3:
                 continue
-                
+            
             quantity = 1
             name = line
             
@@ -410,29 +410,29 @@ class MTGOCRParser:
                         break
                     except:
                         continue
+            # Appliquer la règle : si aucun nombre détecté, quantité = 1
+            # (déjà géré par le dernier pattern)
+            # Nettoyer le nom
+            name = name.strip()
             
             # Créer la carte parsée
             parsed_card = ParsedCard(
-                name=name.strip(),
+                name=name,
                 quantity=quantity,
                 original_text=line,
                 confidence=0.8,
                 is_validated=False,
                 correction_applied=False
             )
-            
             parsed_cards.append(parsed_card)
-            
         return parsed_cards
     
     async def _validate_cards_batch(self, parsed_cards: List[ParsedCard], language: str) -> List[ParsedCard]:
-        """Valide les cartes avec Scryfall"""
+        """Valide les cartes avec Scryfall, toujours tenter un matching même si le nom OCR est imparfait"""
         validated = []
-        
         for card in parsed_cards:
-            # Recherche Scryfall
+            # Recherche Scryfall (toujours tenter même si le nom est imparfait)
             match = await self.scryfall_service.enhanced_card_search(card.name, language)
-            
             if match and match.matched_name:
                 card.name = match.matched_name
                 card.is_validated = True
@@ -441,10 +441,9 @@ class MTGOCRParser:
                 card.scryfall_data = match.card_data
                 validated.append(card)
             else:
-                # Garder la carte non validée avec suggestions
+                # Si aucune correspondance parfaite, garder le nom OCR et suggestions Scryfall
                 card.suggestions = match.suggestions if match else []
                 validated.append(card)
-                
         return validated
     
     async def _analyze_deck_comprehensive(self, cards: List[ParsedCard], format_hint: str = None):

@@ -1,4 +1,4 @@
-# Règles d'extraction OCR (base technique)
+# Règles d'extraction OCR pour Screen To Deck (STD)
 
 ## Règle fondamentale
 - **Si aucun chiffre (x2, x3, x4, etc.) n'est affiché à côté du nom de la carte, alors il n'y a qu'UN exemplaire de cette carte (quantité = 1), même si la carte apparaît plusieurs fois visuellement.**
@@ -31,4 +31,4 @@
 
 ---
 
-*Ces règles sont la base de toute extraction OCR pour ce projet et doivent être respectées dans toute évolution du code.*
+*Ces règles sont la base de toute extraction OCR pour ce projet et doivent être respectées dans toute évolution du code.* 
