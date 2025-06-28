@@ -11,7 +11,7 @@ import pytesseract
 import re
 import logging
 from typing import List, Dict, Any, Optional, Tuple
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import asyncio
 import os
 
@@ -42,8 +42,10 @@ class ParseResult:
     total_cards: int = 0
     main_count: int = 0
     side_count: int = 0
-    errors: List[str] = None
-    warnings: List[str] = None
+    errors: List[str] = field(default_factory=list)
+    warnings: List[str] = field(default_factory=list)
+    confidence_score: float = 0.0
+    processing_notes: List[str] = field(default_factory=list)
 
 class MTGArenaOCR:
     """Module OCR intelligent pour Magic Arena"""
@@ -372,14 +374,27 @@ class MTGOCRParser:
         main_count = ocr_result["stats"]["main_count"]
         side_count = ocr_result["stats"]["side_count"]
         
+        # Générer les warnings sur les cartes douteuses
+        warnings = getattr(self, 'low_confidence_cards', [])
+        # Notes de traitement (exemple : on peut ajouter des logs ou infos ici)
+        processing_notes = []
+        
+        # Calcul du score de confiance global (moyenne des cartes validées)
+        if validated_cards:
+            confidence_score = sum(c.confidence for c in validated_cards) / len(validated_cards)
+        else:
+            confidence_score = 0.0
+        
         return ParseResult(
             cards=validated_cards,
             format_analysis=format_analysis,
             total_cards=len(validated_cards),
             main_count=main_count,
             side_count=side_count,
-            errors=None,
-            warnings=None
+            errors=[],
+            warnings=warnings,
+            confidence_score=confidence_score,
+            processing_notes=processing_notes
         )
     
     async def _parse_cards_enhanced(self, lines: List[str], language: str) -> List[ParsedCard]:
@@ -428,21 +443,41 @@ class MTGOCRParser:
         return parsed_cards
     
     async def _validate_cards_batch(self, parsed_cards: List[ParsedCard], language: str) -> List[ParsedCard]:
-        """Valide les cartes avec Scryfall, toujours tenter un matching même si le nom OCR est imparfait"""
+        """Valide les cartes avec Scryfall, avec gestion avancée du score de confiance et suggestions"""
         validated = []
+        self.low_confidence_cards = []  # Pour warnings globaux
         for card in parsed_cards:
-            # Recherche Scryfall (toujours tenter même si le nom est imparfait)
             match = await self.scryfall_service.enhanced_card_search(card.name, language)
             if match and match.matched_name:
-                card.name = match.matched_name
-                card.is_validated = True
-                card.correction_applied = match.correction_applied
-                card.confidence = match.confidence
-                card.scryfall_data = match.card_data
+                # Correction automatique si confiance élevée
+                if match.confidence >= 0.90:
+                    card.name = match.matched_name
+                    card.is_validated = True
+                    card.correction_applied = match.correction_applied
+                    card.confidence = match.confidence
+                    card.scryfall_data = match.card_data
+                # Marquage douteux si confiance moyenne
+                elif 0.70 <= match.confidence < 0.90:
+                    card.suggestions = [match.matched_name] + (match.suggestions or [])
+                    card.confidence = match.confidence
+                    card.is_validated = False
+                    card.correction_applied = match.correction_applied
+                    self.low_confidence_cards.append(f"{card.original_text} → Suggestion : {match.matched_name} (confiance {match.confidence:.2f})")
+                # Faible confiance ou non reconnu
+                else:
+                    card.suggestions = match.suggestions or []
+                    card.confidence = match.confidence
+                    card.is_validated = False
+                    card.correction_applied = False
+                    self.low_confidence_cards.append(f"{card.original_text} → Non reconnu (confiance {match.confidence:.2f})")
                 validated.append(card)
             else:
-                # Si aucune correspondance parfaite, garder le nom OCR et suggestions Scryfall
+                # Aucune correspondance, garder le nom OCR et suggestions
                 card.suggestions = match.suggestions if match else []
+                card.confidence = match.confidence if match else 0.0
+                card.is_validated = False
+                card.correction_applied = False
+                self.low_confidence_cards.append(f"{card.original_text} → Non reconnu (aucune suggestion)")
                 validated.append(card)
         return validated
     
