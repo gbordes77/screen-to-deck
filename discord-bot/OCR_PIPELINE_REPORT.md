@@ -122,4 +122,184 @@ async def enhanced_card_search(self, card_name: str, lang: str = 'en') -> CardMa
 
 **Contact : @Holdrin / guillaumebordes**
 
-**Pour le code complet, voir les fichiers : ocr_parser.py, bot.py, scryfall_service.py dans le repo.** 
+**Pour le code complet, voir les fichiers : ocr_parser.py, bot.py, scryfall_service.py dans le repo.**
+
+# Annexe : Code source du projet par module
+
+Chaque module interagit via des appels directs : `bot.py` orchestre le workflow utilisateur et appelle `MTGOCRParser` (dans `ocr_parser.py`) pour l'OCR et le parsing, qui lui-même utilise `ScryfallService` (dans `scryfall_service.py`) pour la validation/correction des cartes et l'analyse avancée. Les exports sont gérés par `export_deck.py`. Le code complet est disponible dans le dépôt Git.
+
+## 1. bot.py (Discord & orchestration)
+```python
+# ... Début du fichier bot.py ...
+#!/usr/bin/env python3
+"""
+🃏 Enhanced MTG Deck Scanner Discord Bot - Phase 1
+Integrates with enhanced Scryfall service for intelligent deck scanning
+Now with automatic correction, format detection, and comprehensive analysis
+"""
+
+import os
+import asyncio
+import logging
+import tempfile
+from io import BytesIO
+from typing import Optional, List, Dict, Any
+import json
+
+import discord
+from discord.ext import commands
+import aiohttp
+from PIL import Image
+import requests
+from dotenv import load_dotenv
+
+from ocr_parser import MTGOCRParser, ParseResult, ParsedCard
+from scryfall_service import ScryfallService, DeckAnalysis
+
+# ... (voir le dépôt pour le code complet, 670 lignes) ...
+```
+
+## 2. ocr_parser.py (OCR, parsing, validation)
+```python
+# ... Début du fichier ocr_parser.py ...
+#!/usr/bin/env python3
+"""
+🔍 Enhanced MTG OCR Parser - Phase 1
+Advanced OCR processing with intelligent Scryfall integration
+Now with automatic correction, format detection, and confidence scoring
+"""
+
+import cv2
+import numpy as np
+import pytesseract
+import re
+import logging
+from typing import List, Dict, Any, Optional, Tuple
+from dataclasses import dataclass
+import asyncio
+import tempfile
+import os
+
+@dataclass
+class ParsedCard:
+    name: str
+    quantity: int
+    original_text: str
+    confidence: float
+    is_validated: bool
+    correction_applied: bool
+    scryfall_data: Optional[Dict[str, Any]] = None
+    suggestions: Optional[List[str]] = None
+
+# ... (voir le dépôt pour le code complet, 801 lignes) ...
+```
+
+## 3. scryfall_service.py (Scryfall, correction, analyse)
+```python
+# ... Début du fichier scryfall_service.py ...
+#!/usr/bin/env python3
+"""
+🃏 Scryfall API Service - Phase 1 Enhanced
+Interface with Scryfall API for MTG card validation and data enrichment
+Now with intelligent card correction, format detection, and advanced validation
+"""
+
+import asyncio
+import aiohttp
+import logging
+import time
+import re
+import json
+from typing import Dict, List, Optional, Any, Tuple, Set
+from urllib.parse import quote
+from fuzzywuzzy import fuzz
+from datetime import datetime, timedelta
+from dataclasses import dataclass
+import csv
+
+@dataclass
+class CardMatch:
+    original_name: str
+    matched_name: str
+    confidence: float
+    card_data: Dict[str, Any]
+    suggestions: List[str] = None
+    correction_applied: bool = False
+
+# ... (voir le dépôt pour le code complet, 922 lignes) ...
+```
+
+## 4. export_deck.py (Exports)
+```python
+import csv
+import json
+from typing import List, Tuple
+
+# Exemple de deck avec set (à remplacer par l'import réel)
+DECK = [
+    ("Lightning Bolt", 4, "2XM"),
+    ("Counterspell", 2, "MH2"),
+]
+SIDEBOARD = [
+    ("Surgical Extraction", 2, "NPH"),
+]
+
+def export_csv(deck: List[Tuple[str, int, str]], sideboard: List[Tuple[str, int, str]], path="deck_export.csv"):
+    with open(path, "w", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(["section", "name", "quantity", "set"])
+        for name, qty, set_code in deck:
+            writer.writerow(["main", name, qty, set_code])
+        for name, qty, set_code in sideboard:
+            writer.writerow(["sideboard", name, qty, set_code])
+    print(f"Exporté en CSV : {path}")
+
+def export_json(deck: List[Tuple[str, int, str]], sideboard: List[Tuple[str, int, str]], path="deck_export.json"):
+    data = {
+        "main": [{"name": n, "quantity": q, "set": s} for n, q, s in deck],
+        "sideboard": [{"name": n, "quantity": q, "set": s} for n, q, s in sideboard],
+    }
+    with open(path, "w") as f:
+        json.dump(data, f, indent=2)
+    print(f"Exporté en JSON : {path}")
+
+def export_moxfield(deck: List[Tuple[str, int, str]], sideboard: List[Tuple[str, int, str]], path="deck_export_moxfield.txt"):
+    with open(path, "w") as f:
+        for name, qty, set_code in deck:
+            f.write(f"{qty}x {name} ({set_code})\n")
+        f.write("\nSideboard\n")
+        for name, qty, set_code in sideboard:
+            f.write(f"{qty}x {name} ({set_code})\n")
+    print(f"Exporté en Moxfield : {path}")
+
+if __name__ == "__main__":
+    export_csv(DECK, SIDEBOARD)
+    export_json(DECK, SIDEBOARD)
+    export_moxfield(DECK, SIDEBOARD) 
+```
+
+## 5. requirements.txt (Dépendances)
+```
+# Enhanced MTG Discord Scanner - Requirements
+# Phase 1 with intelligent Scryfall integration
+
+discord.py>=2.3.0
+py-cord>=2.4.1
+
+aiohttp>=3.8.0
+opencv-python>=4.9.0
+pytesseract>=0.3.10
+Pillow>=9.0.0
+numpy>=1.24.0
+fuzzywuzzy>=0.18.0
+python-Levenshtein>=0.21.0
+dataclasses>=0.6; python_version < "3.7"
+python-dotenv>=1.0.0
+requests>=2.28.0
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+black>=23.0.0
+flake8>=6.0.0
+memory-profiler>=0.61.0
+# ...
+``` 
