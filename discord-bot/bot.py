@@ -20,8 +20,41 @@ from PIL import Image
 import requests
 from dotenv import load_dotenv
 
-from ocr_parser import MTGOCRParser, ParseResult, ParsedCard
+from ocr_parser_easyocr import MTGOCRParser, ParseResult, ParsedCard
 from scryfall_service import ScryfallService, DeckAnalysis
+from deck_processor import DeckProcessor
+
+def format_error_field(title: str, lines: List[str], max_length: int = 1024) -> Optional[tuple]:
+    """
+    🔧 FONCTION ANTI-CRASH
+    Formate une liste de lignes d'erreur pour un champ d'embed Discord,
+    en s'assurant de ne jamais dépasser la longueur maximale.
+    """
+    if not lines:
+        return None
+
+    # Construit la chaîne de caractères à partir de la liste
+    full_text = "\n".join(f"- `{line[:50]}{'...' if len(line) > 50 else ''}`" for line in lines)
+    
+    # Si le texte est déjà dans les limites, on le renvoie
+    if len(full_text) <= max_length:
+        return (title, full_text)
+
+    # Sinon, on tronque intelligemment
+    truncated_text = ""
+    lines_included = 0
+    for line in lines:
+        line_to_add = f"- `{line[:50]}{'...' if len(line) > 50 else ''}`\n"
+        if len(truncated_text) + len(line_to_add) > max_length - 100: # Garde une marge
+            break
+        truncated_text += line_to_add
+        lines_included += 1
+    
+    remaining_lines = len(lines) - lines_included
+    if remaining_lines > 0:
+        truncated_text += f"\n... et {remaining_lines} autre(s) ligne(s) non reconnue(s)."
+
+    return (title, truncated_text.strip())
 
 # Load environment variables
 load_dotenv()
@@ -105,11 +138,13 @@ async def on_message(message):
 
 @bot.event
 async def on_reaction_add(reaction, user):
-    """Handle reaction additions with enhanced processing"""
+    """Handle reaction additions with enhanced processing (anti-doublon patch)"""
     # Ignore bot reactions
     if user.bot:
         return
-    
+    # Ignore if the bot itself added the reaction (anti-doublon)
+    if reaction.me:
+        return
     # Check for camera emoji on messages with images
     if str(reaction.emoji) == bot.camera_emoji:
         message = reaction.message
@@ -365,23 +400,17 @@ async def send_enhanced_scan_results(original_message, processing_msg,
             inline=False
         )
     
-    # Unvalidated cards (suggestions)
+    # Unvalidated cards (suggestions) - ANTI-CRASH avec format_error_field
     if unvalidated_cards:
-        unvalidated_text = []
-        for card in unvalidated_cards[:3]:  # Show max 3 failed cards
-            suggestion_text = f"❓ `{card.original_text}`"
-            if card.suggestions:
-                suggestion_text += f" → *{card.suggestions[0]}?*"
-            unvalidated_text.append(suggestion_text)
+        unvalidated_lines = [card.original_text for card in unvalidated_cards]
+        error_field = format_error_field("⚠️ **Needs Review**", unvalidated_lines)
         
-        if len(unvalidated_cards) > 3:
-            unvalidated_text.append(f"*... and {len(unvalidated_cards) - 3} more*")
-        
-        result_embed.add_field(
-            name="⚠️ **Needs Review**",
-            value="\n".join(unvalidated_text),
-            inline=False
-        )
+        if error_field:
+            result_embed.add_field(
+                name=error_field[0],
+                value=error_field[1],
+                inline=False
+            )
     
     # Format legality issues
     if (parse_result.format_analysis and 
@@ -393,9 +422,12 @@ async def send_enhanced_scan_results(original_message, processing_msg,
             inline=False
         )
     
-    # Processing details
+    # Processing details (limited to Discord's 1024 char limit)
     if parse_result.processing_notes:
         processing_text = "\n".join(parse_result.processing_notes[-3:])  # Last 3 notes
+        # Truncate if too long for Discord embed field (max 1024 chars)
+        if len(processing_text) > 900:  # Leave room for code block markers
+            processing_text = processing_text[:900] + "..."
         result_embed.add_field(
             name="🔍 **Processing Details**",
             value=f"```{processing_text}```",
@@ -424,90 +456,60 @@ async def send_enhanced_scan_results(original_message, processing_msg,
     await processing_msg.edit(embed=result_embed, view=view, attachments=[file] if file else [])
 
 async def generate_enhanced_export(parse_result: ParseResult, format_type: str) -> str:
-    """Generate enhanced export content"""
-    validated_cards = [c for c in parse_result.cards if c.is_validated]
+    """
+    VERSION PATCHÉE - Génère l'export en utilisant TOUJOURS les données regroupées
     
-    if format_type == 'mtga':
-        # MTGA format
-        lines = []
+    PRIORITÉ :
+    1. parse_result.export_text (déjà généré avec regroupement)
+    2. parse_result.processed_cards (données intermédiaires regroupées)
+    3. Regroupement manuel depuis parse_result.cards (Fallback de sécurité)
+    """
+    logger.info(f"🎯 Génération de l'export {format_type} avec la logique patchée")
+
+    # CAS 1 : La meilleure situation. L'export est déjà prêt.
+    if hasattr(parse_result, 'export_text') and parse_result.export_text:
+        logger.info("  [Priorité 1] ✅ Utilisation de l'attribut 'export_text' pré-généré")
+        return parse_result.export_text
+
+    # CAS 2 : Les cartes ont été traitées et regroupées.
+    elif hasattr(parse_result, 'processed_cards') and parse_result.processed_cards:
+        logger.info("  [Priorité 2] ✅ Génération de l'export à partir de 'processed_cards'")
+        processor = DeckProcessor()
+        return processor.export_to_format(parse_result.processed_cards, format_type)
+
+    # CAS 3 : Fallback. Les données brutes existent mais n'ont pas été traitées.
+    # Cela indique un problème en amont, mais on peut le rattraper ici.
+    elif hasattr(parse_result, 'cards') and parse_result.cards:
+        logger.warning("  [Priorité 3] ⚠️ 'export_text' et 'processed_cards' sont absents. Exécution d'un regroupement de secours")
+
+        # Séparer les cartes validées seulement
+        validated_cards = [c for c in parse_result.cards if c.is_validated]
         
-        # Commander if detected
-        if (parse_result.format_analysis and 
-            parse_result.format_analysis.get('commander')):
-            commander = parse_result.format_analysis['commander']
-            lines.append("Commander")
-            lines.append(f"1 {commander['name']}")
-            lines.append("")
-        
-        # Main deck
-        lines.append("Deck")
+        main_tuples = []
+        side_tuples = []
         for card in validated_cards:
-            lines.append(f"{card.quantity} {card.name}")
+            tuple_card = (card.name, card.quantity)
+            if hasattr(card, 'is_sideboard') and card.is_sideboard:
+                side_tuples.append(tuple_card)
+            else:
+                main_tuples.append(tuple_card)
         
-        return "\n".join(lines)
+        logger.debug(f"    Données brutes : {len(main_tuples)} lignes main, {len(side_tuples)} lignes side")
         
-    elif format_type == 'moxfield':
-        # Moxfield format
-        lines = []
-        for card in validated_cards:
-            set_code = ""
-            if card.scryfall_data and card.scryfall_data.get('set'):
-                set_code = f" ({card.scryfall_data['set'].upper()})"
-            lines.append(f"{card.quantity}x {card.name}{set_code}")
+        processor = DeckProcessor(strict_mode=False)  # Mode non-strict pour ne pas bloquer l'export
+        processed_cards, validation = processor.process_deck(main_tuples, side_tuples)
         
-        return "\n".join(lines)
+        logger.info(f"    Données regroupées : {validation.main_count} cartes main, {validation.side_count} cartes side")
         
-    elif format_type == 'enhanced':
-        # Enhanced format with metadata
-        lines = [
-            "# Enhanced MTG Deck Export",
-            f"# Scanned with {parse_result.confidence_score:.1%} confidence",
-            ""
-        ]
-        
-        # Format info
-        if parse_result.format_analysis:
-            fa = parse_result.format_analysis
-            lines.extend([
-                f"# Format: {fa.get('format', 'Unknown')}",
-                f"# Total Cards: {fa.get('total_cards', 0)}",
-                f"# Estimated Price: ${fa.get('price_estimate', 0):.2f}",
-                f"# Colors: {', '.join(fa.get('color_identity', []))}",
-                ""
-            ])
-        
-        # Commander
-        if (parse_result.format_analysis and 
-            parse_result.format_analysis.get('commander')):
-            commander = parse_result.format_analysis['commander']
-            lines.extend([
-                "# Commander",
-                f"1x {commander['name']}",
-                ""
-            ])
-        
-        # Main deck
-        lines.append("# Main Deck")
-        for card in validated_cards:
-            correction_note = " # Auto-corrected" if card.correction_applied else ""
-            lines.append(f"{card.quantity}x {card.name}{correction_note}")
-        
-        # Unvalidated cards
-        unvalidated = [c for c in parse_result.cards if not c.is_validated]
-        if unvalidated:
-            lines.extend(["", "# Unvalidated Cards (Manual Review Needed)"])
-            for card in unvalidated:
-                suggestion = f" # Suggestion: {card.suggestions[0]}" if card.suggestions else ""
-                lines.append(f"# {card.quantity}x {card.name}{suggestion}")
-        
-        return "\n".join(lines)
-    
+        if not validation.is_valid:
+            logger.error(f"    Validation du fallback échouée : {validation.errors}")
+            
+        return processor.export_to_format(processed_cards, format_type)
+
+    # CAS 4 : Erreur critique. Aucune donnée de carte n'est disponible.
     else:
-        # Plain text format
-        lines = []
-        for card in validated_cards:
-            lines.append(f"{card.quantity}x {card.name}")
-        return "\n".join(lines)
+        logger.error("  ❌ ERREUR CRITIQUE: Aucune donnée de carte ('cards', 'processed_cards', 'export_text') n'a été trouvée dans parse_result")
+        return "# Erreur: Aucune carte détectée ou les données sont corrompues.\n"
 
 # --- Fonctions globales pour les boutons ---
 async def create_stats_embed(parse_result):

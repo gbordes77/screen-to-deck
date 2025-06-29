@@ -108,4 +108,56 @@ La modularité inhérente à cette architecture est la pierre angulaire d'un sys
 
 ---
 
-**Ce document fait foi de l'état du projet avant arrêt ce soir.** 
+**Ce document fait foi de l'état du projet avant arrêt ce soir.**
+
+# État des lieux - Screen To Deck (juin 2025)
+
+## 1. Fonctionnalités principales
+- **Bot Discord** qui scanne des screenshots de decks Magic: The Gathering et exporte la liste des cartes.
+- **OCR IA** : Passage de Tesseract à EasyOCR (deep learning) pour une reconnaissance nettement supérieure.
+- **Recherche fuzzy Scryfall** : Tolérance aux fautes d'OCR, correction automatique des noms de cartes.
+- **Regroupement intelligent** : Plus de doublons, main/sideboard séparés, export MTGA propre.
+- **Anti-crash** : Gestion des erreurs Discord (limite 1024 caractères, etc.), plus de plantage même avec OCR raté.
+
+## 2. Derniers résultats (29 juin 2025)
+- **OCR EasyOCR** :
+  - 61 blocs de texte détectés sur un screenshot deck réel
+  - 46 lignes retenues après nettoyage
+  - 41 entrées deck parsées (main)
+- **Validation Scryfall** :
+  - 35/41 cartes validées automatiquement (85%)
+  - Corrections automatiques appliquées (ex : "Lurrus of the Dream-DenLOG" → "Lurrus of the Dream-Den")
+  - 6 entrées non reconnues (ex : noms de joueurs, bruit OCR)
+- **Regroupement** :
+  - 41 cartes → 28 cartes uniques après fusion
+- **Export** :
+  - Export MTGA généré, prêt à l'emploi
+  - Export Moxfield, stats, analyse détaillée disponibles
+- **Interface Discord** :
+  - Plus de double scan (patch anti-doublon appliqué)
+  - Boutons interactifs : export, stats, analyse
+
+## 3. Points forts
+- Robustesse : plus de crash, gestion des erreurs propre
+- Qualité OCR : très nette amélioration (EasyOCR)
+- Correction automatique efficace (fuzzy Scryfall)
+- UX : interface claire, anti-doublon, feedback utilisateur
+
+## 4. Limites et axes d'amélioration
+- Quelques noms bruités restent non reconnus (noms propres, artefacts OCR)
+- OCR encore perfectible sur images très dégradées
+- Pas de support voice (PyNaCl non installé)
+- Pas de gestion multi-langue OCR (pour l'instant)
+
+## 5. Prochaines étapes possibles
+- Améliorer le filtrage des lignes bruitées (noms de joueurs, etc.)
+- Ajouter un mode "correction manuelle" pour l'utilisateur
+- Support multi-langue OCR (français, espagnol...)
+- Optimisation GPU (EasyOCR)
+- Ajout d'un historique des scans
+
+---
+
+**Statut :**
+- Le bot est **fonctionnel, robuste et prêt à l'usage** pour la majorité des screenshots deck Magic Arena.
+- Les exports sont fiables, la correction automatique fonctionne, et l'expérience utilisateur est fluide. 

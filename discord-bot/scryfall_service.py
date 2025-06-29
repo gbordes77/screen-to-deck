@@ -311,10 +311,12 @@ class ScryfallService:
         if self._is_cache_valid(cache_key):
             return self.cache[cache_key]
         
-        endpoint = f"/cards/named/fuzzy"
+        endpoint = f"/cards/named"
         params = {'fuzzy': name}
         
+        logger.info(f"[Scryfall] search_card_fuzzy: name='{name}' (param fuzzy)")
         result = await self._make_request(endpoint, params)
+        logger.info(f"[Scryfall] search_card_fuzzy: response for '{name}': {result['name'] if result else 'None'}")
         self._cache_response(cache_key, result)
         
         return result

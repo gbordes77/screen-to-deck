@@ -1,0 +1,125 @@
+=== RÉSULTATS EASYOCR DÉTAILLÉS ===
+Pas de confiance | Texte: Esper Sentinel
+Pas de confiance | Texte: Hushbringer
+Pas de confiance | Texte: Plains
+Pas de confiance | Texte: Lurrus of the Dream-DenLOG
+Pas de confiance | Texte: X4
+Pas de confiance | Texte: x2
+Pas de confiance | Texte: Hallowed Fountain
+Pas de confiance | Texte: Lurrus of the Dream
+Pas de confiance | Texte: Ethereal Armor
+Pas de confiance | Texte: Kor Spiritdancer
+Pas de confiance | Texte: X4
+Pas de confiance | Texte: Fragment Reality
+Pas de confiance | Texte: X4
+Pas de confiance | Texte: X4
+Pas de confiance | Texte: Seachrome Coast
+Pas de confiance | Texte: Giver of Runes
+Pas de confiance | Texte: Light-Paws; Emperor's Voice (LO
+Pas de confiance | Texte: x2
+Pas de confiance | Texte: Fragment Reality
+Pas de confiance | Texte: Legendary Creature Cat Nightmare
+Pas de confiance | Texte: X4
+Pas de confiance | Texte: X4
+Pas de confiance | Texte: Inspiring Vantage
+Pas de confiance | Texte: Companion Each permanent card in your starting deck has mana value ess: Lifelink Once durlng each ofyour turns,you May cast, permanent spell with mana value or less from your grave 3/2 SLAWOMIR MANIAK
+Pas de confiance | Texte: Fragment Reality
+Pas de confiance | Texte: Sentinells Eyes
+Pas de confiance | Texte: Sheltered by Ghosts
+Pas de confiance | Texte: Sacred Foundry
+Pas de confiance | Texte: Shardmages Rescue
+Pas de confiance | Texte: x3
+Pas de confiance | Texte: X4
+Pas de confiance | Texte: Fragment Reality Slip Out the Back Slip Out the Back Best of Three Only Spell Pierce
+Pas de confiance | Texte: Demonic Ruckus
+Pas de confiance | Texte: Sunbaked Canyon
+Pas de confiance | Texte: Combat Research
+Pas de confiance | Texte: X4
+Pas de confiance | Texte: Mana Confluence
+Pas de confiance | Texte: Slip Out the Back
+Pas de confiance | Texte: X4
+Pas de confiance | Texte: Wingspan Stride
+Pas de confiance | Texte: Starting Jown
+Pas de confiance | Texte: Cartouche of Zeal
+Pas de confiance | Texte: X4
+Pas de confiance | Texte: Enchantment - Aura
+Pas de confiance | Texte: Sticky Fingers
+Pas de confiance | Texte: Enchant creature Enchanted crealure gets +1/+]and has menace and trample. When this Aura Is put Into graveyard from the battlefield, draw card: Plot
+Pas de confiance | Texte: Spell Pierce
+Pas de confiance | Texte: ANDREW MAR
+Pas de confiance | Texte: Land owni
+Pas de confiance | Texte: Spell Pierce
+Pas de confiance | Texte: This land enters tapped unless It's your first; second  or third turn of the game: 0: Add @ Pay " life: Add one mana of any color:
+Pas de confiance | Texte: Containment Priest
+Pas de confiance | Texte: Enchantment - Ara
+Pas de confiance | Texte: Enchant creature Enchanted creature has menace and "Whenever this creature deals combat damage to player, create Treasure token:' When enchanted creature dies; draw card-
+Pas de confiance | Texte: Containment Priest
+Pas de confiance | Texte: HRISTO CHUKov
+Pas de confiance | Texte: Containment Priest
+Pas de confiance | Texte: Mank BEHM
+Pas de confiance | Texte: Hushbringer Shelte? Done
+Pas de confiance | Texte: 5
+Pas de confiance | Texte: X4
+
+=== TEXTE FINAL ===
+Esper Sentinel
+Hushbringer
+Plains
+Lurrus of the Dream-DenLOG
+X4
+x2
+Hallowed Fountain
+Lurrus of the Dream
+Ethereal Armor
+Kor Spiritdancer
+X4
+Fragment Reality
+X4
+X4
+Seachrome Coast
+Giver of Runes
+Light-Paws; Emperor's Voice (LO
+x2
+Fragment Reality
+Legendary Creature Cat Nightmare
+X4
+X4
+Inspiring Vantage
+Companion Each permanent card in your starting deck has mana value ess: Lifelink Once durlng each ofyour turns,you May cast, permanent spell with mana value or less from your grave 3/2 SLAWOMIR MANIAK
+Fragment Reality
+Sentinells Eyes
+Sheltered by Ghosts
+Sacred Foundry
+Shardmages Rescue
+x3
+X4
+Fragment Reality Slip Out the Back Slip Out the Back Best of Three Only Spell Pierce
+Demonic Ruckus
+Sunbaked Canyon
+Combat Research
+X4
+Mana Confluence
+Slip Out the Back
+X4
+Wingspan Stride
+Starting Jown
+Cartouche of Zeal
+X4
+Enchantment - Aura
+Sticky Fingers
+Enchant creature Enchanted crealure gets +1/+]and has menace and trample. When this Aura Is put Into graveyard from the battlefield, draw card: Plot
+Spell Pierce
+ANDREW MAR
+Land owni
+Spell Pierce
+This land enters tapped unless It's your first; second  or third turn of the game: 0: Add @ Pay " life: Add one mana of any color:
+Containment Priest
+Enchantment - Ara
+Enchant creature Enchanted creature has menace and "Whenever this creature deals combat damage to player, create Treasure token:' When enchanted creature dies; draw card-
+Containment Priest
+HRISTO CHUKov
+Containment Priest
+Mank BEHM
+Hushbringer Shelte? Done
+5
+X4

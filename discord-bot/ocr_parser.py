@@ -22,6 +22,14 @@ logging.basicConfig(
 )
 logger = logging.getLogger("ocr_parser")
 
+# Import du DeckProcessor pour le regroupement intelligent
+try:
+    from deck_processor import DeckProcessor
+    DECK_PROCESSOR_AVAILABLE = True
+except ImportError:
+    DECK_PROCESSOR_AVAILABLE = False
+    logger.warning("⚠️ DeckProcessor non disponible - regroupement intelligent désactivé")
+
 @dataclass
 class ParsedCard:
     """Représente une carte parsée depuis l'OCR"""
@@ -46,6 +54,9 @@ class ParseResult:
     warnings: List[str] = field(default_factory=list)
     confidence_score: float = 0.0
     processing_notes: List[str] = field(default_factory=list)
+    # Nouveaux attributs pour le regroupement intelligent
+    processed_cards: Optional[List[Any]] = None
+    export_text: Optional[str] = None
 
 class MTGArenaOCR:
     """Module OCR intelligent pour Magic Arena"""
@@ -385,6 +396,48 @@ class MTGOCRParser:
         else:
             confidence_score = 0.0
         
+        # NOUVEAU : Regroupement intelligent et génération de export_text
+        processed_cards = None
+        export_text = None
+        
+        if DECK_PROCESSOR_AVAILABLE and validated_cards:
+            try:
+                self.logger.info("🎯 Application du regroupement intelligent")
+                
+                # Séparer main et sideboard
+                main_tuples = []
+                side_tuples = []
+                
+                for card in validated_cards:
+                    tuple_card = (card.name, card.quantity)
+                    # Pour l'instant, toutes les cartes vont dans le main
+                    # TODO: Détecter automatiquement le sideboard selon la position OCR
+                    if hasattr(card, 'is_sideboard') and card.is_sideboard:
+                        side_tuples.append(tuple_card)
+                    else:
+                        main_tuples.append(tuple_card)
+                
+                # Traitement avec DeckProcessor
+                processor = DeckProcessor(strict_mode=False)
+                processed_cards, validation = processor.process_deck(main_tuples, side_tuples)
+                
+                # Génération de l'export MTGA
+                export_text = processor.export_to_format(processed_cards, 'mtga')
+                
+                self.logger.info(f"✅ Regroupement terminé: {len(processed_cards)} cartes uniques")
+                self.logger.info(f"📊 Validation: {validation.main_count} main, {validation.side_count} side")
+                
+                # Ajouter les infos de validation aux notes
+                processing_notes.append(f"Regroupement intelligent appliqué: {len(validated_cards)} → {len(processed_cards)} cartes")
+                processing_notes.append(f"Totaux après regroupement: {validation.main_count} main, {validation.side_count} side")
+                
+                if validation.warnings:
+                    processing_notes.extend([f"Avertissement: {w}" for w in validation.warnings])
+                    
+            except Exception as e:
+                self.logger.error(f"❌ Erreur lors du regroupement intelligent: {e}")
+                processing_notes.append(f"Erreur regroupement: {e}")
+        
         return ParseResult(
             cards=validated_cards,
             format_analysis=format_analysis,
@@ -394,7 +447,9 @@ class MTGOCRParser:
             errors=[],
             warnings=warnings,
             confidence_score=confidence_score,
-            processing_notes=processing_notes
+            processing_notes=processing_notes,
+            processed_cards=processed_cards,
+            export_text=export_text
         )
     
     async def _parse_cards_enhanced(self, lines: List[str], language: str) -> List[ParsedCard]:
