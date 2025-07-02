@@ -1,0 +1,87 @@
+# ==============================================
+# SCREEN-TO-DECK SAAS DOCKERFILE
+# Multi-stage production build
+# ==============================================
+
+# ==============================================
+# BASE STAGE
+# ==============================================
+FROM node:18-alpine AS base
+
+# Install security updates and required packages
+RUN apk update && apk upgrade && \
+    apk add --no-cache \
+    curl \
+    dumb-init \
+    && rm -rf /var/cache/apk/*
+
+# Create app user for security
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nextjs -u 1001
+
+WORKDIR /app
+
+# ==============================================
+# DEPENDENCIES STAGE
+# ==============================================
+FROM base AS deps
+
+# Copy package files
+COPY package*.json ./
+COPY server/package*.json ./server/
+COPY client/package*.json ./client/
+
+# Install dependencies
+RUN npm ci --only=production --no-audit --no-fund && \
+    cd server && npm ci --only=production --no-audit --no-fund && \
+    cd ../client && npm ci --only=production --no-audit --no-fund
+
+# ==============================================
+# BUILD STAGE
+# ==============================================
+FROM base AS builder
+
+# Copy dependencies
+COPY --from=deps /app/node_modules ./node_modules
+COPY --from=deps /app/server/node_modules ./server/node_modules
+COPY --from=deps /app/client/node_modules ./client/node_modules
+
+# Copy source code
+COPY . .
+
+# Build applications
+ENV NODE_ENV=production
+RUN npm run build:saas
+
+# ==============================================
+# PRODUCTION STAGE
+# ==============================================
+FROM base AS production
+
+# Set environment
+ENV NODE_ENV=production
+ENV PORT=3001
+
+# Copy built applications and dependencies
+COPY --from=builder --chown=nextjs:nodejs /app/server/dist ./server/
+COPY --from=builder --chown=nextjs:nodejs /app/client/dist ./client/
+COPY --from=deps --chown=nextjs:nodejs /app/node_modules ./node_modules/
+COPY --from=deps --chown=nextjs:nodejs /app/server/node_modules ./server/node_modules/
+
+# Copy additional required files
+COPY --chown=nextjs:nodejs package.json ./
+COPY --chown=nextjs:nodejs server/package.json ./server/
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:3001/health || exit 1
+
+# Expose port
+EXPOSE 3001
+
+# Switch to non-root user
+USER nextjs
+
+# Start application with dumb-init for proper signal handling
+ENTRYPOINT ["dumb-init", "--"]
+CMD ["node", "server/index.js"] 
