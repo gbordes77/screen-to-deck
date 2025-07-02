@@ -1,7 +1,7 @@
 # 📊 État d'Avancement - Screen-to-Deck SaaS
 
 **Date de mise à jour** : 2 juillet 2025  
-**Statut global** : 🟢 **85% TERMINÉ** - Infrastructure SaaS quasi-complète
+**Statut global** : 🟡 **75% TERMINÉ** - Infrastructure SaaS complète, OCR à améliorer
 
 ---
 
@@ -99,31 +99,183 @@ Transformation de Screen-to-Deck d'une application mono-utilisateur vers une **p
 
 ## ⏳ STATUT ACTUEL
 
-### 🟢 **TERMINÉ (85%)**
+### 🟢 **TERMINÉ (60%)**
 
 - Infrastructure cloud complète
 - Architecture SaaS multi-tenant
-- Services backend
+- Services backend de base
 - Scripts de déploiement
 - Monitoring & analytics
 - Documentation complète
 
-### 🟡 **EN COURS (10%)**
+### 🟡 **EN COURS (15%)**
 
 - **Supabase** : Utilisateur en train de configurer le projet
   - Plan Pro annulé ✅
   - Création projet FREE en attente
   - Application du schéma SQL à faire
 
-### 🔴 **À FAIRE (5%)**
+### 🔴 **PRIORITÉ CRITIQUE (25%)**
 
+- **🎯 Amélioration reconnaissance cartes (PRIORITÉ #1)**
+  - **Précision actuelle** : ~75-85% (insuffisant pour SaaS premium)
+  - **Objectif requis** : 98%+ pour satisfaction client
+  - **Impact direct** : Retention, pricing, croissance organique
 - Tests end-to-end complets
 - Configuration finale des variables d'environnement
 - Premier déploiement de validation
 
 ---
 
+## 🎯 ROADMAP AMÉLIORATION RECONNAISSANCE CARTES
+
+### **⚠️ PROBLÈME ACTUEL**
+
+La reconnaissance OCR n'atteint pas les 100% nécessaires pour une expérience utilisateur premium. Les clients SaaS s'attendent à une précision quasi-parfaite.
+
+### 🔍 **AXES D'AMÉLIORATION PRIORITAIRES**
+
+#### **Phase 1 : Diagnostic et Métriques (1-2 semaines)**
+
+1. **Analyse des échecs actuels**
+   - Types d'erreurs fréquentes (noms, éditions, coûts)
+   - Cartes problématiques (foils, anciennes éditions, langues)
+   - Conditions d'éclairage/qualité image impactantes
+
+2. **Métriques de performance**
+   - Taux de reconnaissance par type de carte
+   - Temps de traitement moyen
+   - Coût par reconnaissance (OpenAI API)
+
+#### **Phase 2 : Optimisation Pipeline OCR (2-3 semaines)**
+
+1. **Préprocessing d'images amélioré**
+
+   ```typescript
+   // Améliorations à implémenter
+   - Détection automatique de cartes dans l'image
+   - Correction de perspective et rotation
+   - Amélioration contraste/luminosité adaptative
+   - Suppression bruit et artefacts
+   - Standardisation format (résolution, ratio)
+   ```
+
+2. **Multi-model approach**
+   - Combiner OpenAI Vision + EasyOCR local
+   - Validation croisée des résultats
+   - Fallback intelligent si échec
+
+3. **Contextualisation MTG**
+   - Base de données cartes Scryfall locale
+   - Correction orthographique MTG-aware
+   - Validation logique (coût vs couleurs)
+
+#### **Phase 3 : IA Spécialisée MTG (3-4 semaines)**
+
+1. **Fine-tuning modèle dédié**
+   - Dataset cartes MTG spécialisé
+   - Entraînement sur différentes éditions
+   - Reconnaissance spécifique symboles MTG
+
+2. **Computer Vision avancée**
+   - Détection zones texte précise
+   - Reconnaissance symboles de mana
+   - Analyse layout par type de carte
+
+3. **Machine Learning incrémental**
+   - Apprentissage des corrections utilisateur
+   - Amélioration continue du modèle
+   - Feedback loop client → précision
+
+#### **Phase 4 : Features Avancées (4-6 semaines)**
+
+1. **Reconnaissance contextuelle**
+   - Détection automatique format (Standard, Modern, etc.)
+   - Validation légalité deck en temps réel
+   - Suggestions cartes similaires
+
+2. **Multi-langues natif**
+   - Support français, allemand, espagnol, japonais
+   - Traduction automatique noms de cartes
+   - Base de données multilingue
+
+3. **Optimisations performance**
+   - Cache intelligent résultats
+   - Reconnaissance parallèle
+   - CDN pour images traitées
+
+### 📊 **OBJECTIFS CHIFFRÉS**
+
+| Phase | Délai | Précision Cible | Temps Traitement | Coût par Scan |
+|-------|-------|-----------------|------------------|---------------|
+| **Actuel** | - | ~75-85% | 3-5s | $0.02-0.05 |
+| **Phase 1** | 2 sem | 85-90% | 2-3s | $0.015-0.03 |
+| **Phase 2** | 5 sem | 90-95% | 1-2s | $0.01-0.02 |
+| **Phase 3** | 9 sem | 95-98% | <1s | $0.005-0.01 |
+| **Phase 4** | 15 sem | 98-99%+ | <0.5s | $0.002-0.005 |
+
+### 💰 **IMPACT BUSINESS**
+
+**Précision actuelle (80%)** → **Clients insatisfaits, churn élevé**  
+**Précision cible (98%+)** → **Premium pricing justifié, croissance organique**
+
+### 🛠️ **IMPLÉMENTATION TECHNIQUE**
+
+#### **Fichiers à créer/modifier :**
+
+```
+server/src/services/
+├── ocrEnhanced.service.ts      # Pipeline OCR amélioré
+├── imageProcessing.service.ts  # Préprocessing images
+├── mtgValidation.service.ts    # Validation contextuelle MTG
+├── mlModel.service.ts          # Modèle IA dédié
+└── recognitionMetrics.service.ts # Métriques performance
+
+discord-bot/
+├── enhanced_ocr_pipeline.py    # Pipeline Python optimisé
+├── card_detection.py           # Détection automatique cartes
+├── image_preprocessing.py      # Améliorations image
+└── mtg_context_validator.py    # Validation MTG
+```
+
+#### **Nouvelles dépendances :**
+
+```json
+{
+  "opencv-python": "Computer vision",
+  "tensorflow": "ML model custom",
+  "scikit-image": "Preprocessing images",
+  "mtg-sdk": "Validation cartes MTG",
+  "sharp": "Manipulation images Node.js"
+}
+```
+
+### 🎯 **SUCCESS METRICS**
+
+**KPIs Techniques :**
+
+- Précision reconnaissance > 98%
+- Temps traitement < 500ms
+- Coût par scan < $0.005
+- Taux de correction manuelle < 2%
+
+**KPIs Business :**
+
+- NPS > 8/10 (satisfaction client)
+- Churn rate < 5% mensuel
+- Conversion Free → Pro > 15%
+- Retention 12 mois > 80%
+
+---
+
 ## 🚀 PROCHAINES ÉTAPES PRIORITAIRES
+
+### 🎯 **PHASE 0 : AMÉLIORATION RECONNAISSANCE OCR (PRIORITÉ #1)**
+
+**⚠️ CRITIQUE :** Sans reconnaissance excellente (98%+), le SaaS ne peut pas réussir.
+
+**Durée estimée** : 2-4 semaines de développement concentré
+**Impact** : Directement lié au succès commercial
 
 ### 📋 **Phase 1 : Finalisation Supabase (1-2h)**
 
@@ -293,22 +445,35 @@ npm run backup:create
 
 ## 🎯 CONCLUSION
 
-**Screen-to-Deck SaaS est à 85% terminé** avec une infrastructure enterprise-ready.
+**Screen-to-Deck SaaS a une infrastructure enterprise-ready (75% terminé)** mais nécessite une optimisation critique de la reconnaissance.
 
-### **Réussites majeures :**
+### **✅ Réussites majeures :**
 
 - Architecture multi-tenant complète
 - Infrastructure cloud optimisée
 - Business model validé
 - Documentation exhaustive
 
-### **Il ne reste que :**
+### **🎯 Priorités critiques restantes :**
 
+- **Amélioration reconnaissance OCR** (75% → 98%+) - **ESSENTIEL**
 - Finaliser Supabase (2h)
 - Premier déploiement (1h)
 - Tests de validation (1h)
 
-**🚀 Votre plateforme sera opérationnelle sous 4-6h de travail !**
+### **⚠️ Sans OCR excellent :**
+
+- Clients insatisfaits → Churn élevé
+- Impossibilité de pricing premium
+- Croissance limitée
+
+### **✅ Avec OCR 98%+ :**
+
+- Clients ravis → Retention élevée
+- Justification prix premium
+- Croissance organique par bouche-à-oreille
+
+**🚀 Infrastructure prête → Focus sur la QUALITÉ de reconnaissance !**
 
 ---
 
