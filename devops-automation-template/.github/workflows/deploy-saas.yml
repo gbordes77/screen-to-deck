@@ -1,0 +1,116 @@
+name: 🚀 Deploy SaaS - Production Ready
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  NODE_VERSION: '18'
+  PYTHON_VERSION: '3.11'
+
+jobs:
+  # Phase 1: Tests et validations
+  test-and-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: 📊 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      
+      - name: 📦 Install Dependencies
+        run: |
+          npm ci
+          cd server && npm ci
+          cd ../client && npm ci
+      
+      - name: 🧪 Run Tests
+        run: |
+          npm run test:server
+          npm run test:client
+          npm run lint
+      
+      - name: 🔍 Security Audit
+        run: npm audit --audit-level=high
+      
+      - name: 🏗️ Build Check
+        run: npm run build
+
+  # Phase 2: Build et scan sécurité
+  build-and-scan:
+    needs: test-and-validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: 🐳 Build Docker Images
+        run: |
+          docker build -f Dockerfile.saas -t ${{ github.repository }}:latest .
+          docker build -f docker/Dockerfile.monitoring -t monitoring:latest ./monitoring
+      
+      - name: 🔒 Security Scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ${{ github.repository }}:latest
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+      
+      - name: 📤 Upload Security Results
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+  # Phase 3: Deploy staging
+  deploy-staging:
+    if: github.event_name == 'pull_request'
+    needs: [test-and-validate, build-and-scan]
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: 🚀 Deploy to Staging
+        run: |
+          ./scripts/deploy-complete.sh staging
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          DATABASE_URL: ${{ secrets.STAGING_DATABASE_URL }}
+      
+      - name: 🧪 Staging Health Check
+        run: ./scripts/health-check.sh ${{ secrets.STAGING_URL }}
+
+  # Phase 4: Deploy production
+  deploy-production:
+    if: github.ref == 'refs/heads/main'
+    needs: [test-and-validate, build-and-scan]
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: 🎯 Deploy to Production
+        run: |
+          ./scripts/deploy-complete.sh production
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          DATABASE_URL: ${{ secrets.PRODUCTION_DATABASE_URL }}
+          BACKUP_ENABLED: true
+      
+      - name: ✅ Production Health Check
+        run: ./scripts/health-check.sh ${{ secrets.PRODUCTION_URL }}
+      
+      - name: 📊 Update Monitoring
+        run: ./scripts/monitoring-setup.sh production
+      
+      - name: 🔔 Notify Deployment
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          channel: '#deployments'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} 
