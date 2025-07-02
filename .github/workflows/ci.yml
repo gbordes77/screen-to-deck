@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip install --upgrade pip
+          pip install -r discord-bot/requirements.txt
+          pip install pytest pytest-cov flake8 sphinx
+      - name: Lint with flake8
+        run: |
+          source venv/bin/activate
+          flake8 discord-bot/ --count --select=E9,F63,F7,F82 --show-source --statistics || true
+      - name: Run tests with pytest
+        run: |
+          source venv/bin/activate
+          pytest discord-bot/tests/ --maxfail=1 --disable-warnings -v --cov=discord-bot
+      - name: Build Sphinx documentation
+        run: |
+          cd discord-bot/docs
+          make html
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: .coverage
+      - name: Upload Sphinx HTML docs
+        uses: actions/upload-artifact@v4
+        with:
+          name: sphinx-docs
+          path: discord-bot/docs/build/html 

@@ -1,0 +1,272 @@
+name: 🚀 CI/CD Pipeline - Screen to Deck
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      deploy_environment:
+        description: 'Environment to deploy to'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+        - staging
+        - production
+
+env:
+  NODE_VERSION: '18'
+  PYTHON_VERSION: '3.11'
+
+jobs:
+  # ===========================================
+  # TESTS & QUALITY CHECKS
+  # ===========================================
+  test-client:
+    name: 🧪 Test Client
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: client/package-lock.json
+
+      - name: 📥 Install dependencies
+        working-directory: client
+        run: npm ci
+
+      - name: 🔍 Lint code
+        working-directory: client
+        run: npm run lint
+
+      - name: 🧪 Run tests
+        working-directory: client
+        run: npm test -- --coverage --watchAll=false
+
+      - name: 📊 Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: ./client/coverage
+          flags: client
+
+  test-server:
+    name: 🧪 Test Server
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: server/package-lock.json
+
+      - name: 📥 Install dependencies
+        working-directory: server
+        run: npm ci
+
+      - name: 🔍 Lint code
+        working-directory: server
+        run: npm run lint
+
+      - name: 🏗️ Build project
+        working-directory: server
+        run: npm run build
+
+      - name: 🧪 Run tests
+        working-directory: server
+        run: npm test -- --coverage
+        env:
+          NODE_ENV: test
+
+      - name: 📊 Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: ./server/coverage
+          flags: server
+
+  test-discord-bot:
+    name: 🤖 Test Discord Bot
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+          cache-dependency-path: discord-bot/requirements.txt
+
+      - name: 📥 Install dependencies
+        working-directory: discord-bot
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-cov black flake8
+
+      - name: 🔍 Lint with flake8
+        working-directory: discord-bot
+        run: flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+
+      - name: 🎨 Check formatting with black
+        working-directory: discord-bot
+        run: black --check .
+
+      - name: 🧪 Run tests with pytest
+        working-directory: discord-bot
+        run: pytest tests/ -v --cov=. --cov-report=xml
+
+      - name: 📊 Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: ./discord-bot
+          flags: discord-bot
+
+  # ===========================================
+  # SECURITY CHECKS
+  # ===========================================
+  security-scan:
+    name: 🔒 Security Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔍 Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+
+      - name: 📊 Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+      - name: 🔍 Audit npm packages (Client)
+        working-directory: client
+        run: npm audit --audit-level high
+
+      - name: 🔍 Audit npm packages (Server)
+        working-directory: server
+        run: npm audit --audit-level high
+
+  # ===========================================
+  # BUILD & DOCKER
+  # ===========================================
+  build:
+    name: 🏗️ Build & Docker
+    runs-on: ubuntu-latest
+    needs: [test-client, test-server, test-discord-bot]
+    if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🐳 Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: 🔑 Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: 🏗️ Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/screen-to-deck:latest
+            ${{ secrets.DOCKER_USERNAME }}/screen-to-deck:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  # ===========================================
+  # DEPLOYMENT
+  # ===========================================
+  deploy-staging:
+    name: 🚀 Deploy to Staging
+    runs-on: ubuntu-latest
+    needs: [build, security-scan]
+    if: github.ref == 'refs/heads/develop' || (github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_environment == 'staging')
+    environment:
+      name: staging
+      url: https://staging.screen-to-deck.com
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🚀 Deploy to staging
+        run: |
+          echo "Deploying to staging environment..."
+          # Ajoutez ici vos commandes de déploiement staging
+          # Par exemple: deploy to Heroku, AWS, etc.
+
+  deploy-production:
+    name: 🚀 Deploy to Production
+    runs-on: ubuntu-latest
+    needs: [build, security-scan]
+    if: github.ref == 'refs/heads/main' || (github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_environment == 'production')
+    environment:
+      name: production
+      url: https://screen-to-deck.com
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🚀 Deploy to production
+        run: |
+          echo "Deploying to production environment..."
+          # Ajoutez ici vos commandes de déploiement production
+          # Par exemple: deploy to Vercel, Netlify, AWS, etc.
+
+  # ===========================================
+  # NOTIFICATIONS
+  # ===========================================
+  notify:
+    name: 📢 Notify
+    runs-on: ubuntu-latest
+    needs: [deploy-staging, deploy-production]
+    if: always()
+    steps:
+      - name: 📢 Discord Notification
+        uses: Ilshidur/action-discord@master
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        with:
+          args: |
+            🚀 **Screen to Deck Deployment**
+            - **Status**: ${{ job.status }}
+            - **Branch**: ${{ github.ref }}
+            - **Commit**: ${{ github.sha }}
+            - **Author**: ${{ github.actor }}
+            - **Environment**: ${{ github.event.inputs.deploy_environment || 'auto' }}
+
+  # ===========================================
+  # CLEANUP
+  # ===========================================
+  cleanup:
+    name: 🧹 Cleanup
+    runs-on: ubuntu-latest
+    needs: [notify]
+    if: always()
+    steps:
+      - name: 🧹 Clean up Docker images
+        run: |
+          docker system prune -af --volumes
+          docker builder prune -af 

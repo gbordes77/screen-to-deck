@@ -1,0 +1,247 @@
+version: '3.8'
+
+# ===========================================
+# DOCKER COMPOSE - STAGING ENVIRONMENT
+# SCREEN TO DECK
+# ===========================================
+# Configuration pour l'environnement de staging
+# Usage: docker-compose -f docker-compose.yml -f docker-compose.staging.yml up
+
+services:
+  # ===========================================
+  # CLIENT (FRONTEND)
+  # ===========================================
+  client:
+    environment:
+      - NODE_ENV=staging
+      - VITE_API_URL=http://localhost:3001
+      - VITE_ENVIRONMENT=staging
+      - VITE_DEBUG=true
+    ports:
+      - "3000:80"
+    volumes:
+      - ./client/nginx.staging.conf:/etc/nginx/conf.d/default.conf:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.client-staging.rule=Host(`staging.screen-to-deck.local`)"
+      - "traefik.http.services.client-staging.loadbalancer.server.port=80"
+
+  # ===========================================
+  # SERVER (BACKEND API)
+  # ===========================================
+  server:
+    environment:
+      - NODE_ENV=staging
+      - PORT=3001
+      - CORS_ORIGIN=http://localhost:3000,http://staging.screen-to-deck.local
+      - LOG_LEVEL=debug
+      - DATABASE_URL=postgresql://postgres:password@postgres:5432/screen_to_deck_staging
+      - REDIS_URL=redis://redis:6379/1
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - JWT_SECRET=${JWT_SECRET:-staging-jwt-secret-key}
+      - RATE_LIMIT_MAX=1000
+      - RATE_LIMIT_WINDOW=900000
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./server/logs:/app/logs
+      - ./uploads:/app/uploads
+    depends_on:
+      - postgres
+      - redis
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.server-staging.rule=Host(`api-staging.screen-to-deck.local`)"
+      - "traefik.http.services.server-staging.loadbalancer.server.port=3001"
+
+  # ===========================================
+  # DISCORD BOT
+  # ===========================================
+  discord-bot:
+    environment:
+      - ENVIRONMENT=staging
+      - DISCORD_TOKEN=${DISCORD_TOKEN_STAGING}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - API_BASE_URL=http://server:3001
+      - LOG_LEVEL=DEBUG
+      - SCRYFALL_CACHE_TTL=3600
+    volumes:
+      - ./discord-bot/logs:/app/logs
+      - ./discord-bot/cache:/app/cache
+    depends_on:
+      - server
+      - redis
+
+  # ===========================================
+  # DATABASE (POSTGRESQL)
+  # ===========================================
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=screen_to_deck_staging
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_INITDB_ARGS=--encoding=UTF-8 --lc-collate=C --lc-ctype=C
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data_staging:/var/lib/postgresql/data
+      - ./database/init-staging.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+    command: >
+      postgres 
+      -c shared_preload_libraries=pg_stat_statements
+      -c pg_stat_statements.track=all
+      -c max_connections=200
+      -c shared_buffers=256MB
+      -c effective_cache_size=1GB
+      -c work_mem=4MB
+      -c maintenance_work_mem=64MB
+      -c log_statement=all
+      -c log_min_duration_statement=1000
+    labels:
+      - "traefik.enable=false"
+
+  # ===========================================
+  # REDIS (CACHE & SESSIONS)
+  # ===========================================
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data_staging:/data
+      - ./redis/redis.staging.conf:/usr/local/etc/redis/redis.conf:ro
+    command: redis-server /usr/local/etc/redis/redis.conf
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-staging-redis-password}
+    labels:
+      - "traefik.enable=false"
+
+  # ===========================================
+  # MONITORING & OBSERVABILITY
+  # ===========================================
+  
+  # Grafana for monitoring
+  grafana:
+    image: grafana/grafana:latest
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}
+      - GF_INSTALL_PLUGINS=grafana-piechart-panel
+    ports:
+      - "3010:3000"
+    volumes:
+      - grafana_data_staging:/var/lib/grafana
+      - ./monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./monitoring/grafana/datasources:/etc/grafana/provisioning/datasources
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.grafana-staging.rule=Host(`grafana-staging.screen-to-deck.local`)"
+
+  # Prometheus for metrics
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus/prometheus.staging.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data_staging:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=7d'
+      - '--web.enable-lifecycle'
+    labels:
+      - "traefik.enable=false"
+
+  # Node Exporter for system metrics
+  node-exporter:
+    image: prom/node-exporter:latest
+    ports:
+      - "9100:9100"
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
+    labels:
+      - "traefik.enable=false"
+
+  # ===========================================
+  # REVERSE PROXY & LOAD BALANCER
+  # ===========================================
+  traefik:
+    image: traefik:v3.0
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--log.level=INFO"
+      - "--accesslog=true"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080" # Traefik dashboard
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik/staging:/etc/traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik-staging.rule=Host(`traefik-staging.screen-to-deck.local`)"
+
+  # ===========================================
+  # TESTING & UTILITIES
+  # ===========================================
+  
+  # Mailhog for email testing
+  mailhog:
+    image: mailhog/mailhog:latest
+    ports:
+      - "1025:1025" # SMTP
+      - "8025:8025" # Web UI
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.mailhog-staging.rule=Host(`mail-staging.screen-to-deck.local`)"
+
+  # Adminer for database management
+  adminer:
+    image: adminer:latest
+    ports:
+      - "8081:8080"
+    environment:
+      - ADMINER_DEFAULT_SERVER=postgres
+    depends_on:
+      - postgres
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.adminer-staging.rule=Host(`db-staging.screen-to-deck.local`)"
+
+# ===========================================
+# VOLUMES
+# ===========================================
+volumes:
+  postgres_data_staging:
+    driver: local
+  redis_data_staging:
+    driver: local
+  grafana_data_staging:
+    driver: local
+  prometheus_data_staging:
+    driver: local
+
+# ===========================================
+# NETWORKS
+# ===========================================
+networks:
+  default:
+    name: screen-to-deck-staging
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16 

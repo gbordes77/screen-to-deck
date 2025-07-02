@@ -13,22 +13,26 @@ Transform your MTG deck screenshots into intelligent, validated deck lists using
 ### ✨ **Phase 1 Enhanced Features**
 
 🧠 **Intelligent AI Correction**
+
 - Automatic OCR error correction using Scryfall API
 - Smart fuzzy matching for misspelled card names
 - Real-time card validation with confidence scoring
 
 🎲 **Format Detection & Analysis**
+
 - Automatic format recognition (Standard, Commander, Modern, etc.)
 - Competitive tier estimation
 - Comprehensive legality checking
 
 📊 **Advanced Deck Analytics**
+
 - Price estimation and tracking
 - Color identity analysis
 - Meta-game positioning
 - Performance statistics
 
 ⚡ **Performance Optimized**
+
 - Intelligent caching system
 - Batch processing for faster validation
 - Memory-efficient operations
@@ -36,14 +40,18 @@ Transform your MTG deck screenshots into intelligent, validated deck lists using
 ## 🎯 Platforms
 
 ### 🌐 **Web Application**
+
 Full-featured React + TypeScript frontend with FastAPI backend
+
 - Drag & drop image upload
 - Real-time processing updates
 - Multiple export formats (MTGA, Moxfield, Archidekt, TappedOut)
 - Responsive design with dark mode
 
 ### 🤖 **Discord Bot**
+
 Enhanced Discord integration with AI-powered features
+
 - Auto-reaction system (📷 emoji)
 - Slash commands with intelligent options
 - Interactive buttons for exports
@@ -54,6 +62,7 @@ Enhanced Discord integration with AI-powered features
 ### **Discord Bot (Recommended)**
 
 1. **Clone & Setup**
+
    ```bash
    git clone <repository-url>
    cd discord-bot
@@ -73,6 +82,7 @@ Enhanced Discord integration with AI-powered features
 ### **Web Application**
 
 1. **Backend Setup**
+
    ```bash
    cd server
    npm install
@@ -80,6 +90,7 @@ Enhanced Discord integration with AI-powered features
    ```
 
 2. **Frontend Setup**
+
    ```bash
    cd client
    npm install
@@ -93,6 +104,7 @@ Enhanced Discord integration with AI-powered features
 ## 🔍 **Enhanced Features Showcase**
 
 ### **🔧 Automatic OCR Correction**
+
 ```
 Input OCR: "4x Lighming Bolt"
 AI Correction: "4x Lightning Bolt" ✅
@@ -100,6 +112,7 @@ Confidence: 98%
 ```
 
 ### **🎲 Format Detection**
+
 ```
 Detected Format: Commander
 Commander: Atraxa, Praetors' Voice
@@ -110,6 +123,7 @@ Price Estimate: $847.32
 ```
 
 ### **📊 Comprehensive Analysis**
+
 - **Validation Rate**: 94.5% (industry-leading)
 - **Auto-Corrections**: 87% success rate
 - **Format Accuracy**: 96.2%
@@ -120,12 +134,14 @@ Price Estimate: $847.32
 ### **Enhanced Slash Commands**
 
 **`/scan [format] [analysis] [language]`**
+
 - AI-powered scanning with full analysis
 - Multiple export formats
 - Multi-language OCR support
 - Confidence scoring
 
 **`/stats`**
+
 - Bot performance metrics
 - Cache statistics
 - Processing analytics
@@ -133,10 +149,12 @@ Price Estimate: $847.32
 ### **Interactive Features**
 
 📷 **Auto-Reaction System**
+
 - Automatic detection of deck images
 - Click to process with enhanced AI
 
 🎮 **Export Buttons**
+
 - MTGA format (instant import)
 - Moxfield integration
 - Detailed analysis reports
@@ -145,12 +163,14 @@ Price Estimate: $847.32
 ## 🧠 **AI Technology Stack**
 
 ### **Core Intelligence**
+
 - **Scryfall API Integration**: 100% accurate card database
 - **Fuzzy String Matching**: Advanced error correction algorithms
 - **Machine Learning OCR**: Multi-method preprocessing
 - **Format Detection AI**: Pattern recognition for deck types
 
 ### **Enhanced Processing Pipeline**
+
 1. **Multi-Method OCR**: 5 different preprocessing techniques
 2. **AI Validation**: Intelligent Scryfall matching
 3. **Auto-Correction**: Smart typo fixing
@@ -170,6 +190,7 @@ Price Estimate: $847.32
 ## 🔧 **Configuration**
 
 ### **Environment Variables**
+
 ```env
 # Enhanced MTG Scanner Configuration
 DISCORD_BOT_TOKEN=your_bot_token_here
@@ -188,6 +209,7 @@ MAX_IMAGE_SIZE_MB=10
 ```
 
 ### **Advanced Features**
+
 - **Multi-language OCR**: Support for 6+ languages
 - **Custom Format Rules**: Define your own format detection
 - **API Integration**: Connect to external deck databases
@@ -196,6 +218,7 @@ MAX_IMAGE_SIZE_MB=10
 ## 🚀 **Deployment Options**
 
 ### **Docker Deployment**
+
 ```bash
 # Full stack deployment
 docker-compose up -d
@@ -207,6 +230,7 @@ docker run -d --env-file .env mtg-scanner-bot
 ```
 
 ### **Cloud Deployment**
+
 - **Discord Bot**: Deploy to Railway, Heroku, or DigitalOcean
 - **Web App**: Deploy to Vercel, Netlify, or AWS
 - **Database**: PostgreSQL or MongoDB for persistence
@@ -214,12 +238,14 @@ docker run -d --env-file .env mtg-scanner-bot
 ## 🧪 **Testing Enhanced Features**
 
 Run the comprehensive test suite:
+
 ```bash
 cd discord-bot
 python test_enhanced_features.py
 ```
 
 **Test Coverage:**
+
 - ✅ Automatic OCR corrections
 - ✅ Format detection accuracy
 - ✅ Batch validation performance
@@ -231,6 +257,7 @@ python test_enhanced_features.py
 ### **Enhanced Endpoints**
 
 **`POST /api/scan/enhanced`**
+
 ```json
 {
   "confidence_score": 0.94,
@@ -245,6 +272,7 @@ python test_enhanced_features.py
 ```
 
 **`GET /api/cards/validate/{name}`**
+
 - Intelligent card validation
 - Fuzzy matching with suggestions
 - Confidence scoring
@@ -254,6 +282,7 @@ python test_enhanced_features.py
 We welcome contributions to enhance the AI capabilities!
 
 ### **Development Setup**
+
 ```bash
 # Install development dependencies
 pip install -r requirements-dev.txt
@@ -266,6 +295,7 @@ black . && flake8 .
 ```
 
 ### **Enhancement Ideas**
+
 - [ ] Machine learning model for format prediction
 - [ ] Advanced image preprocessing
 - [ ] Multi-card detection in single images
@@ -296,6 +326,7 @@ MIT License - see [LICENSE](LICENSE) for details.
 ## 🎯 **Roadmap - Phase 2**
 
 Coming Soon:
+
 - 🔍 **Multi-card image detection**
 - 🎨 **Advanced card art recognition**
 - 📈 **Price tracking & alerts**
@@ -306,4 +337,10 @@ Coming Soon:
 
 **🃏 Enhanced MTG Scanner - Making deck digitization intelligent, accurate, and effortless.**
 
-*Phase 1: Intelligence • Phase 2: Vision • Phase 3: Automation* 
+*Phase 1: Intelligence • Phase 2: Vision • Phase 3: Automation*
+
+# .env — Configuration Screen To Deck (STD)
+
+# Colle ici le token secret de ton bot Discord (ne partage jamais ce fichier !)
+
+DISCORD_TOKEN=colle_ton_token_ici
