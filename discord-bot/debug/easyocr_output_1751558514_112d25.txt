@@ -1,0 +1,25 @@
+=== RÉSULTATS EASYOCR DÉTAILLÉS ===
+Pas de confiance | Texte: Jiei
+Pas de confiance | Texte: Einhnan
+Pas de confiance | Texte: Dtzoul Detnt
+Pas de confiance | Texte: DermunMecrit
+Pas de confiance | Texte: Hen
+Pas de confiance | Texte: Huen
+Pas de confiance | Texte: JuInunt
+Pas de confiance | Texte: Wt In Mre
+Pas de confiance | Texte: Akutnl , flanktr AMutu Hoeeet anketleteetAa
+Pas de confiance | Texte: Ftlutulof tuc Miste
+Pas de confiance | Texte: Dumt
+
+=== TEXTE FINAL ===
+Jiei
+Einhnan
+Dtzoul Detnt
+DermunMecrit
+Hen
+Huen
+JuInunt
+Wt In Mre
+Akutnl , flanktr AMutu Hoeeet anketleteetAa
+Ftlutulof tuc Miste
+Dumt

@@ -20,7 +20,7 @@ from PIL import Image
 import requests
 from dotenv import load_dotenv
 
-from ocr_parser_advanced import MTGOCRParser, ParseResult, ParsedCard
+from ocr_parser_easyocr import MTGOCRParser, ParseResult, ParsedCard
 from scryfall_service import ScryfallService, DeckAnalysis
 from deck_processor import DeckProcessor
 
