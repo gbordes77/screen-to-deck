@@ -17,13 +17,19 @@ import time # Ajout pour l'horodatage
 import uuid # Ajout pour l'unicité
 from typing import List, Tuple, Dict, Any, Optional
 from dataclasses import dataclass, field
+from pathlib import Path
+from skimage.filters import threshold_local
+from utils.logger import setup_logger, trace_ocr_performance
 
 from deck_processor import DeckProcessor, ProcessedCard, ValidationResult
 from scryfall_service import ScryfallService
 
 # Configuration du logger
-logger = logging.getLogger("ocr_parser_easyocr")
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logger = setup_logger()
+
+# Définir le répertoire de débogage
+debug_dir = Path('ocr_debug')
+debug_dir.mkdir(exist_ok=True)
 
 # --- Dataclasses (mis à jour) ---
 @dataclass
@@ -69,6 +75,7 @@ class UltraAdvancedOCR:
             logger.error(f"❌ Erreur lors de l'initialisation d'EasyOCR: {e}")
             raise
 
+    @trace_ocr_performance
     def extract_text_from_image(self, image_path: str) -> str:
         """
         Traite une image complète et en extrait le texte brut en utilisant EasyOCR.
@@ -450,3 +457,41 @@ async def main_test():
 if __name__ == '__main__':
     print("Ce fichier est un module et doit être importé.")
     # Pour tester: asyncio.run(main_test()) 
+
+@trace_ocr_performance
+def preprocess_for_easyocr(image_path: str) -> np.ndarray:
+    # ... (le reste de la fonction reste inchangé)
+    # ...
+    return warped
+
+@trace_ocr_performance
+def extract_text_from_image_easyocr(image_path: str, lang: str = 'fr'):
+    logger.info(f"Début de l'extraction de texte avec EasyOCR pour {image_path}", language=lang)
+    
+    # Prétraitement de l'image
+    preprocessed_image = preprocess_for_easyocr(image_path)
+    
+    # Initialisation de EasyOCR
+    reader = easyocr.Reader([lang, 'en'], gpu=False)
+    
+    # Extraction du texte
+    results = reader.readtext(preprocessed_image, detail=1, paragraph=False)
+    
+    # Sauvegarde de l'image avec les boîtes englobantes
+    debug_image = preprocessed_image.copy()
+    for (bbox, text, prob) in results:
+        # Extraire les coordonnées de la boîte englobante
+        (top_left, top_right, bottom_right, bottom_left) = bbox
+        top_left = tuple(map(int, top_left))
+        bottom_right = tuple(map(int, bottom_right))
+        
+        # Dessiner la boîte et le texte
+        cv2.rectangle(debug_image, top_left, bottom_right, (0, 255, 0), 2)
+        cv2.putText(debug_image, text, (top_left[0], top_left[1] - 10), 
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
+    
+    debug_output_path = debug_dir / f"easyocr_debug_{Path(image_path).stem}.png"
+    cv2.imwrite(str(debug_output_path), debug_image)
+    logger.info(f"Image de débogage sauvegardée dans {debug_output_path}")
+
+    return results, preprocessed_image 

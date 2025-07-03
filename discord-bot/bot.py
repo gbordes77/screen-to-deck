@@ -23,6 +23,10 @@ from dotenv import load_dotenv
 from ocr_parser_advanced import MTGOCRParser, ParseResult, ParsedCard
 from scryfall_service import ScryfallService, DeckAnalysis
 from deck_processor import DeckProcessor
+from utils.logger import setup_logger
+
+# Configuration du logger
+logger = setup_logger()
 
 def format_error_field(title: str, lines: List[str], max_length: int = 1024) -> Optional[tuple]:
     """

@@ -45,16 +45,16 @@ services:
     build:
       context: ./discord-bot
       dockerfile: Dockerfile
-    environment:
-      - DISCORD_BOT_TOKEN=${DISCORD_BOT_TOKEN}
-      - API_BASE_URL=http://web-api:3001/api
-      - LOG_LEVEL=INFO
-      - PYTHONUNBUFFERED=1
+    env_file: ./discord-bot/env.production
     volumes:
-      - ./discord-bot/logs:/app/logs
-      - ./discord-bot/cache:/app/cache
+      - ./discord-bot/ocr_debug:/app/ocr_debug
       - ./discord-bot/temp:/app/temp
     restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
     depends_on:
       - web-api
     healthcheck:

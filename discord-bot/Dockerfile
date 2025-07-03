@@ -1,48 +1,52 @@
-FROM python:3.11-slim
+# Dockerfile - Version production optimisée
+FROM python:3.11-slim as builder
 
-# 📦 Install system dependencies including Tesseract OCR
-RUN apt-get update && apt-get install -y \
-    tesseract-ocr \
-    tesseract-ocr-fra \
-    tesseract-ocr-eng \
+WORKDIR /app
+
+# Dépendances système pour OCR
+RUN apt-get update && apt-get install -y --no-install-recommends \
     libgl1-mesa-glx \
     libglib2.0-0 \
     libsm6 \
     libxext6 \
     libxrender-dev \
     libgomp1 \
-    libgstreamer1.0-0 \
-    libgstreamer-plugins-base1.0-0 \
-    libgtk-3-0 \
     wget \
+    git \
     && rm -rf /var/lib/apt/lists/*
 
-# 🔧 Set working directory
+# Copie requirements
+COPY requirements-frozen.txt .
+
+# Environnement virtuel
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+RUN pip install --no-cache-dir -r requirements-frozen.txt
+
+# --- Image finale ---
+FROM python:3.11-slim
+
 WORKDIR /app
 
-# 📋 Copy requirements first for better Docker layer caching
-COPY requirements.txt .
+# Dépendances runtime seulement
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libgl1-mesa-glx \
+    libglib2.0-0 \
+    libgomp1 \
+    && rm -rf /var/lib/apt/lists/*
 
-# 🚀 Install Python dependencies
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
+# Copie venv depuis builder
+COPY --from=builder /opt/venv /opt/venv
 
-# 📁 Copy application code
+# Copie application
 COPY . .
 
-# 👤 Create non-root user for security
-RUN useradd --create-home --shell /bin/bash mtgbot && \
-    chown -R mtgbot:mtgbot /app
-
-USER mtgbot
-
-# 🔒 Set environment variables
+# Variables d'environnement
+ENV PATH="/opt/venv/bin:$PATH"
 ENV PYTHONUNBUFFERED=1
-ENV PYTHONDONTWRITEBYTECODE=1
 
-# 🏃 Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-    CMD python -c "import asyncio; import aiohttp; asyncio.run(aiohttp.ClientSession().get('https://discord.com/api/v10/gateway').close())" || exit 1
+# Healthcheck
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s \
+    CMD python -c "import discord; import easyocr" || exit 1
 
-# 🎯 Default command
 CMD ["python", "bot.py"] 
