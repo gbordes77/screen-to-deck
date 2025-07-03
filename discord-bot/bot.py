@@ -16,11 +16,12 @@ import json
 import discord
 from discord.ext import commands
 import aiohttp
+from aiohttp import web
 from PIL import Image
 import requests
 from dotenv import load_dotenv
 
-from ocr_parser_advanced import MTGOCRParser, ParseResult, ParsedCard
+from ocr_parser_easyocr import MTGOCRParser, ParseResult, ParsedCard
 from scryfall_service import ScryfallService, DeckAnalysis
 from deck_processor import DeckProcessor
 from utils.logger import setup_logger
@@ -112,6 +113,8 @@ async def setup_hook():
     logger.info("🔧 Features: Auto-correction, Format detection, Intelligent validation")
     # Initialisation asynchrone de ScryfallService
     await bot.scryfall_service.__aenter__()
+    # Démarrage du serveur de health check en tâche de fond
+    bot.loop.create_task(start_health_check_server())
 
 @bot.event
 async def on_ready():
@@ -666,8 +669,34 @@ class EnhancedDeckView(discord.ui.View):
             ephemeral=True
         )
 
+# === Health Check Server ===
+async def health_check(request):
+    """Répond aux health checks de la plateforme de déploiement."""
+    if bot.is_ready():
+        return web.json_response({"status": "ok", "bot_user": str(bot.user)}, status=200)
+    else:
+        return web.json_response({"status": "starting"}, status=503)
+
+async def start_health_check_server():
+    """Démarre le serveur web aiohttp pour les health checks."""
+    app = web.Application()
+    app.router.add_get("/healthz", health_check)
+    runner = web.AppRunner(app)
+    await runner.setup()
+    site = web.TCPSite(runner, '0.0.0.0', 8080)
+    try:
+        await site.start()
+        logger.info("🩺 Health check server started on port 8080 at /healthz")
+        # Le serveur tourne tant que le bot tourne
+        await asyncio.Event().wait()
+    except (KeyboardInterrupt, asyncio.CancelledError):
+        logger.info("🛑 Health check server stopping...")
+    finally:
+        await runner.cleanup()
+        logger.info("✅ Health check server stopped cleanly.")
+
 def main():
-    """Enhanced main function"""
+    """Point d'entrée principal pour lancer le bot."""
     # Check for Discord token
     TOKEN = os.getenv('DISCORD_BOT_TOKEN')
     

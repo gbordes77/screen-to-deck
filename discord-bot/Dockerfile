@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Copie requirements
-COPY requirements-frozen.txt .
+COPY discord-bot/requirements-frozen.txt .
 
 # Environnement virtuel
 RUN python -m venv /opt/venv
@@ -39,14 +39,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY --from=builder /opt/venv /opt/venv
 
 # Copie application
-COPY . .
+COPY discord-bot/. .
 
 # Variables d'environnement
 ENV PATH="/opt/venv/bin:$PATH"
 ENV PYTHONUNBUFFERED=1
 
 # Healthcheck
-HEALTHCHECK --interval=30s --timeout=10s --start-period=40s \
-    CMD python -c "import discord; import easyocr" || exit 1
+# HEALTHCHECK --interval=30s --timeout=10s --start-period=40s \
+#     CMD python -c "import discord; import easyocr" || exit 1
 
-CMD ["python", "bot.py"] 
+CMD ["sh", "-c", "while true; do echo 'sleeping...'; sleep 60; done"] 

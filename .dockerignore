@@ -1,0 +1,304 @@
+# flyctl launch added from .gitignore
+# Dependencies
+**/node_modules
+**/npm-debug.log*
+**/yarn-debug.log*
+**/yarn-error.log*
+**/package-lock.json
+**/yarn.lock
+
+# Environment variables
+**/.env
+**/.env.local
+**/.env.development.local
+**/.env.test.local
+**/.env.production.local
+
+# Build outputs
+client/dist
+server/dist
+server/build
+**/build
+**/dist
+
+# Runtime data
+**/pids
+**/*.pid
+**/*.seed
+**/*.pid.lock
+
+# Logs
+**/logs
+**/*.log
+
+# Coverage directory used by tools like istanbul
+**/coverage
+**/*.lcov
+
+# nyc test coverage
+**/.nyc_output
+
+# Dependency directories
+**/jspm_packages
+
+# Optional npm cache directory
+**/.npm
+
+# Optional REPL history
+**/.node_repl_history
+
+# Output of 'npm pack'
+**/*.tgz
+
+# Yarn Integrity file
+**/.yarn-integrity
+
+# parcel-bundler cache (https://parceljs.org/)
+**/.cache
+**/.parcel-cache
+
+# next.js build output
+**/.next
+
+# nuxt.js build output
+**/.nuxt
+
+# vuepress build output
+**/.vuepress/dist
+
+# Serverless directories
+**/.serverless
+
+# FuseBox cache
+**/.fusebox
+
+# DynamoDB Local files
+**/.dynamodb
+
+# TernJS port file
+**/.tern-port
+
+# OS generated files
+**/.DS_Store
+**/.DS_Store?
+**/._*
+**/.Spotlight-V100
+**/.Trashes
+**/ehthumbs.db
+**/Thumbs.db
+
+# IDE files
+**/.vscode
+**/.idea
+**/*.swp
+**/*.swo
+**/*~
+
+# Temporary files
+**/tmp
+**/temp
+**/*.tmp
+**/*.temp
+
+# Uploads directory (for development)
+**/uploads
+**/public/uploads
+
+# Test files
+**/test-images
+**/*.test.png
+**/*.test.jpg
+
+# 🐍 Python (Discord Bot)
+**/__pycache__
+**/*.py[cod]
+**/*$py.class
+**/*.so
+**/.Python
+**/*.egg-info
+**/.installed.cfg
+**/*.egg
+**/venv
+**/env
+**/ENV
+**/.venv
+
+# 🤖 Discord Bot Specific
+**/discord-bot/bot.log
+**/discord-bot/temp
+**/discord-bot/cache
+**/discord-bot/downloads
+**/discord-bot/uploads
+**/discord-bot/processed_images
+**/discord-bot/scryfall_cache
+**/discord-bot/card_cache.json
+**/discord-bot/deck_cache
+**/discord-bot/user_data
+**/discord-bot/logs
+
+# 🔍 OCR & Image Processing
+**/tesseract_cache
+**/*.png.bak
+**/*.jpg.bak
+**/*.jpeg.bak
+**/preprocessed_*.png
+**/processed_*.jpg
+
+# 🐳 Docker
+**/docker-compose.override.yml
+**/.env.docker
+
+# 🧪 Python Testing
+**/.pytest_cache
+**/.coverage
+**/htmlcov
+**/.tox
+**/.nox
+**/.coverage.*
+**/nosetests.xml
+**/coverage.xml
+**/*.cover
+**/*.py,cover
+**/.hypothesis
+
+# 🔗 Type Checking
+**/.mypy_cache
+**/.dmypy.json
+**/dmypy.json
+**/.pyre
+
+# 🧩 Jupyter Notebooks
+**/.ipynb_checkpoints
+
+# 🗃️ Databases
+**/*.db
+**/*.sqlite
+**/*.sqlite3 
+
+# flyctl launch added from discord-bot/.gitignore
+# 🐍 Python
+discord-bot/**/__pycache__
+discord-bot/**/*.py[cod]
+discord-bot/**/*$py.class
+discord-bot/**/*.so
+discord-bot/**/.Python
+discord-bot/**/build
+discord-bot/**/develop-eggs
+discord-bot/**/dist
+discord-bot/**/downloads
+discord-bot/**/eggs
+discord-bot/**/.eggs
+discord-bot/**/lib
+discord-bot/**/lib64
+discord-bot/**/parts
+discord-bot/**/sdist
+discord-bot/**/var
+discord-bot/**/wheels
+discord-bot/**/pip-wheel-metadata
+discord-bot/**/share/python-wheels
+discord-bot/**/*.egg-info
+discord-bot/**/.installed.cfg
+discord-bot/**/*.egg
+discord-bot/**/MANIFEST
+
+# 🔐 Environment & Secrets
+discord-bot/**/.env
+discord-bot/**/.env.local
+discord-bot/**/.env.development.local
+discord-bot/**/.env.test.local
+discord-bot/**/.env.production.local
+discord-bot/**/*.key
+discord-bot/**/*.pem
+discord-bot/**/config.json
+
+# 🤖 Discord Bot Specific
+discord-bot/**/bot.log
+discord-bot/**/*.log
+discord-bot/**/temp
+discord-bot/**/cache
+discord-bot/**/downloads
+discord-bot/**/uploads
+discord-bot/**/processed_images
+
+# 🔍 OCR & Image Processing
+discord-bot/**/tesseract_cache
+discord-bot/**/*.png.bak
+discord-bot/**/*.jpg.bak
+discord-bot/**/*.jpeg.bak
+discord-bot/**/preprocessed_*.png
+discord-bot/**/processed_*.jpg
+
+# 📊 Data & Cache
+discord-bot/**/scryfall_cache
+discord-bot/**/card_cache.json
+discord-bot/**/deck_cache
+discord-bot/**/user_data
+
+# 🧪 Testing
+discord-bot/**/.pytest_cache
+discord-bot/**/.coverage
+discord-bot/**/htmlcov
+discord-bot/**/.tox
+discord-bot/**/.nox
+discord-bot/**/.coverage.*
+discord-bot/**/.cache
+discord-bot/**/nosetests.xml
+discord-bot/**/coverage.xml
+discord-bot/**/*.cover
+discord-bot/**/*.py,cover
+discord-bot/**/.hypothesis
+
+# 📝 Documentation
+discord-bot/**/docs/_build
+discord-bot/**/.sphinx-build
+
+# 🔧 Development Tools
+discord-bot/**/.vscode
+discord-bot/**/.idea
+discord-bot/**/*.swp
+discord-bot/**/*.swo
+discord-bot/**/*~
+
+# 🐳 Docker
+discord-bot/**/.dockerignore
+discord-bot/**/Dockerfile.dev
+
+# 💻 OS Generated
+discord-bot/**/.DS_Store
+discord-bot/**/.DS_Store?
+discord-bot/**/._*
+discord-bot/**/.Spotlight-V100
+discord-bot/**/.Trashes
+discord-bot/**/ehthumbs.db
+discord-bot/**/Thumbs.db
+
+# 🔄 Jupyter Notebooks
+discord-bot/**/.ipynb_checkpoints
+
+# 📱 PyCharm
+discord-bot/**/.idea
+
+# 🗃️ Databases
+discord-bot/**/*.db
+discord-bot/**/*.sqlite
+discord-bot/**/*.sqlite3
+
+# 🧩 Virtual Environments
+discord-bot/**/venv
+discord-bot/**/env
+discord-bot/**/ENV
+discord-bot/**/env.bak
+discord-bot/**/venv.bak
+discord-bot/**/.venv
+
+# 🔗 mypy
+discord-bot/**/.mypy_cache
+discord-bot/**/.dmypy.json
+discord-bot/**/dmypy.json
+
+# 🧪 Pyre type checker
+discord-bot/**/.pyre
+
+# 🔧 pyenv
+discord-bot/**/.python-version 
+fly.toml

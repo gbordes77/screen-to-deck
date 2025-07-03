@@ -1,0 +1,38 @@
+# fly.toml app configuration file generated for screen-to-deck-bot on 2025-07-03T19:58:44+02:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'screen-to-deck-bot'
+primary_region = 'cdg'
+
+[build]
+  dockerfile = './discord-bot/Dockerfile'
+
+[metrics]
+  port = 8080
+  path = '/metrics'
+
+[[services]]
+  protocol = 'tcp'
+  internal_port = 8080
+
+  [[services.ports]]
+    port = 80
+    handlers = ['http']
+
+  [[services.ports]]
+    port = 443
+    handlers = ['tls', 'http']
+
+  # [[services.http_checks]]
+  #   interval = "10s"
+  #   timeout = "2s"
+  #   method = "GET"
+  #   path = "/healthz"
+  #   grace_period = "5s"
+
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1
