@@ -20,7 +20,7 @@ from PIL import Image
 import requests
 from dotenv import load_dotenv
 
-from ocr_parser_easyocr import MTGOCRParser, ParseResult, ParsedCard
+from ocr_parser_advanced import MTGOCRParser, ParseResult, ParsedCard
 from scryfall_service import ScryfallService, DeckAnalysis
 from deck_processor import DeckProcessor
 
@@ -138,19 +138,26 @@ async def on_message(message):
 
 @bot.event
 async def on_reaction_add(reaction, user):
-    """Handle reaction additions with enhanced processing (anti-doublon patch)"""
-    # Ignore bot reactions
+    """
+    Handle reaction additions with corrected logic.
+    Triggers scan only when a non-bot user clicks the camera emoji.
+    """
+    # 1. Ignorer les actions du bot lui-même pour éviter les boucles infinies
     if user.bot:
         return
-    # Ignore if the bot itself added the reaction (anti-doublon)
-    if reaction.me:
-        return
-    # Check for camera emoji on messages with images
-    if str(reaction.emoji) == bot.camera_emoji:
-        message = reaction.message
-        if message.attachments:
-            # Process the image with enhanced analysis
-            await scan_message_images(message, user, auto_scan=True)
+
+    # 2. Vérifier que la réaction est bien la bonne (📷)
+    # 3. Vérifier que le message contient bien une image
+    if str(reaction.emoji) == bot.camera_emoji and reaction.message.attachments:
+        
+        # Sécurité anti-spam : vérifier si un scan n'est pas déjà en cours pour ce message
+        if reaction.message.id in bot.processing_jobs and bot.processing_jobs[reaction.message.id]:
+            logger.warning(f"Scan already in progress for message {reaction.message.id}. Ignoring new reaction.")
+            return
+
+        # Lancer le scan
+        logger.info(f"User {user.name} triggered scan for message {reaction.message.id}")
+        await scan_message_images(reaction.message, user, auto_scan=True)
 
 async def handle_image_attachments(message):
     """Add camera emoji to messages with image attachments"""

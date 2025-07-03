@@ -1,0 +1,31 @@
+=== RÉSULTATS EASYOCR DÉTAILLÉS ===
+Pas de confiance | Texte: Bldkboard Dzouloeors Droug dGogs IJnk Lhirtmind
+Pas de confiance | Texte: Yattk L4JItuInd
+Pas de confiance | Texte: Tlbheunendehindet
+Pas de confiance | Texte: Wbhexa niehinder
+Pas de confiance | Texte: Aahexnmehinier
+Pas de confiance | Texte: A6cr-
+Pas de confiance | Texte: rgman
+Pas de confiance | Texte: Iol In Rin
+Pas de confiance | Texte: Kulmi Flunktr 
+Pas de confiance | Texte: drbhan Hothtt64
+Pas de confiance | Texte: deduneneWkr
+Pas de confiance | Texte: DDC
+Pas de confiance | Texte: decunenoeuicr LDd
+Pas de confiance | Texte: Znc:
+
+=== TEXTE FINAL ===
+Bldkboard Dzouloeors Droug dGogs IJnk Lhirtmind
+Yattk L4JItuInd
+Tlbheunendehindet
+Wbhexa niehinder
+Aahexnmehinier
+A6cr-
+rgman
+Iol In Rin
+Kulmi Flunktr 
+drbhan Hothtt64
+deduneneWkr
+DDC
+decunenoeuicr LDd
+Znc:

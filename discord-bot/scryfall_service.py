@@ -549,95 +549,82 @@ class ScryfallService:
             return []
     
     async def get_card_rulings(self, card_id: str) -> List[Dict[str, Any]]:
-        """Get rulings for a specific card"""
-        cache_key = f"rulings:{card_id}"
-        
-        if self._is_cache_valid(cache_key):
-            return self.cache[cache_key]
-        
-        endpoint = f"/cards/{card_id}/rulings"
-        
-        result = await self._make_request(endpoint)
-        
-        if result and 'data' in result:
-            rulings = result['data']
-            self._cache_response(cache_key, rulings)
-            return rulings
-        
-        self._cache_response(cache_key, [])
-        return []
-    
-    async def enhanced_card_search(self, card_name: str, lang: str = 'en') -> CardMatch:
+        """Fetch rulings for a specific card ID"""
+        return await self._make_request(f"/cards/{card_id}/rulings")
+
+    async def enhanced_card_search(self, card_name: str, lang: str = 'en') -> Optional[CardMatch]:
         """
-        Enhanced card search with intelligent correction and confidence scoring
+        Enhanced card search with multi-step fallback logic.
+        1. Try exact match.
+        2. Try fuzzy match.
+        3. If name is truncated, use autocomplete to find best match.
         """
-        original_name = card_name.strip()
+        start_time = time.time()
         
-        # Try exact match first
-        card = await self.search_card_exact(original_name)
-        if card:
+        # 0. Clean the input name
+        cleaned_name = self._apply_ocr_corrections(card_name.strip())
+        
+        # 1. First, try an exact match (highest confidence)
+        card_data = await self.search_card_exact(cleaned_name)
+        
+        if card_data:
+            confidence = self._calculate_match_confidence(cleaned_name, card_data['name'])
             return CardMatch(
-                original_name=original_name,
-                matched_name=card['name'],
-                confidence=1.0,
-                card_data=card,
-                correction_applied=False
-            )
-        
-        # Apply OCR corrections and try again
-        corrected_name = self._apply_ocr_corrections(original_name)
-        if corrected_name != original_name:
-            card = await self.search_card_fuzzy(corrected_name)
-            if card:
-                confidence = self._calculate_match_confidence(original_name, card['name'])
-                return CardMatch(
-                    original_name=original_name,
-                    matched_name=card['name'],
-                    confidence=confidence,
-                    card_data=card,
-                    correction_applied=True
-                )
-        
-        # Try fuzzy search with original name
-        card = await self.search_card_fuzzy(original_name)
-        if card:
-            confidence = self._calculate_match_confidence(original_name, card['name'])
-            return CardMatch(
-                original_name=original_name,
-                matched_name=card['name'],
+                original_name=card_name,
+                matched_name=card_data['name'],
                 confidence=confidence,
-                card_data=card,
-                correction_applied=False
+                card_data=card_data,
+                correction_applied=(cleaned_name != card_name)
             )
+            
+        # 2. If no exact match, try a fuzzy search
+        card_data = await self.search_card_fuzzy(cleaned_name)
         
-        # Get suggestions for failed matches
-        suggestions = await self.autocomplete_card_names(original_name[:30])
-        # Nouvelle logique : si la suggestion principale est très proche, on valide
-        if suggestions:
-            best_suggestion = suggestions[0]
-            score = fuzz.ratio(original_name.lower(), best_suggestion.lower())
-            if score > 90:
-                # On tente de récupérer la carte exacte depuis Scryfall
-                card = await self.search_card_exact(best_suggestion)
-                if card:
+        # 3. Fallback logic for truncated or low-confidence names
+        is_truncated = cleaned_name.endswith('...')
+        confidence_fuzzy = self._calculate_match_confidence(cleaned_name, card_data['name']) if card_data else 0
+
+        if not card_data or is_truncated or confidence_fuzzy < 85:
+            logger.info(f"Fuzzy search failed or confidence low for '{cleaned_name}'. Trying autocomplete...")
+            
+            # Use autocomplete for partial/truncated names
+            autocomplete_suggestions = await self.autocomplete_card_names(cleaned_name.replace('...', ''))
+            
+            if autocomplete_suggestions:
+                best_suggestion = autocomplete_suggestions[0]
+                logger.info(f"Autocomplete suggested '{best_suggestion}' for '{cleaned_name}'. Validating...")
+                
+                # Validate the best suggestion with an exact search
+                card_data_from_suggestion = await self.search_card_exact(best_suggestion)
+                
+                if card_data_from_suggestion:
+                    # Found a high-confidence match via autocomplete
+                    confidence = self._calculate_match_confidence(cleaned_name, card_data_from_suggestion['name'])
                     return CardMatch(
-                        original_name=original_name,
-                        matched_name=card['name'],
-                        confidence=score/100.0,
-                        card_data=card,
-                        correction_applied=True
+                        original_name=card_name,
+                        matched_name=card_data_from_suggestion['name'],
+                        confidence=confidence,
+                        card_data=card_data_from_suggestion,
+                        suggestions=autocomplete_suggestions,
+                        correction_applied=True 
                     )
-        
-        return CardMatch(
-            original_name=original_name,
-            matched_name=None,
-            confidence=0.0,
-            card_data=None,
-            suggestions=suggestions[:5] if suggestions else [],
-        )
-    
+
+        # If fuzzy search was successful and confidence is high enough
+        if card_data and confidence_fuzzy >= 85:
+            return CardMatch(
+                original_name=card_name,
+                matched_name=card_data['name'],
+                confidence=confidence_fuzzy,
+                card_data=card_data,
+                correction_applied=(cleaned_name != card_name)
+            )
+            
+        # If all attempts fail
+        logger.warning(f"Failed to find a confident match for '{card_name}'")
+        return None
+
     def _calculate_match_confidence(self, original: str, matched: str) -> float:
-        """Calculate confidence score for card matching"""
+        """Calculate confidence score using fuzzy string matching."""
         # Use multiple string similarity metrics
         ratio = fuzz.ratio(original.lower(), matched.lower())
         partial_ratio = fuzz.partial_ratio(original.lower(), matched.lower())
