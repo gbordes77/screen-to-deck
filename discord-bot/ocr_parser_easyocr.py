@@ -13,6 +13,8 @@ import re
 import logging
 import os
 import asyncio
+import time # Ajout pour l'horodatage
+import uuid # Ajout pour l'unicité
 from typing import List, Tuple, Dict, Any, Optional
 from dataclasses import dataclass, field
 
@@ -70,19 +72,38 @@ class UltraAdvancedOCR:
     def extract_text_from_image(self, image_path: str) -> str:
         """
         Traite une image complète et en extrait le texte brut en utilisant EasyOCR.
+        Ajout d'un prétraitement d'image pour améliorer la qualité.
         """
         logger.info(f"🔍 Début de l'extraction avec EasyOCR depuis : {image_path}")
         try:
-            # EasyOCR gère bien les images brutes, le prétraitement est moins critique
-            # mais peut toujours être appliqué si nécessaire.
             image = cv2.imread(image_path)
             if image is None:
                 raise FileNotFoundError(f"Image introuvable ou illisible à : {image_path}")
+
+            # --- DÉBUT DU PRÉTRAITEMENT D'IMAGE ---
+            logger.info("  🖼️  Application du prétraitement d'image...")
+            
+            # 1. Conversion en niveaux de gris
+            gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+            
+            # 2. Augmentation du contraste (CLAHE)
+            clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8,8))
+            contrast_image = clahe.apply(gray_image)
+
+            # 3. Binarisation adaptative pour mieux gérer les variations de luminosité
+            processed_image = cv2.adaptiveThreshold(
+                contrast_image, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
+                cv2.THRESH_BINARY, 11, 2
+            )
+            
+            # Sauvegarder l'image prétraitée pour le debug
+            debug_image_path = os.path.join(os.path.dirname(image_path), "debug_preprocessed_image.png")
+            cv2.imwrite(debug_image_path, processed_image)
+            logger.info(f"  💾 Image prétraitée sauvegardée pour debug : {debug_image_path}")
+            # --- FIN DU PRÉTRAITEMENT D'IMAGE ---
             
             logger.info("  🤖 Traitement par l'IA EasyOCR en cours...")
-            # readtext retourne une liste de (bbox, text, confidence) avec detail=1
-            # ou une liste de text avec detail=0
-            results = self.reader.readtext(image, detail=1, paragraph=True)
+            results = self.reader.readtext(processed_image, detail=1, paragraph=True)
             
             # Log des résultats avec confiance
             logger.info(f"  📊 EasyOCR a détecté {len(results)} blocs de texte")
@@ -106,8 +127,14 @@ class UltraAdvancedOCR:
             logger.info("  ✅ Extraction de texte par EasyOCR terminée")
             logger.info(f"  📝 Texte extrait ({len(full_text)} caractères)")
             
-            # Sauvegarder pour debug
-            debug_text_path = "easyocr_debug_output.txt"
+            # Sauvegarder pour debug avec un nom de fichier unique
+            timestamp = int(time.time())
+            unique_id = uuid.uuid4().hex[:6]
+            debug_text_path = f"debug/easyocr_output_{timestamp}_{unique_id}.txt"
+            
+            # S'assurer que le répertoire de debug existe
+            os.makedirs(os.path.dirname(debug_text_path), exist_ok=True)
+
             with open(debug_text_path, 'w', encoding='utf-8') as f:
                 f.write("=== RÉSULTATS EASYOCR DÉTAILLÉS ===\n")
                 if results:
