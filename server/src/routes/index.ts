@@ -32,8 +32,20 @@ router.get('/', (req, res) => {
         'POST /api/cards/validate': 'Validate a list of cards',
         'GET /api/cards/random': 'Get a random card',
       },
+      health: {
+        'GET /api/health': 'API health check endpoint',
+      },
     },
     status: 'operational',
+    timestamp: new Date().toISOString(),
+  });
+});
+
+// Health check endpoint under /api for compatibility with Docker/infra checks
+router.get('/health', (req, res) => {
+  res.json({
+    status: 'OK',
+    scope: 'api',
     timestamp: new Date().toISOString(),
   });
 });
