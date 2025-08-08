@@ -1,4 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
+import fs from 'fs';
+import path from 'path';
 import { MTGCard, ScryfallCard, ScryfallSearchResult, ValidationResult } from '../types';
 import { createError } from '../middleware/errorHandler';
 
@@ -9,8 +11,9 @@ class ScryfallService {
   private readonly requestDelay = 100; // 100ms between requests to respect rate limits
 
   constructor() {
+    const offline = process.env.OFFLINE_MODE === 'true';
     this.api = axios.create({
-      baseURL: process.env.SCRYFALL_API_URL || 'https://api.scryfall.com',
+      baseURL: offline ? 'http://localhost' : (process.env.SCRYFALL_API_URL || 'https://api.scryfall.com'),
       timeout: 10000,
       headers: {
         'User-Agent': 'MTG-Deck-Converter/1.0',
@@ -129,20 +132,26 @@ class ScryfallService {
       return this.cache.get(cacheKey)!;
     }
 
+    // Offline: search in local dataset
+    if (process.env.OFFLINE_MODE === 'true') {
+      const dataset = this.loadLocalDataset();
+      const exact = dataset.find(c => c.name.toLowerCase() === cacheKey) || null;
+      if (exact) {
+        this.cache.set(cacheKey, exact);
+      }
+      return exact;
+    }
+
     try {
       const response = await this.api.get(`/cards/named`, {
-        params: {
-          exact: cardName,
-        },
+        params: { exact: cardName },
       });
-
       const card = response.data as ScryfallCard;
       this.cache.set(cacheKey, card);
       return card;
-      
     } catch (error) {
       if (axios.isAxiosError(error) && error.response?.status === 404) {
-        return null; // Card not found
+        return null;
       }
       throw error;
     }
@@ -152,20 +161,28 @@ class ScryfallService {
    * Perform fuzzy search for card suggestions
    */
   async fuzzySearch(cardName: string, limit = 5): Promise<ScryfallCard[]> {
+    if (process.env.OFFLINE_MODE === 'true') {
+      const dataset = this.loadLocalDataset();
+      const q = cardName.toLowerCase();
+      const scored = dataset.map(c => ({
+        card: c,
+        score: this.simpleSimilarity(q, c.name.toLowerCase())
+      }))
+      .sort((a,b) => b.score - a.score)
+      .slice(0, limit)
+      .map(x => x.card);
+      return scored;
+    }
+
     try {
       const response = await this.api.get(`/cards/search`, {
-        params: {
-          q: cardName,
-          limit,
-        },
+        params: { q: cardName, limit },
       });
-
       const searchResult = response.data as ScryfallSearchResult;
       return searchResult.data || [];
-      
     } catch (error) {
       if (axios.isAxiosError(error) && error.response?.status === 404) {
-        return []; // No results found
+        return [];
       }
       throw error;
     }
@@ -267,6 +284,28 @@ class ScryfallService {
     }
     
     this.lastRequestTime = Date.now();
+  }
+
+  private loadLocalDataset(): ScryfallCard[] {
+    const dataPath = process.env.SCRYFALL_DATA_PATH || path.join(process.cwd(), 'data', 'scryfall-default-cards.json');
+    try {
+      const raw = fs.readFileSync(dataPath, 'utf-8');
+      const parsed = JSON.parse(raw);
+      // Accept both array and bulk {data: []}
+      const cards: ScryfallCard[] = Array.isArray(parsed) ? parsed : parsed.data;
+      return cards || [];
+    } catch (e) {
+      throw createError(`Local Scryfall dataset not found or invalid at ${dataPath}`, 500);
+    }
+  }
+
+  private simpleSimilarity(a: string, b: string): number {
+    // Jaccard on character trigrams (cheap + decent)
+    const ngrams = (s: string) => new Set(Array.from({length: Math.max(0, s.length-2)}, (_,i) => s.slice(i,i+3)));
+    const A = ngrams(a); const B = ngrams(b);
+    const inter = new Set([...A].filter(x => B.has(x))).size;
+    const uni = new Set([...A, ...B]).size || 1;
+    return inter / uni;
   }
 
   /**

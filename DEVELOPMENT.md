@@ -28,6 +28,22 @@ npm run dev
 # Health: http://localhost:3001/health and http://localhost:3001/api/health
 ```
 
+Offline mode (no external services)
+
+1) Fetch Scryfall dataset once:
+```bash
+./scripts/fetch-scryfall-bulk.sh
+```
+This downloads `data/scryfall-default-cards.json`.
+
+2) Enable offline mode:
+```bash
+cp server/env.example server/.env
+# Ensure OFFLINE_MODE=true and SCRYFALL_DATA_PATH=./data/scryfall-default-cards.json
+```
+
+3) Start as usual (`npm run dev`). OCR will use a local Python helper (Tesseract/EasyOCR if available) and card validation will query the local dataset only.
+
 Quality gates
 
 - Lint: `npm run lint` or `npm run lint:client` / `npm run lint:server`

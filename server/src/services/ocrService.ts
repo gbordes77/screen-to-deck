@@ -2,20 +2,21 @@ import OpenAI from 'openai';
 import fs from 'fs';
 import path from 'path';
 import sharp from 'sharp';
+import { spawn } from 'child_process';
 import { MTGCard, OCRResult, OpenAIVisionMessage } from '../types';
 import { createError } from '../middleware/errorHandler';
 
 class OCRService {
-  private openai: OpenAI;
+  private openai: OpenAI | null = null;
 
   constructor() {
-    if (!process.env.OPENAI_API_KEY) {
-      throw createError('OpenAI API key not configured', 500);
+    const offline = process.env.OFFLINE_MODE === 'true';
+    if (!offline) {
+      if (!process.env.OPENAI_API_KEY) {
+        throw createError('OpenAI API key not configured', 500);
+      }
+      this.openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
     }
-    
-    this.openai = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY,
-    });
   }
 
   /**
@@ -31,48 +32,40 @@ class OCRService {
       // Convert image to base64
       const base64Image = await this.imageToBase64(optimizedImagePath);
       
-      // Create the prompt for card extraction
-      const messages: OpenAIVisionMessage[] = [
-        {
-          role: 'system',
-          content: [{
-            type: 'text',
-            text: this.getSystemPrompt()
-          }]
-        },
-        {
-          role: 'user',
-          content: [
-            {
-              type: 'text',
-              text: 'Please extract all Magic: The Gathering cards from this image and return them in the specified JSON format.'
-            },
-            {
-              type: 'image_url',
-              image_url: {
-                url: `data:image/jpeg;base64,${base64Image}`,
-                detail: 'high'
-              }
-            }
-          ]
+      let cards: MTGCard[] = [];
+
+      if (process.env.OFFLINE_MODE === 'true') {
+        // Offline: call local OCR via Tesseract (through a small Python helper from discord-bot)
+        const content = await this.runLocalOcr(base64Image);
+        cards = this.parseCardsFromResponse(content);
+      } else {
+        // Online: use OpenAI Vision
+        if (!this.openai) {
+          throw createError('OpenAI client not initialized', 500);
         }
-      ];
-
-      // Call OpenAI Vision API
-      const response = await this.openai.chat.completions.create({
-        model: 'gpt-4o',
-        messages: messages as any,
-        max_tokens: 2000,
-        temperature: 0.1,
-      });
-
-      const content = response.choices[0]?.message?.content;
-      if (!content) {
-        throw createError('No response from OpenAI Vision API', 500);
+        const messages: OpenAIVisionMessage[] = [
+          {
+            role: 'system',
+            content: [{ type: 'text', text: this.getSystemPrompt() }]
+          },
+          {
+            role: 'user',
+            content: [
+              { type: 'text', text: 'Please extract all Magic: The Gathering cards from this image and return them in the specified JSON format.' },
+              { type: 'image_url', image_url: { url: `data:image/jpeg;base64,${base64Image}`, detail: 'high' } }
+            ]
+          }
+        ];
+        const response = await this.openai.chat.completions.create({
+          model: 'gpt-4o',
+          messages: messages as any,
+          max_tokens: 2000,
+          temperature: 0.1,
+        });
+        const content = response.choices[0]?.message?.content;
+        if (!content) throw createError('No response from OpenAI Vision API', 500);
+        cards = this.parseCardsFromResponse(content);
       }
-
-      // Parse the JSON response
-      const cards = this.parseCardsFromResponse(content);
       
       // Clean up optimized image
       if (optimizedImagePath !== imagePath) {
@@ -102,6 +95,29 @@ class OCRService {
         errors: [error instanceof Error ? error.message : 'Unknown OCR error'],
       };
     }
+  }
+
+  /**
+   * Run local OCR by delegating to a Python helper that uses Tesseract/EasyOCR if available.
+   * Returns a string content that mimics the JSON block expected by parseCardsFromResponse.
+   */
+  private runLocalOcr(base64Jpeg: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const proc = spawn('python3', ['discord-bot/ocr_parser_easyocr.py', '--stdin-base64']);
+      let out = '';
+      let err = '';
+      proc.stdout.on('data', (d) => (out += d.toString()));
+      proc.stderr.on('data', (d) => (err += d.toString()));
+      proc.on('close', (code) => {
+        if (code === 0 && out.trim()) {
+          resolve(out.trim());
+        } else {
+          reject(new Error(err || 'Local OCR failed'));
+        }
+      });
+      proc.stdin.write(base64Jpeg);
+      proc.stdin.end();
+    });
   }
 
   /**
