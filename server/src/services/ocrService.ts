@@ -10,12 +10,12 @@ class OCRService {
   private openai: OpenAI | null = null;
 
   constructor() {
-    const offline = process.env.OFFLINE_MODE === 'true';
+    const offline = ((process.env as any)['OFFLINE_MODE']) === 'true';
     if (!offline) {
-      if (!process.env.OPENAI_API_KEY) {
+      if (!((process.env as any)['OPENAI_API_KEY'])) {
         throw createError('OpenAI API key not configured', 500);
       }
-      this.openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+      this.openai = new OpenAI({ apiKey: ((process.env as any)['OPENAI_API_KEY']) });
     }
   }
 
@@ -34,7 +34,7 @@ class OCRService {
       
       let cards: MTGCard[] = [];
 
-      if (process.env.OFFLINE_MODE === 'true') {
+      if (((process.env as any)['OFFLINE_MODE']) === 'true') {
         // Offline: call local OCR via Tesseract (through a small Python helper from discord-bot)
         const content = await this.runLocalOcr(base64Image);
         cards = this.parseCardsFromResponse(content);
@@ -133,7 +133,7 @@ class OCRService {
         const optimizedPath = imagePath.replace(/\.(jpg|jpeg|png)$/i, '_optimized.jpg');
         
         await image
-          .resize({ width: 2048, height: null, withoutEnlargement: true })
+          .resize({ width: 2048, height: undefined, withoutEnlargement: true })
           .jpeg({ quality: 90 })
           .toFile(optimizedPath);
           

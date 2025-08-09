@@ -19,11 +19,11 @@ const router = Router();
 const upload = multer({
   dest: 'uploads/',
   limits: {
-    fileSize: parseInt(process.env.MAX_FILE_SIZE || '10485760'), // 10MB default
+    fileSize: parseInt(((process.env as any)['MAX_FILE_SIZE']) || '10485760'), // 10MB default
     files: 1,
   },
-  fileFilter: (req, file, cb) => {
-    const allowedTypes = (process.env.ALLOWED_FILE_TYPES || 'image/jpeg,image/jpg,image/png,image/webp').split(',');
+  fileFilter: (_req, file, cb) => {
+    const allowedTypes = (((process.env as any)['ALLOWED_FILE_TYPES']) || 'image/jpeg,image/jpg,image/png,image/webp').split(',');
     
     if (allowedTypes.includes(file.mimetype)) {
       cb(null, true);

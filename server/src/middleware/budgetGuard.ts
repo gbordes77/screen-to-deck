@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import IORedis from 'ioredis';
 
-const redis = new IORedis(process.env.REDIS_URL || 'redis://localhost:6379');
+const redis = new IORedis(((process.env as any)['REDIS_URL']) || 'redis://localhost:6379');
 
 function getHourKey(): string {
   const d = new Date();
@@ -22,8 +22,8 @@ function estimateCostEur(bytes: number): number {
 }
 
 export async function budgetGuard(req: Request, res: Response, next: NextFunction) {
-  const maxJobsPerHour = parseInt(process.env.MAX_JOBS_PER_HOUR || '0');
-  const maxDailyCost = parseFloat(process.env.MAX_DAILY_COST_EUR || '0');
+  const maxJobsPerHour = parseInt(((process.env as any)['MAX_JOBS_PER_HOUR']) || '0');
+  const maxDailyCost = parseFloat(((process.env as any)['MAX_DAILY_COST_EUR']) || '0');
 
   try {
     if (!maxJobsPerHour && !maxDailyCost) {

@@ -118,7 +118,7 @@ class ExportService {
       format: 'moxfield',
       content,
       filename: `${deckName || 'deck'}_moxfield.json`,
-      url: url.length < 2048 ? url : undefined, // Only include URL if not too long
+      url: url.length < 2048 ? url : '',
     };
   }
 

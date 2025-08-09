@@ -14,6 +14,7 @@ import { validateEnv } from './utils/validateEnv';
 import routes from './routes';
 import { initOcrWorker } from './queue/ocr.queue';
 import clientProm from 'prom-client';
+// Type-only imports to avoid missing @types issues at runtime
 import swaggerUi from 'swagger-ui-express';
 import YAML from 'yamljs';
 
@@ -24,8 +25,8 @@ dotenv.config();
 validateEnv();
 
 const app = express();
-const PORT = process.env.PORT || 3001;
-const HOST = process.env.HOST || '127.0.0.1';
+const PORT = (process.env as any)['PORT'] || 3001;
+const HOST = (process.env as any)['HOST'] || '127.0.0.1';
 
 // Security middleware
 app.use(helmet({
@@ -37,8 +38,8 @@ app.use(helmet({
       "img-src": ["'self'", "data:", "https://c2.scryfall.com"],
       "connect-src": [
         "'self'",
-        process.env.SCRYFALL_API_URL || 'https://api.scryfall.com',
-        process.env.OPENAI_BASE || 'https://api.openai.com'
+        (process.env as any)['SCRYFALL_API_URL'] || 'https://api.scryfall.com',
+        (process.env as any)['OPENAI_BASE'] || 'https://api.openai.com'
       ],
       "script-src": ["'self'"],
       "object-src": ["'none'"],
@@ -49,15 +50,15 @@ app.use(helmet({
 
 // CORS configuration
 app.use(cors({
-  origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
+  origin: (process.env as any)['CORS_ORIGIN'] || 'http://localhost:5173',
   credentials: true,
   optionsSuccessStatus: 200,
 }));
 
 // Rate limiting
 const limiter = rateLimit({
-  windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS || '900000'), // 15 minutes
-  max: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS || '100'), // limit each IP to 100 requests per windowMs
+  windowMs: parseInt((process.env as any)['RATE_LIMIT_WINDOW_MS'] || '900000'), // 15 minutes
+  max: parseInt((process.env as any)['RATE_LIMIT_MAX_REQUESTS'] || '100'), // limit each IP to 100 requests per windowMs
   message: {
     error: 'Too many requests from this IP, please try again later.',
   },
@@ -69,7 +70,7 @@ app.use(limiter);
 
 // General middleware
 app.use(compression());
-const logger = pino({ level: process.env.LOG_LEVEL || 'info' });
+const logger = pino({ level: (process.env as any)['LOG_LEVEL'] || 'info' });
 app.use((req, _res, next) => { (req as any).id = req.headers['x-request-id']?.toString() || uuidv4(); next(); });
 app.use(pinoHttp({ logger, customProps: (req) => ({ requestId: (req as any).id }) }));
 app.use(express.json({ limit: '10mb' }));
@@ -84,7 +85,7 @@ app.get('/health', (req, res) => {
     status: 'OK',
     timestamp: new Date().toISOString(),
     uptime: process.uptime(),
-    environment: process.env.NODE_ENV || 'development',
+    environment: (process.env as any)['NODE_ENV'] || 'development',
   });
 });
 

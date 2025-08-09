@@ -3,7 +3,7 @@ import { unlink, writeFile } from "fs/promises";
 import OpenAI from "openai";
 import { join } from "path";
 import sharp from "sharp";
-import { ScryfallService } from "./scryfallService";
+import scryfallService from "./scryfallService";
 
 interface CardRecognitionResult {
   name: string;
@@ -46,14 +46,14 @@ interface ProcessingMetrics {
  */
 export class EnhancedOCRService {
   private openai: OpenAI;
-  private scryfallService: ScryfallService;
+  private scryfallService: any;
   private tempDir: string;
 
   constructor() {
     this.openai = new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,
     });
-    this.scryfallService = new ScryfallService();
+    this.scryfallService = scryfallService;
     this.tempDir = process.env.TEMP_DIR || "/tmp";
   }
 

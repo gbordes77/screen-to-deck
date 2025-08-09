@@ -11,7 +11,7 @@ router.use('/export', exportRoutes);
 router.use('/cards', cardsRoutes);
 
 // API info endpoint
-router.get('/', (req, res) => {
+router.get('/', (_req, res) => {
   res.json({
     name: 'MTG Deck Converter API',
     version: '1.0.0',
@@ -42,7 +42,7 @@ router.get('/', (req, res) => {
 });
 
 // Health check endpoint under /api for compatibility with Docker/infra checks
-router.get('/health', (req, res) => {
+router.get('/health', (_req, res) => {
   res.json({
     status: 'OK',
     scope: 'api',

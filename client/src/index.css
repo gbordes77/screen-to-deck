@@ -11,9 +11,7 @@
     @apply antialiased;
   }
   
-  * {
-    @apply border-border;
-  }
+  /* Remove invalid class apply to avoid Tailwind error in minimal build */
 }
 
 @layer components {

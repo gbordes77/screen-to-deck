@@ -32,11 +32,11 @@ const cardsArraySchema = Joi.array().items(cardSchema).min(1).required();
  * Export deck list to specific format
  */
 router.post('/:format', asyncHandler(async (req: Request, res: Response) => {
-  const { format } = req.params as { format: ExportFormat };
+  const { format } = req.params as { format?: ExportFormat };
   
   // Validate format
   const validFormats: ExportFormat[] = ['mtga', 'moxfield', 'archidekt', 'tappedout', 'txt'];
-  if (!validFormats.includes(format)) {
+  if (!format || !validFormats.includes(format)) {
     throw createError(`Invalid format. Supported formats: ${validFormats.join(', ')}`, 400);
   }
 
@@ -47,10 +47,10 @@ router.post('/:format', asyncHandler(async (req: Request, res: Response) => {
   if (!parsed.success) {
     throw createError(parsed.error.issues.map(i => i.message).join(', '), 400);
   }
-  const { cards, deckName } = parsed.data;
+  const { cards, deckName } = parsed.data as { cards: MTGCard[]; deckName?: string };
 
   try {
-    const exportResult = await exportService.exportDeck(cards, format, deckName);
+    const exportResult = await exportService.exportDeck(cards as MTGCard[], format as ExportFormat, deckName);
 
     const response: APIResponse = {
       success: true,
@@ -82,10 +82,10 @@ router.post('/all', asyncHandler(async (req: Request, res: Response) => {
     throw createError(error.details[0].message, 400);
   }
 
-  const { cards, deckName } = value;
+  const { cards, deckName } = value as { cards: MTGCard[]; deckName?: string };
 
   try {
-    const exportResults = await exportService.exportToAllFormats(cards, deckName);
+    const exportResults = await exportService.exportToAllFormats(cards as MTGCard[], deckName);
 
     const response: APIResponse = {
       success: true,
@@ -197,11 +197,11 @@ router.get('/formats', asyncHandler(async (req: Request, res: Response) => {
  * Preview export without downloading
  */
 router.post('/preview/:format', asyncHandler(async (req: Request, res: Response) => {
-  const { format } = req.params as { format: ExportFormat };
+  const { format } = req.params as { format?: ExportFormat };
   
   // Validate format
   const validFormats: ExportFormat[] = ['mtga', 'moxfield', 'archidekt', 'tappedout', 'txt'];
-  if (!validFormats.includes(format)) {
+  if (!format || !validFormats.includes(format)) {
     throw createError(`Invalid format. Supported formats: ${validFormats.join(', ')}`, 400);
   }
 
@@ -216,10 +216,10 @@ router.post('/preview/:format', asyncHandler(async (req: Request, res: Response)
     throw createError(error.details[0].message, 400);
   }
 
-  const { cards, deckName } = value;
+  const { cards, deckName } = value as { cards: MTGCard[]; deckName?: string };
 
   try {
-    const exportResult = await exportService.exportDeck(cards, format, deckName);
+    const exportResult = await exportService.exportDeck(cards as MTGCard[], format as ExportFormat, deckName);
 
     // Return preview with limited content length for display
     const preview = {
@@ -250,11 +250,11 @@ router.post('/preview/:format', asyncHandler(async (req: Request, res: Response)
  * Download export as file
  */
 router.post('/download/:format', asyncHandler(async (req: Request, res: Response) => {
-  const { format } = req.params as { format: ExportFormat };
+  const { format } = req.params as { format?: ExportFormat };
   
   // Validate format
   const validFormats: ExportFormat[] = ['mtga', 'moxfield', 'archidekt', 'tappedout', 'txt'];
-  if (!validFormats.includes(format)) {
+  if (!format || !validFormats.includes(format)) {
     throw createError(`Invalid format. Supported formats: ${validFormats.join(', ')}`, 400);
   }
 
@@ -269,10 +269,10 @@ router.post('/download/:format', asyncHandler(async (req: Request, res: Response
     throw createError(error.details[0].message, 400);
   }
 
-  const { cards, deckName } = value;
+  const { cards, deckName } = value as { cards: MTGCard[]; deckName?: string };
 
   try {
-    const exportResult = await exportService.exportDeck(cards, format, deckName);
+    const exportResult = await exportService.exportDeck(cards as MTGCard[], format as ExportFormat, deckName);
 
     // Set appropriate headers for file download
     const contentType = format === 'moxfield' ? 'application/json' : 'text/plain';

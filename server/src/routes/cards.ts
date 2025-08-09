@@ -22,7 +22,7 @@ router.get('/search', asyncHandler(async (req: Request, res: Response) => {
     throw createError(error.details[0].message, 400);
   }
 
-  const { q: query, limit } = value;
+  const { q: query, limit } = value as { q: string; limit: number };
 
   try {
     const cards = await scryfallService.searchCards(`${query} limit:${limit}`);
@@ -50,18 +50,18 @@ router.get('/search', asyncHandler(async (req: Request, res: Response) => {
  * Find card by exact name
  */
 router.get('/named/:name', asyncHandler(async (req: Request, res: Response) => {
-  const { name } = req.params;
+  const { name } = req.params as { name?: string };
 
   if (!name || name.trim().length < 2) {
     throw createError('Card name must be at least 2 characters long', 400);
   }
 
   try {
-    const card = await scryfallService.findCard(name);
+    const card = await scryfallService.findCard(name as string);
 
     if (!card) {
       // Try fuzzy search for suggestions
-      const suggestions = await scryfallService.fuzzySearch(name, 5);
+      const suggestions = await scryfallService.fuzzySearch(name as string, 5);
       
       const error = createError(`Card "${name}" not found`, 404);
       (error as any).suggestions = suggestions.map(card => card.name);
@@ -91,16 +91,16 @@ router.get('/named/:name', asyncHandler(async (req: Request, res: Response) => {
  * Get card by Scryfall ID
  */
 router.get('/:id', asyncHandler(async (req: Request, res: Response) => {
-  const { id } = req.params;
+  const { id } = req.params as { id?: string };
 
   // Validate UUID format
   const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-  if (!uuidRegex.test(id)) {
+  if (!id || !uuidRegex.test(id)) {
     throw createError('Invalid Scryfall ID format', 400);
   }
 
   try {
-    const card = await scryfallService.getCardById(id);
+    const card = await scryfallService.getCardById(id as string);
 
     if (!card) {
       throw createError(`Card with ID "${id}" not found`, 404);
@@ -135,10 +135,10 @@ router.post('/validate', asyncHandler(async (req: Request, res: Response) => {
   if (!parsed.success) {
     throw createError(parsed.error.issues.map(i => i.message).join(', '), 400);
   }
-  const { cards } = parsed.data;
+  const { cards } = parsed.data as { cards: MTGCard[] };
 
   try {
-    const { validatedCards, validationResult } = await scryfallService.validateAndEnrichCards(cards);
+    const { validatedCards, validationResult } = await scryfallService.validateAndEnrichCards(cards as MTGCard[]);
 
     const response: APIResponse = {
       success: true,
@@ -186,14 +186,14 @@ router.get('/random', asyncHandler(async (req: Request, res: Response) => {
  * Check format legality for a deck
  */
 router.post('/legality/:format', asyncHandler(async (req: Request, res: Response) => {
-  const { format } = req.params;
+  const { format } = req.params as { format?: string };
   
   const validFormats = [
     'standard', 'pioneer', 'modern', 'legacy', 'vintage', 'commander', 
     'brawl', 'historic', 'timeless', 'pauper', 'penny'
   ];
   
-  if (!validFormats.includes(format.toLowerCase())) {
+  if (!format || !validFormats.includes(format.toLowerCase())) {
     throw createError(`Invalid format. Supported formats: ${validFormats.join(', ')}`, 400);
   }
 
@@ -212,7 +212,7 @@ router.post('/legality/:format', asyncHandler(async (req: Request, res: Response
     throw createError(error.details[0].message, 400);
   }
 
-  const { cards } = value;
+  const { cards } = value as { cards: MTGCard[] };
 
   try {
     const legalityCheck = await scryfallService.checkFormatLegality(cards, format);
@@ -241,7 +241,7 @@ router.post('/legality/:format', asyncHandler(async (req: Request, res: Response
  * Autocomplete card names
  */
 router.get('/autocomplete/:partial', asyncHandler(async (req: Request, res: Response) => {
-  const { partial } = req.params;
+  const { partial } = req.params as { partial?: string };
 
   if (!partial || partial.trim().length < 2) {
     throw createError('Partial name must be at least 2 characters long', 400);
@@ -256,7 +256,7 @@ router.get('/autocomplete/:partial', asyncHandler(async (req: Request, res: Resp
     throw createError(error.details[0].message, 400);
   }
 
-  const { limit } = value;
+  const { limit } = value as { limit: number };
 
   try {
     const suggestions = await scryfallService.fuzzySearch(partial, limit);

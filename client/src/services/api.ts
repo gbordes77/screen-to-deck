@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import axios, { AxiosInstance } from 'axios';
 import { 
   APIResponse, 
   ProcessingStatus, 
@@ -14,7 +14,8 @@ class APIService {
 
   constructor() {
     this.api = axios.create({
-      baseURL: import.meta.env.VITE_API_URL || '/api',
+      // Vite injects import.meta.env at runtime; during type-check it exists.
+      baseURL: (import.meta as any).env?.VITE_API_URL || '/api',
       timeout: 30000,
       headers: {
         'Content-Type': 'application/json',
