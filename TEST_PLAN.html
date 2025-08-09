@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Screen‑to‑Deck – Cahier de tests (pas à pas)</title>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Helvetica,Arial,sans-serif;line-height:1.5;margin:2rem;max-width:1000px}
+    h1,h2,h3{margin-top:1.6rem}
+    code,pre{background:#0f172a;color:#e2e8f0;border-radius:6px}
+    code{padding:.15rem .35rem}
+    pre{padding:1rem;overflow:auto}
+    .ok{color:#059669;font-weight:600}
+    .warn{color:#b45309;font-weight:600}
+    .bad{color:#dc2626;font-weight:600}
+    ol,ul{padding-left:1.25rem}
+    .box{border:1px solid #e2e8f0;padding:1rem;border-radius:8px;background:#fafafa}
+    .small{font-size:.95rem;color:#475569}
+  </style>
+</head>
+<body>
+  <h1>Screen‑to‑Deck — Cahier de tests (pas à pas)</h1>
+  <p class="small">Objectif: vérifier de bout‑en‑bout l’application auto‑hébergée (front+API), l’OCR, la validation Scryfall, l’export, la file d’attente, la sécurité et l’observabilité.</p>
+
+  <h2>0) Pré‑requis</h2>
+  <ul>
+    <li>macOS, Node.js ≥ 20, npm ≥ 9</li>
+    <li>Clé OpenAI valide (non commitée)</li>
+    <li>Redis local pour tests file d’attente (brew install redis, ou Docker redis)</li>
+    <li>Quelques captures d’écran de decks (Arena/MTGO) pour les tests</li>
+  </ul>
+
+  <h2>1) Démarrage « one‑command » (self‑hosting)</h2>
+  <ol>
+    <li>Dans un terminal à la racine du repo :
+      <pre><code>./scripts/self-host.sh</code></pre>
+    </li>
+    <li>Quand demandé, assurez‑vous d’avoir mis votre clé dans <code>server/.env</code> et <code>.env</code> (valeur OPENAI_API_KEY). Le script configure <code>CORS_ORIGIN</code> automatiquement.</li>
+    <li>Vérifiez la santé :
+      <pre><code>curl -f http://&lt;IP_LAN&gt;:3001/health
+curl -f http://&lt;IP_LAN&gt;:3001/api/health</code></pre>
+      Résultat attendu : <span class="ok">200 OK</span> JSON avec status: OK.
+    </li>
+    <li>Ouvrez le front : <code>http://&lt;IP_LAN&gt;:5173</code> (depuis un autre appareil du réseau si besoin).</li>
+  </ol>
+
+  <h2>2) Parcours Front — Upload OCR → Validation → Export</h2>
+  <ol>
+    <li>Depuis le front, glissez‑déposez une capture d’écran de deck.</li>
+    <li>Attendez le passage du statut « processing » → « completed ».</li>
+    <li>Vérifiez que des cartes et quantités sont affichées et cohérentes (main/side si applicable).</li>
+    <li>Testez l’export :
+      <ul>
+        <li>MTGA (txt) : le fichier commence par « Deck » et contient les lignes « <code>4 Lightning Bolt</code> » etc.</li>
+        <li>Moxfield/Archidekt/TappedOut : contenu au format attendu ou URL d’import si fourni.</li>
+      </ul>
+    </li>
+    <li>Résultat attendu : exports générés sans erreur, cohérents avec l’image.</li>
+  </ol>
+
+  <h2>3) API — Tests essentiels (curl)</h2>
+  <div class="box">
+    <p class="small">Adaptez l’IP: <code>http://&lt;IP_LAN&gt;:3001</code>. Remplacez <code>deck.jpg</code> par votre image.</p>
+  </div>
+  <ol>
+    <li>Upload OCR :
+      <pre><code>curl -F "image=@deck.jpg" -F validateCards=true http://&lt;IP_LAN&gt;:3001/api/ocr/upload</code></pre>
+      Attendu : <span class="ok">202 Accepted</span> avec un <code>processId</code>.
+    </li>
+    <li>Polling statut :
+      <pre><code>curl http://&lt;IP_LAN&gt;:3001/api/ocr/status/&lt;processId&gt;</code></pre>
+      Attendu : progression puis <code>status: completed</code> avec un <code>result</code>.
+    </li>
+    <li>Validation Scryfall (batch) :
+      <pre><code>curl -X POST http://&lt;IP_LAN&gt;:3001/api/cards/validate \
+  -H 'Content-Type: application/json' \
+  -d '{"cards":[{"name":"Lightning Bolt","quantity":4},{"name":"Counterspell","quantity":2}]}'</code></pre>
+      Attendu : noms canoniques, métadonnées, avertissements si correction.
+    </li>
+    <li>Export MTGA :
+      <pre><code>curl -X POST http://&lt;IP_LAN&gt;:3001/api/export/mtga \
+  -H 'Content-Type: application/json' \
+  -d '{"cards":[{"name":"Lightning Bolt","quantity":4}]}'</code></pre>
+      Attendu : contenu texte MTGA dans <span class="ok">200</span>.
+    </li>
+  </ol>
+
+  <h2>4) Scryfall — Batching & performance</h2>
+  <ol>
+    <li>Envoyez une liste de ~100 noms (réels) à <code>/api/cards/validate</code> (voir commande ci‑dessus). Attendu : réponse en 1‑2 batches (75 + 25), sans erreurs <span class="ok">429</span>.</li>
+    <li>Vérifiez que la latence est raisonnable (&lt; 2‑3s selon réseau).</li>
+  </ol>
+
+  <h2>5) File d’attente — Persistance, retries</h2>
+  <ol>
+    <li>Démarrez Redis (ex: <code>brew services start redis</code> ou Docker redis).</li>
+    <li>Lancez un upload OCR (cf. section 3). Attendu : <span class="ok">202</span> + statut <code>processing</code>.</li>
+    <li>Simulez un redémarrage API rapide (Ctrl‑C puis relance) pendant un traitement : le job doit être repris automatiquement (retries/backoff) et finir en <code>completed</code> ou <code>failed</code> avec message explicite.</li>
+  </ol>
+
+  <h2>6) Garde‑fous coûts & quotas</h2>
+  <ol>
+    <li>Dans <code>server/.env</code>, mettez <code>MAX_JOBS_PER_HOUR=1</code>, redémarrez l’API. Faites 2 uploads d’affilée : le deuxième doit renvoyer <span class="bad">429</span> « Hourly job limit reached ».</li>
+    <li>Mettez <code>MAX_DAILY_COST_EUR=0.01</code> et uploadez une grosse image (&gt;1MB). Attendu : <span class="bad">402</span> « Daily OCR budget exceeded ».</li>
+  </ol>
+
+  <h2>7) Observabilité & sécurité</h2>
+  <ol>
+    <li>Logs structurés : observez la console API; chaque requête a un <code>requestId</code>.
+      <div class="small">Attendu : lignes JSON pino avec requestId, route, status.</div>
+    </li>
+    <li>Prometheus :
+      <pre><code>curl http://&lt;IP_LAN&gt;:3001/metrics | head</code></pre>
+      Attendu : métriques par défaut Node/Process exposées.
+    </li>
+    <li>Swagger/OpenAPI : ouvrez <code>http://&lt;IP_LAN&gt;:3001/api/docs</code>. Attendu : documentation interactive des endpoints.
+    </li>
+    <li>CSP : chargez le front et utilisez l’app. Attendu : pas d’erreurs CSP non nécessaires dans la console; seules les origines autorisées sont utilisées.</li>
+  </ol>
+
+  <h2>8) Docker « prod » (optionnel)</h2>
+  <ol>
+    <li>Build & run :
+      <pre><code>docker-compose -f docker-compose.prod.yml up -d --build app nginx</code></pre>
+    </li>
+    <li>Vérifiez :
+      <ul>
+        <li>Front: <code>http://localhost/</code> (servi par Nginx, build statique)</li>
+        <li>API: <code>http://localhost/api/health</code> proxifié vers l’API</li>
+      </ul>
+    </li>
+  </ol>
+
+  <h2>9) Tests d’erreur & robustesse</h2>
+  <ol>
+    <li>Upload sans fichier → <span class="bad">400</span> « No image file provided ».</li>
+    <li>Upload avec type non autorisé (ex: <code>.gif</code>) → <span class="bad">400</span> « File type ... not allowed ».</li>
+    <li>Status sur <code>processId</code> inconnu → <span class="bad">404</span> « Processing job not found ».</li>
+    <li>Export format invalide → <span class="bad">400</span> « Invalid format ».</li>
+  </ol>
+
+  <h2>10) Vérifications finales</h2>
+  <ul>
+    <li>Front accessible depuis un autre appareil du LAN.</li>
+    <li>OCR complet → cartes détectées → validation Scryfall → exports générés.</li>
+    <li>Swagger OK, métriques OK, logs structurés OK.</li>
+    <li>Budget guard et file d’attente fonctionnels.</li>
+  </ul>
+
+  <h3>Notes</h3>
+  <ul class="small">
+    <li>Les noms détectés peuvent être corrigés (fuzzy) — c’est attendu. Comparez avec la capture d’écran pour juger la qualité.</li>
+    <li>Les performances dépendent de votre réseau et de la charge OpenAI/Scryfall.</li>
+  </ul>
+</body>
+</html>
