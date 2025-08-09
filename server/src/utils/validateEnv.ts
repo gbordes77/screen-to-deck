@@ -5,11 +5,7 @@ const envSchema = Joi.object({
     .valid('development', 'production', 'test')
     .default('development'),
   PORT: Joi.number().default(3001),
-  OFFLINE_MODE: Joi.boolean().default(false),
-  OPENAI_API_KEY: Joi.alternatives().try(
-    Joi.string(),
-    Joi.valid('').strip()
-  ).when('OFFLINE_MODE', { is: false, then: Joi.string().required().messages({ 'any.required': 'OPENAI_API_KEY is required when OFFLINE_MODE is false' }) }),
+  OPENAI_API_KEY: Joi.string().min(10).required().messages({ 'any.required': 'OPENAI_API_KEY is required' }),
   CORS_ORIGIN: Joi.string().default('http://localhost:5173'),
   RATE_LIMIT_WINDOW_MS: Joi.number().default(900000),
   RATE_LIMIT_MAX_REQUESTS: Joi.number().default(100),
@@ -44,7 +40,4 @@ export const validateEnv = (): void => {
   
   console.log('✅ Environment validation passed');
   console.log(`🔧 Running in ${process.env.NODE_ENV} mode`);
-  if (process.env.OFFLINE_MODE === 'true') {
-    console.log('📦 OFFLINE_MODE enabled: using local OCR and Scryfall dataset');
-  }
 }; 
