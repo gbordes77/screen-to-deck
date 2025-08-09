@@ -43,18 +43,40 @@ class ScryfallService {
     const errors: string[] = [];
     const warnings: string[] = [];
     const suggestions: string[] = [];
+    // Batch exact lookups via /cards/collection (up to 75 identifiers per request)
+    const identifiers = cards.map(c => ({ name: c.name }));
+    const batches = this.chunk(identifiers, 75);
+    const foundByName: Map<string, ScryfallCard> = new Map();
+
+    for (const batch of batches) {
+      try {
+        await this.respectRateLimit();
+        const results = await this.fetchCollection(batch);
+        for (const card of results) {
+          foundByName.set(this.normalizeKey(card.name), card);
+        }
+      } catch (e) {
+        console.warn('Batch collection fetch failed, will fallback per-card for this batch:', e);
+        // fallback to per-card find
+        for (const ident of batch) {
+          try {
+            await this.respectRateLimit();
+            const one = await this.findCard(ident.name || '');
+            if (one) foundByName.set(this.normalizeKey(one.name), one);
+          } catch {}
+        }
+      }
+    }
 
     for (const card of cards) {
       try {
-        await this.respectRateLimit();
-        
-        const scryfallCard = await this.findCard(card.name);
-        
+        const key = this.normalizeKey(card.name);
+        const scryfallCard = foundByName.get(key) || null;
+
         if (scryfallCard) {
-          // Enrich the card with Scryfall data
           const enrichedCard: MTGCard = {
             ...card,
-            name: scryfallCard.name, // Use canonical name from Scryfall
+            name: scryfallCard.name,
             set: scryfallCard.set,
             collector_number: scryfallCard.collector_number,
             rarity: scryfallCard.rarity,
@@ -68,43 +90,25 @@ class ScryfallService {
             scryfall_id: scryfallCard.id,
             image_uris: scryfallCard.image_uris,
           };
-          
           validatedCards.push(enrichedCard);
-          
-          // Check for potential issues
           if (scryfallCard.name !== card.name) {
             warnings.push(`Card name corrected: "${card.name}" → "${scryfallCard.name}"`);
           }
-          
         } else {
-          // Card not found - try fuzzy search
+          // Fallback to fuzzy
           const fuzzyResults = await this.fuzzySearch(card.name);
-          
           if (fuzzyResults.length > 0) {
             const bestMatch = fuzzyResults[0];
             suggestions.push(`"${card.name}" not found. Did you mean "${bestMatch.name}"?`);
-            
-            // Add the original card with a warning
-            validatedCards.push({
-              ...card,
-              name: card.name + ' (UNVALIDATED)',
-            });
+            validatedCards.push({ ...card, name: card.name + ' (UNVALIDATED)' });
           } else {
             errors.push(`Card not found: "${card.name}"`);
-            
-            // Still add the card but mark it as unvalidated
-            validatedCards.push({
-              ...card,
-              name: card.name + ' (NOT FOUND)',
-            });
+            validatedCards.push({ ...card, name: card.name + ' (NOT FOUND)' });
           }
         }
-        
       } catch (error) {
         console.error(`Error validating card "${card.name}":`, error);
         warnings.push(`Could not validate "${card.name}": ${error instanceof Error ? error.message : 'Unknown error'}`);
-        
-        // Add the original card
         validatedCards.push(card);
       }
     }
@@ -127,7 +131,7 @@ class ScryfallService {
    */
   async findCard(cardName: string): Promise<ScryfallCard | null> {
     // Check cache first
-    const cacheKey = cardName.toLowerCase();
+    const cacheKey = this.normalizeKey(cardName);
     if (this.cache.has(cacheKey)) {
       return this.cache.get(cacheKey)!;
     }
@@ -269,6 +273,44 @@ class ScryfallService {
       legal: issues.length === 0,
       issues,
     };
+  }
+
+  /**
+   * Batch fetch via /cards/collection
+   */
+  private async fetchCollection(identifiers: Array<{ name?: string; set?: string; collector_number?: string; id?: string; }>): Promise<ScryfallCard[]> {
+    if (process.env.OFFLINE_MODE === 'true') {
+      // offline handled via local dataset and fuzzy; exact batch can map to findCard calls
+      const results: ScryfallCard[] = [];
+      for (const ident of identifiers) {
+        if (ident.name) {
+          const c = await this.findCard(ident.name);
+          if (c) results.push(c);
+        }
+      }
+      return results;
+    }
+
+    const response = await this.api.post(`/cards/collection`, { identifiers }, { timeout: 15000 });
+    const searchResult = response.data as { data: ScryfallCard[] };
+    return searchResult.data || [];
+  }
+
+  private chunk<T>(arr: T[], size: number): T[][] {
+    const out: T[][] = [];
+    for (let i = 0; i < arr.length; i += size) out.push(arr.slice(i, i + size));
+    return out;
+  }
+
+  private normalizeKey(name: string): string {
+    // lower-case, trim, fold diacritics, remove punctuation variety
+    return name
+      .trim()
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/\p{Diacritic}+/gu, '')
+      .replace(/['’`´]/g, '')
+      .replace(/\s+/g, ' ');
   }
 
   /**
