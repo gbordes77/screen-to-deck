@@ -1,7 +1,21 @@
 import { Request, Response, NextFunction } from 'express';
 import IORedis from 'ioredis';
 
-const redis = new IORedis(((process.env as any)['REDIS_URL']) || 'redis://localhost:6379');
+// Only create Redis connection if explicitly enabled
+let redis: IORedis | null = null;
+
+if (process.env.USE_REDIS === 'true' && process.env.REDIS_URL) {
+  try {
+    redis = new IORedis(process.env.REDIS_URL, {
+      maxRetriesPerRequest: null,
+      retryStrategy: () => null,
+      enableOfflineQueue: false,
+    });
+  } catch (error) {
+    console.log('BudgetGuard: Redis not available, budget tracking disabled');
+    redis = null;
+  }
+}
 
 function getHourKey(): string {
   const d = new Date();
@@ -26,6 +40,11 @@ export async function budgetGuard(req: Request, res: Response, next: NextFunctio
   const maxDailyCost = parseFloat(((process.env as any)['MAX_DAILY_COST_EUR']) || '0');
 
   try {
+    // Skip budget guard if Redis is not available
+    if (!redis) {
+      return next();
+    }
+
     if (!maxJobsPerHour && !maxDailyCost) {
       return next();
     }

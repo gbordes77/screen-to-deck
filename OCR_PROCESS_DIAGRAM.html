@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MTG OCR Process - Diagramme Complet</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+        .status-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 15px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .status-card h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.2em;
+        }
+        .status-ok { border-left: 4px solid #4ade80; }
+        .status-warning { border-left: 4px solid #fbbf24; }
+        .status-error { border-left: 4px solid #f87171; }
+        .diagram-container {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            margin: 30px 0;
+        }
+        .mermaid {
+            text-align: center;
+        }
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .tech-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+        .error-log {
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        .success { color: #4ade80; }
+        .error { color: #f87171; }
+        .warning { color: #fbbf24; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 MTG Screen-to-Deck - Processus OCR Complet</h1>
+        
+        <div class="status-grid">
+            <div class="status-card status-ok">
+                <h3>✅ Frontend</h3>
+                <p>React + Vite<br>Port: 5173<br>Upload: OK</p>
+            </div>
+            <div class="status-card status-ok">
+                <h3>✅ Backend</h3>
+                <p>Express + TS<br>Port: 3001<br>API: Running</p>
+            </div>
+            <div class="status-card status-ok">
+                <h3>✅ OpenAI</h3>
+                <p>Vision API<br>Key: Configured<br>GPT-4: Ready</p>
+            </div>
+            <div class="status-card status-ok">
+                <h3>✅ EasyOCR</h3>
+                <p>Python 3.13<br>PyTorch: Installed<br>Models: Ready</p>
+            </div>
+            <div class="status-card status-warning">
+                <h3>⚠️ Redis</h3>
+                <p>BullMQ: Disabled<br>Cache: Off<br>Fallback: Direct</p>
+            </div>
+            <div class="status-card status-ok">
+                <h3>✅ WebP</h3>
+                <p>Multer: Accept<br>Sharp: Fixed<br>Support: Full</p>
+            </div>
+        </div>
+
+        <div class="diagram-container">
+            <div class="mermaid">
+graph TD
+    Start["🎮 USER Upload image.webp"] --> UI["🖥️ FRONTEND localhost:5173<br/>SimpleImageUpload.tsx"]
+    
+    UI -->|"FormData POST"| API["🔌 API ENDPOINT<br/>/api/ocr/upload"]
+    
+    API --> MULTER{"📦 MULTER<br/>Validation fichier"}
+    MULTER -->|"❌ Reject"| ERR1["Error 400<br/>Invalid file type/size"]
+    MULTER -->|"✅ Accept"| PROCESS["📋 Generate processId<br/>Create status object"]
+    
+    PROCESS --> REDIS{"🗄️ Redis Available?"}
+    REDIS -->|"❌ NO"| DIRECT["⚡ Process Direct<br/>processImageAsync"]
+    REDIS -->|"✅ YES"| QUEUE["📬 BullMQ Queue<br/>Add job"]
+    QUEUE --> DIRECT
+    
+    DIRECT --> OPTIMIZE["🖼️ SHARP Optimize<br/>Resize if > 2048px<br/>Convert to JPEG"]
+    OPTIMIZE --> BASE64["🔄 Convert to Base64<br/>For OCR processing"]
+    
+    BASE64 --> EASYOCR["🐍 PYTHON EasyOCR<br/>ocr_parser_easyocr.py"]
+    EASYOCR -->|"spawn python3"| PYPROCESS["📝 Process avec EasyOCR<br/>+ OpenCV preprocessing"]
+    
+    PYPROCESS -->|"❌ Error"| OCRERR["⚠️ Log EasyOCR failed<br/>Fallback to OpenAI"]
+    PYPROCESS -->|"✅ Success"| PARSEOCR["Parse JSON Results<br/>Extract cards array"]
+    
+    PARSEOCR --> CONFIDENCE{"📊 Confidence Check<br/>> 60% ?"}
+    CONFIDENCE -->|"❌ Low"| OPENAI["🤖 OpenAI Vision API<br/>GPT-4 with prompt"]
+    CONFIDENCE -->|"✅ High"| SCRYFALL
+    OCRERR --> OPENAI
+    
+    OPENAI --> PARSEAI["Parse OpenAI Response<br/>Extract cards JSON"]
+    PARSEAI --> SCRYFALL["🔍 Scryfall Validation START"]
+    
+    SCRYFALL --> EXACT{"Exact Match?<br/>Lightning Bolt = Lightning Bolt"}
+    EXACT -->|"✅ Found"| GETDATA["Fetch Scryfall Data<br/>Get mana cost, type, etc"]
+    EXACT -->|"❌ Not Found"| FUZZY["🧮 FUZZY MATCHING<br/>FuzzyWuzzy Algorithm"]
+    
+    FUZZY --> LEVEN["Calculate Levenshtein Distance<br/>Llghtning Boit vs ALL cards"]
+    LEVEN --> SCORES["Top 5 Matches:<br/>Lightning Bolt 87%<br/>Lightning Strike 70%<br/>Lightning Helix 65%"]
+    
+    SCORES --> THRESHOLD{"Score >= 85%?"}
+    THRESHOLD -->|"✅ YES"| CORRECT["✨ Auto-Correct<br/>Llghtning Boit → Lightning Bolt"]
+    THRESHOLD -->|"❌ NO"| PARTIAL["Try Partial Match<br/>Search by first word"]
+    
+    PARTIAL --> CONTEXT["Check Context<br/>Other cards in deck<br/>Mana colors present"]
+    CONTEXT --> GUESS["Best Guess<br/>or Mark as Unknown"]
+    
+    CORRECT --> GETDATA
+    GUESS --> GETDATA
+    
+    GETDATA --> CACHE["💾 Cache Result<br/>5 min TTL"]
+    CACHE --> UPDATE["📊 Update Status<br/>status completed<br/>result cards array"]
+    UPDATE --> POLL["🔄 Frontend Polling<br/>/api/ocr/status/:id"]
+    
+    POLL --> DISPLAY["✨ Display Results<br/>Card list + Export options"]
+    
+    style Start fill:#f9f,stroke:#333,stroke-width:4px
+    style DISPLAY fill:#9f9,stroke:#333,stroke-width:4px
+    style ERR1 fill:#f99,stroke:#333,stroke-width:2px
+    style OCRERR fill:#ff9,stroke:#333,stroke-width:2px
+    style REDIS fill:#99f,stroke:#333,stroke-width:2px
+    style OPENAI fill:#f9f,stroke:#333,stroke-width:3px
+    style EASYOCR fill:#9ff,stroke:#333,stroke-width:3px
+            </div>
+        </div>
+
+        <h2>🧮 Exemple de Fuzzy Matching en Action</h2>
+        <div class="error-log" style="background: rgba(100,200,100,0.1);">
+            <div class="success">📝 OCR lit (avec erreurs) :</div>
+            <code style="color: #f87171;">
+            "Llghtning Boit"         (i manquant, o→oi)<br>
+            "Counterspel1"           (l→1)<br>
+            "Birds of Paradlse"      (i→l)<br>
+            "Jace, the M1nd 5culptor" (i→1, S→5)<br>
+            </code><br><br>
+            
+            <div class="success">🔍 Scryfall Fuzzy Matching :</div>
+            <code style="color: #fbbf24;">
+            "Llghtning Boit" → Recherche dans 25,000+ cartes<br>
+            ├─ "Lightning Bolt" = 87% match ✅<br>
+            ├─ "Lightning Strike" = 70% match<br>
+            └─ "Lightning Helix" = 65% match<br>
+            </code><br><br>
+            
+            <div class="success">✨ Résultat Final Corrigé :</div>
+            <code style="color: #4ade80;">
+            "Lightning Bolt" {R} - Instant<br>
+            "Counterspell" {U}{U} - Instant<br>
+            "Birds of Paradise" {G} - Creature<br>
+            "Jace, the Mind Sculptor" {2}{U}{U} - Planeswalker<br>
+            </code>
+        </div>
+
+        <h2>📊 Algorithme de Levenshtein</h2>
+        <div class="status-grid">
+            <div class="status-card">
+                <h3>Distance = 1</h3>
+                <code>cat → bat</code><br>
+                <small>Changer 1 lettre</small>
+            </div>
+            <div class="status-card">
+                <h3>Distance = 2</h3>
+                <code>cat → cart</code><br>
+                <small>Ajouter 1 lettre</small>
+            </div>
+            <div class="status-card">
+                <h3>Distance = 3</h3>
+                <code>kitten → sitting</code><br>
+                <small>Multiple changes</small>
+            </div>
+        </div>
+
+        <h2>🛠️ Stack Technique Implémentée</h2>
+        <div class="tech-stack">
+            <span class="tech-badge">React 18</span>
+            <span class="tech-badge">TypeScript</span>
+            <span class="tech-badge">Vite</span>
+            <span class="tech-badge">Express.js</span>
+            <span class="tech-badge">Multer</span>
+            <span class="tech-badge">Sharp</span>
+            <span class="tech-badge">Python 3.13</span>
+            <span class="tech-badge">EasyOCR</span>
+            <span class="tech-badge">PyTorch</span>
+            <span class="tech-badge">OpenCV</span>
+            <span class="tech-badge">OpenAI Vision</span>
+            <span class="tech-badge">Scryfall API</span>
+            <span class="tech-badge">FuzzyWuzzy</span>
+            <span class="tech-badge">WebP Support</span>
+        </div>
+
+        <h2>📝 Corrections Appliquées</h2>
+        <div class="error-log">
+            <div class="success">✅ FIX #1: WebP Support</div>
+            <code>// ocrService.ts ligne 135</code><br>
+            <code>- const optimizedPath = imagePath.replace(/\.(jpg|jpeg|png)$/i, '_optimized.jpg');</code><br>
+            <code>+ const optimizedPath = imagePath.replace(/\.(jpg|jpeg|png|webp|gif)$/i, '_optimized.jpg');</code><br><br>
+            
+            <div class="success">✅ FIX #2: Redis Queue Null Check</div>
+            <code>// ocr.ts ligne 63</code><br>
+            <code>- await ocrQueue.add('run', { processId, filePath, validateCards });</code><br>
+            <code>+ if (ocrQueue) { await ocrQueue.add(...) } else { processImageAsync(...) }</code><br><br>
+            
+            <div class="success">✅ FIX #3: Python Script Path</div>
+            <code>// ocrService.ts ligne 108</code><br>
+            <code>+ const scriptPath = path.join(__dirname, '../../../discord-bot/ocr_parser_easyocr.py');</code><br><br>
+            
+            <div class="success">✅ FIX #4: EasyOCR Fallback</div>
+            <code>// ocrService.ts ligne 40-47</code><br>
+            <code>+ try { easyOcrContent = await this.runLocalOcr(base64Image); }</code><br>
+            <code>+ catch (error) { console.warn('EasyOCR failed, using OpenAI'); }</code><br><br>
+            
+            <div class="success">✅ FIX #5: Python Dependencies</div>
+            <code>$ pip3 install --user --break-system-packages easyocr fuzzywuzzy opencv-python</code>
+        </div>
+
+        <h2>🚀 Points de Contrôle</h2>
+        <div class="status-grid">
+            <div class="status-card">
+                <h3>1️⃣ Upload</h3>
+                <p>File: image.webp<br>Size: ~100KB<br>Type: image/webp</p>
+            </div>
+            <div class="status-card">
+                <h3>2️⃣ Processing</h3>
+                <p>ProcessId: UUID<br>Status: processing<br>Progress: 0-100%</p>
+            </div>
+            <div class="status-card">
+                <h3>3️⃣ OCR Primary</h3>
+                <p>EasyOCR: Try first<br>Timeout: 30s<br>Fallback: Ready</p>
+            </div>
+            <div class="status-card">
+                <h3>4️⃣ OCR Backup</h3>
+                <p>OpenAI Vision: GPT-4<br>Max tokens: 2000<br>Temperature: 0.1</p>
+            </div>
+            <div class="status-card">
+                <h3>5️⃣ Validation</h3>
+                <p>Scryfall: API v1<br>Fuzzy match: 85%<br>Cache: 5min</p>
+            </div>
+            <div class="status-card">
+                <h3>6️⃣ Export</h3>
+                <p>Formats: 5 types<br>MTGA, Moxfield<br>JSON, CSV, TXT</p>
+            </div>
+        </div>
+
+        <h2>🎯 Flow Actuel</h2>
+        <div class="error-log">
+            <div class="warning">📍 Current State:</div>
+            1. User uploads image.webp ✅<br>
+            2. Frontend sends to backend ✅<br>
+            3. Multer accepts file ✅<br>
+            4. Process starts without Redis ✅<br>
+            5. Sharp optimizes image ✅<br>
+            6. EasyOCR attempts processing ✅<br>
+            7. On fail → OpenAI Vision ✅<br>
+            8. Results validated with Scryfall ⏳<br>
+            9. Frontend receives results ⏳<br>
+            10. User exports deck ⏳
+        </div>
+
+        <script>
+            mermaid.initialize({ 
+                startOnLoad: true,
+                theme: 'default',
+                flowchart: {
+                    useMaxWidth: true,
+                    htmlLabels: true,
+                    curve: 'basis'
+                }
+            });
+            
+            // Auto-refresh pour voir les changements
+            setTimeout(() => {
+                console.log('OCR Process Diagram Loaded');
+            }, 1000);
+        </script>
+    </div>
+</body>
+</html>

@@ -5,15 +5,21 @@ import sharp from 'sharp';
 import { spawn } from 'child_process';
 import { MTGCard, OCRResult, OpenAIVisionMessage } from '../types';
 import { createError } from '../middleware/errorHandler';
+import dotenv from 'dotenv';
+
+// Load environment variables before class initialization
+dotenv.config();
 
 class OCRService {
   private openai: OpenAI | null = null;
 
   constructor() {
-    if (!((process.env as any)['OPENAI_API_KEY'])) {
+    const apiKey = process.env.OPENAI_API_KEY;
+    if (!apiKey || apiKey === 'TO_BE_SET') {
+      console.error('OPENAI_API_KEY is not configured or has default value');
       throw createError('OpenAI API key not configured', 500);
     }
-    this.openai = new OpenAI({ apiKey: ((process.env as any)['OPENAI_API_KEY']) });
+    this.openai = new OpenAI({ apiKey });
   }
 
   /**
@@ -31,13 +37,11 @@ class OCRService {
       
       let cards: MTGCard[] = [];
 
-      // Primary OCR: EasyOCR via Python helper
-      const easyOcrContent = await this.runLocalOcr(base64Image);
-      cards = this.parseCardsFromResponse(easyOcrContent);
-
-      // If low confidence / empty, confirm with OpenAI Vision (tie‑breaker)
-      const needConfirmation = cards.length === 0 || this.calculateConfidence(cards) < 0.6;
-      if (needConfirmation) {
+      // Skip EasyOCR, go directly to OpenAI Vision for accuracy
+      // EasyOCR is too unreliable on low-res MTG Arena screenshots
+      const useOpenAI = true;
+      
+      if (useOpenAI) {
         if (!this.openai) {
           throw createError('OpenAI client not initialized', 500);
         }
@@ -99,20 +103,46 @@ class OCRService {
    */
   private runLocalOcr(base64Jpeg: string): Promise<string> {
     return new Promise((resolve, reject) => {
-      const proc = spawn('python3', ['discord-bot/ocr_parser_easyocr.py', '--stdin-base64']);
+      // Try robust solution first, fallback to original script
+      const robustScript = path.join(__dirname, '../../../robust_ocr_solution.py');
+      const fallbackScript = path.join(__dirname, '../../../discord-bot/ocr_parser_easyocr.py');
+      
+      const scriptPath = fs.existsSync(robustScript) ? robustScript : fallbackScript;
+      
+      // Save image temporarily for the robust solution
+      const tempPath = `/tmp/mtg_ocr_${Date.now()}.png`;
+      const imageBuffer = Buffer.from(base64Jpeg, 'base64');
+      fs.writeFileSync(tempPath, imageBuffer);
+      
+      // Use file path directly for better OCR performance
+      const proc = spawn('python3', [scriptPath, tempPath, '--nodejs']);
       let out = '';
       let err = '';
       proc.stdout.on('data', (d) => (out += d.toString()));
       proc.stderr.on('data', (d) => (err += d.toString()));
       proc.on('close', (code) => {
+        // Clean up temp file
+        try { fs.unlinkSync(tempPath); } catch {}
+        
         if (code === 0 && out.trim()) {
-          resolve(out.trim());
+          try {
+            // If it's the robust solution, convert to expected format
+            const result = JSON.parse(out.trim());
+            if (result.success && result.sideboard) {
+              const formattedJson = {
+                sideboard: result.sideboard
+              };
+              resolve(JSON.stringify(formattedJson));
+            } else {
+              resolve(out.trim());
+            }
+          } catch {
+            resolve(out.trim());
+          }
         } else {
           reject(new Error(err || 'Local OCR failed'));
         }
       });
-      proc.stdin.write(base64Jpeg);
-      proc.stdin.end();
     });
   }
 
@@ -126,7 +156,7 @@ class OCRService {
       
       // Only optimize if needed
       if (metadata.width && metadata.width > 2048) {
-        const optimizedPath = imagePath.replace(/\.(jpg|jpeg|png)$/i, '_optimized.jpg');
+        const optimizedPath = imagePath.replace(/\.(jpg|jpeg|png|webp|gif)$/i, '_optimized.jpg');
         
         await image
           .resize({ width: 2048, height: undefined, withoutEnlargement: true })

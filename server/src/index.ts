@@ -18,8 +18,9 @@ import clientProm from 'prom-client';
 import swaggerUi from 'swagger-ui-express';
 import YAML from 'yamljs';
 
-// Load environment variables
-dotenv.config();
+// Load environment variables from parent directory first, then local
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+dotenv.config(); // Also load local .env if exists
 
 // Validate required environment variables
 validateEnv();

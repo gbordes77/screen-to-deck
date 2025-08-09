@@ -1,0 +1,13 @@
+{
+  "lands_correct": [
+    {"name": "Concealed Courtyard", "quantity": 3},
+    {"name": "Floodform Verge", "quantity": 3},
+    {"name": "Gloomlake Verge", "quantity": 4},
+    {"name": "Godless Shrine", "quantity": 4},
+    {"name": "Island", "quantity": 2},
+    {"name": "Starting Town", "quantity": 4},
+    {"name": "Watery Grave", "quantity": 4}
+  ],
+  "total_lands": 24,
+  "note": "Correction basée sur l'image fournie montrant clairement chaque terrain"
+}

@@ -2,11 +2,13 @@ import { Router } from 'express';
 import ocrRoutes from './ocr';
 import exportRoutes from './export';
 import cardsRoutes from './cards';
+import enhancedOcrRoutes from './ocr.enhanced';
 
 const router = Router();
 
 // API routes
 router.use('/ocr', ocrRoutes);
+router.use('/ocr', enhancedOcrRoutes); // Enhanced OCR endpoints under /ocr/enhanced
 router.use('/export', exportRoutes);
 router.use('/cards', cardsRoutes);
 
@@ -20,6 +22,8 @@ router.get('/', (_req, res) => {
       ocr: {
         'POST /api/ocr/upload': 'Upload and process deck screenshot',
         'GET /api/ocr/status/:id': 'Get processing status',
+        'POST /api/ocr/enhanced': 'Enhanced OCR with super-resolution and never-give-up mode',
+        'GET /api/ocr/enhanced/status': 'Check enhanced OCR service capabilities',
       },
       export: {
         'POST /api/export/:format': 'Export deck list to specific format',

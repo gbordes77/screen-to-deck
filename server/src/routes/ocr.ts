@@ -59,8 +59,13 @@ router.post('/upload', upload.single('image'), budgetGuard, asyncHandler(async (
 
   processingStatus.set(processId, status);
 
-  // Enqueue async processing (BullMQ)
-  await ocrQueue.add('run', { processId, filePath: req.file.path, validateCards, deckName });
+  // Enqueue async processing (BullMQ) - only if Redis is available
+  if (ocrQueue) {
+    await ocrQueue.add('run', { processId, filePath: req.file.path, validateCards, deckName });
+  } else {
+    // Process directly without queue
+    processImageAsync(processId, req.file.path, { validateCards, deckName });
+  }
 
   const response: APIResponse = {
     success: true,
@@ -135,8 +140,13 @@ router.post('/process-base64', budgetGuard, asyncHandler(async (req: Request, re
 
   processingStatus.set(processId, status);
 
-  // Enqueue async processing (BullMQ)
-  await ocrQueue.add('run', { processId, filePath: tempFilePath, validateCards, deckName });
+  // Enqueue async processing (BullMQ) - only if Redis is available
+  if (ocrQueue) {
+    await ocrQueue.add('run', { processId, filePath: tempFilePath, validateCards, deckName });
+  } else {
+    // Process directly without queue
+    processImageAsync(processId, tempFilePath, { validateCards, deckName });
+  }
 
   const response: APIResponse = {
     success: true,

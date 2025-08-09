@@ -1,0 +1,33 @@
+{
+  "deck_name": "Pixie Revival",
+  "format": "Modern",
+  "mainboard": [
+    {"name": "Concealed Courtyard", "quantity": 4},
+    {"name": "Nurturing Pixie", "quantity": 4},
+    {"name": "Surgespell Kirin", "quantity": 4},
+    {"name": "Slice Up", "quantity": 4},
+    {"name": "Floodform Verge", "quantity": 2},
+    {"name": "Gloomlake's Verge", "quantity": 4},
+    {"name": "Spyglass Siren", "quantity": 4},
+    {"name": "Lair of Rebellion", "quantity": 2},
+    {"name": "Nowhere to Hide", "quantity": 2},
+    {"name": "Momentum Break", "quantity": 2},
+    {"name": "Crooning Relic", "quantity": 2},
+    {"name": "Tragic Trajectory", "quantity": 4},
+    {"name": "Island", "quantity": 2},
+    {"name": "Starting Town", "quantity": 3},
+    {"name": "Victory Plans", "quantity": 3},
+    {"name": "Stormcaller's Talent", "quantity": 4}
+  ],
+  "sideboard": [
+    {"name": "Seism Rip", "quantity": 2},
+    {"name": "Counter target artifact or enchantment spell", "quantity": 1},
+    {"name": "Devious Momentum Break", "quantity": 1},
+    {"name": "Instant", "quantity": 3},
+    {"name": "Cosmogone Zen", "quantity": 2},
+    {"name": "Exercise", "quantity": 1},
+    {"name": "No More Lies", "quantity": 2},
+    {"name": "Enchantment", "quantity": 3}
+  ],
+  "notes": "Deck visible dans l'interface MTGO. Certains noms de cartes du sideboard sont partiellement visibles."
+}

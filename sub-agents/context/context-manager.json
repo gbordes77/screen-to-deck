@@ -1,0 +1,539 @@
+{
+  "projectName": "MTG Screen-to-Deck",
+  "projectVersion": "2.0.1",
+  "lastFullScan": "2025-08-09T16:54:06Z",
+  "projectStatus": {
+    "phase": "Development",
+    "gitBranch": "main",
+    "modifiedFiles": [
+      "client/src/index.css",
+      "server/package-lock.json"
+    ],
+    "untrackedFiles": [
+      "CLAUDE.md"
+    ],
+    "recentCommits": [
+      {
+        "hash": "5aeb2ca",
+        "message": "feat(ui): restore minimal UI (Layout, Home, Converter with upload+polling, Results, About) to avoid blank page"
+      },
+      {
+        "hash": "8caa954",
+        "message": "fix(env): simplify env validation (require OPENAI_API_KEY; remove broken alternatives/offline logic)"
+      },
+      {
+        "hash": "69b7403",
+        "message": "refactor(ocr): remove tesseract usage and dependencies; set EasyOCR as primary OCR with OpenAI Vision confirmation; update docs"
+      }
+    ]
+  },
+  "architecture": {
+    "type": "Full-Stack Application with Discord Bot",
+    "components": {
+      "frontend": {
+        "framework": "React 18",
+        "language": "TypeScript",
+        "builder": "Vite",
+        "styling": "TailwindCSS",
+        "routing": "React Router v6",
+        "port": 5173,
+        "dependencies": {
+          "ui": ["@headlessui/react", "@heroicons/react", "lucide-react", "framer-motion"],
+          "state": ["axios", "react-hot-toast"],
+          "upload": ["react-dropzone"]
+        }
+      },
+      "backend": {
+        "framework": "Express",
+        "language": "TypeScript",
+        "runtime": "Node.js >= 18",
+        "port": 3001,
+        "dependencies": {
+          "core": ["express", "cors", "helmet", "compression"],
+          "ocr": ["openai"],
+          "validation": ["joi", "zod"],
+          "storage": ["@aws-sdk/client-s3", "@supabase/supabase-js"],
+          "cache": ["redis", "ioredis", "lru-cache"],
+          "queue": ["bullmq"],
+          "monitoring": ["pino", "prom-client"],
+          "image": ["sharp", "multer"]
+        }
+      },
+      "discordBot": {
+        "language": "Python 3.8+",
+        "framework": "discord.py",
+        "ocr": "EasyOCR",
+        "dependencies": {
+          "discord": ["discord.py", "py-cord"],
+          "ocr": ["easyocr", "torch", "torchvision", "opencv-python"],
+          "api": ["aiohttp", "requests"],
+          "matching": ["fuzzywuzzy", "python-Levenshtein"]
+        }
+      }
+    },
+    "externalServices": {
+      "required": {
+        "openai": {
+          "service": "OpenAI Vision API",
+          "purpose": "OCR for web application",
+          "envVar": "OPENAI_API_KEY"
+        },
+        "scryfall": {
+          "service": "Scryfall API",
+          "purpose": "Card validation and data",
+          "url": "https://api.scryfall.com"
+        }
+      },
+      "optional": {
+        "discord": {
+          "service": "Discord Bot",
+          "envVar": "DISCORD_TOKEN"
+        },
+        "redis": {
+          "service": "Redis Cache",
+          "envVar": "REDIS_URL"
+        },
+        "supabase": {
+          "service": "Supabase Database",
+          "envVars": ["SUPABASE_URL", "SUPABASE_ANON_KEY", "SUPABASE_SERVICE_ROLE_KEY"]
+        },
+        "cloudflareR2": {
+          "service": "Cloudflare R2 Storage",
+          "envVars": ["R2_ACCOUNT_ID", "R2_ACCESS_KEY_ID", "R2_SECRET_ACCESS_KEY"]
+        }
+      }
+    }
+  },
+  "directoryTree": {
+    "path": "/",
+    "purpose": "Root directory of MTG Screen-to-Deck project - AI-powered Magic: The Gathering deck scanner",
+    "lastScanned": "2025-08-09T16:54:06Z",
+    "files": [
+      "package.json",
+      "package-lock.json",
+      "README.md",
+      "CLAUDE.md",
+      ".env",
+      ".gitignore",
+      ".dockerignore",
+      "docker-compose.yml",
+      "docker-compose.prod.yml",
+      "docker-compose.staging.yml"
+    ],
+    "subdirectories": {
+      "client": {
+        "path": "/client",
+        "purpose": "React/TypeScript frontend application with Vite build system",
+        "lastScanned": "2025-08-09T16:54:06Z",
+        "files": [
+          "package.json",
+          "vite.config.ts",
+          "tailwind.config.js",
+          "postcss.config.js",
+          "tsconfig.json"
+        ],
+        "subdirectories": {
+          "src": {
+            "path": "/client/src",
+            "purpose": "Frontend source code - components, pages, services",
+            "lastScanned": "2025-08-09T16:54:06Z",
+            "files": [
+              "App.tsx",
+              "main.tsx",
+              "index.css"
+            ],
+            "subdirectories": {
+              "components": {
+                "path": "/client/src/components",
+                "purpose": "Reusable React components including Layout wrapper",
+                "lastScanned": "2025-08-09T16:54:06Z",
+                "files": ["Layout.tsx"],
+                "subdirectories": {}
+              },
+              "pages": {
+                "path": "/client/src/pages",
+                "purpose": "Application pages - Home, Converter, Results, About",
+                "lastScanned": "2025-08-09T16:54:06Z",
+                "files": [
+                  "HomePage.tsx",
+                  "ConverterPage.tsx",
+                  "ResultsPage.tsx",
+                  "AboutPage.tsx"
+                ],
+                "subdirectories": {}
+              },
+              "services": {
+                "path": "/client/src/services",
+                "purpose": "API client services for backend communication",
+                "lastScanned": "2025-08-09T16:54:06Z",
+                "files": [],
+                "subdirectories": {}
+              },
+              "types": {
+                "path": "/client/src/types",
+                "purpose": "TypeScript type definitions for frontend",
+                "lastScanned": "2025-08-09T16:54:06Z",
+                "files": ["index.ts"],
+                "subdirectories": {}
+              }
+            }
+          },
+          "public": {
+            "path": "/client/public",
+            "purpose": "Static assets served directly by Vite",
+            "lastScanned": "2025-08-09T16:54:06Z",
+            "files": [],
+            "subdirectories": {}
+          },
+          "dist": {
+            "path": "/client/dist",
+            "purpose": "Production build output from Vite",
+            "lastScanned": "2025-08-09T16:54:06Z",
+            "files": [],
+            "subdirectories": {}
+          }
+        }
+      },
+      "server": {
+        "path": "/server",
+        "purpose": "Express/TypeScript backend API server with OCR and validation services",
+        "lastScanned": "2025-08-09T16:54:06Z",
+        "files": [
+          "package.json",
+          "package-lock.json",
+          "tsconfig.json"
+        ],
+        "subdirectories": {
+          "src": {
+            "path": "/server/src",
+            "purpose": "Backend source code - API routes, services, middleware",
+            "lastScanned": "2025-08-09T16:54:06Z",
+            "files": ["index.ts"],
+            "subdirectories": {
+              "routes": {
+                "path": "/server/src/routes",
+                "purpose": "Express API endpoints - OCR, cards, export",
+                "lastScanned": "2025-08-09T16:54:06Z",
+                "files": [
+                  "index.ts",
+                  "ocr.ts",
+                  "cards.ts",
+                  "export.ts"
+                ],
+                "subdirectories": {}
+              },
+              "services": {
+                "path": "/server/src/services",
+                "purpose": "Core business logic - OCR processing, Scryfall integration, storage",
+                "lastScanned": "2025-08-09T16:54:06Z",
+                "files": [
+                  "ocrService.ts",
+                  "scryfallService.ts",
+                  "exportService.ts",
+                  "enhanced-ocr.service.ts",
+                  "enhanced-ocr-optimized.service.ts",
+                  "storage.service.ts",
+                  "supabase.service.ts"
+                ],
+                "subdirectories": {}
+              },
+              "middleware": {
+                "path": "/server/src/middleware",
+                "purpose": "Express middleware - rate limiting, auth, error handling",
+                "lastScanned": "2025-08-09T16:54:06Z",
+                "files": ["rateLimiter.ts"],
+                "subdirectories": {}
+              },
+              "types": {
+                "path": "/server/src/types",
+                "purpose": "TypeScript type definitions and interfaces",
+                "lastScanned": "2025-08-09T16:54:06Z",
+                "files": ["index.ts"],
+                "subdirectories": {}
+              },
+              "utils": {
+                "path": "/server/src/utils",
+                "purpose": "Utility functions and helpers including env validation",
+                "lastScanned": "2025-08-09T16:54:06Z",
+                "files": ["validateEnv.ts"],
+                "subdirectories": {}
+              },
+              "queue": {
+                "path": "/server/src/queue",
+                "purpose": "Background job processing with BullMQ",
+                "lastScanned": "2025-08-09T16:54:06Z",
+                "files": [],
+                "subdirectories": {}
+              }
+            }
+          },
+          "dist": {
+            "path": "/server/dist",
+            "purpose": "Compiled JavaScript output from TypeScript",
+            "lastScanned": "2025-08-09T16:54:06Z",
+            "files": [],
+            "subdirectories": {}
+          }
+        }
+      },
+      "discord-bot": {
+        "path": "/discord-bot",
+        "purpose": "Python Discord bot with EasyOCR integration for card scanning",
+        "lastScanned": "2025-08-09T16:54:06Z",
+        "files": [
+          "bot.py",
+          "requirements.txt",
+          "ocr_parser_easyocr.py",
+          "ocr_parser_easyocr_working.py",
+          "scryfall_service.py",
+          "deck_processor.py",
+          "export_deck.py",
+          "validate_env.py",
+          "start_bot.sh"
+        ],
+        "subdirectories": {
+          "tests": {
+            "path": "/discord-bot/tests",
+            "purpose": "Python test suite for bot components",
+            "lastScanned": "2025-08-09T16:54:06Z",
+            "files": [
+              "test_parser.py",
+              "test_scryfall.py",
+              "test_export.py"
+            ],
+            "subdirectories": {}
+          },
+          "utils": {
+            "path": "/discord-bot/utils",
+            "purpose": "Utility modules for logging and helpers",
+            "lastScanned": "2025-08-09T16:54:06Z",
+            "files": ["logger.py"],
+            "subdirectories": {}
+          },
+          "docs": {
+            "path": "/discord-bot/docs",
+            "purpose": "Documentation for Discord bot",
+            "lastScanned": "2025-08-09T16:54:06Z",
+            "files": [],
+            "subdirectories": {}
+          }
+        }
+      },
+      "scripts": {
+        "path": "/scripts",
+        "purpose": "Automation and deployment scripts for infrastructure and operations",
+        "lastScanned": "2025-08-09T16:54:06Z",
+        "files": [
+          "test-supabase-config.js",
+          "setup-infrastructure.sh",
+          "deploy-complete.sh",
+          "check-prerequisites.sh"
+        ],
+        "subdirectories": {}
+      },
+      "tests": {
+        "path": "/tests",
+        "purpose": "Integration and end-to-end test suites",
+        "lastScanned": "2025-08-09T16:54:06Z",
+        "files": [
+          "test-enhanced-ocr.spec.ts",
+          "test-scryfall-validation.spec.ts"
+        ],
+        "subdirectories": {}
+      },
+      "docs": {
+        "path": "/docs",
+        "purpose": "Project documentation and architecture diagrams",
+        "lastScanned": "2025-08-09T16:54:06Z",
+        "files": [],
+        "subdirectories": {}
+      },
+      "sub-agents": {
+        "path": "/sub-agents",
+        "purpose": "AI agent configurations and context management",
+        "lastScanned": "2025-08-09T16:54:06Z",
+        "files": [],
+        "subdirectories": {
+          "context": {
+            "path": "/sub-agents/context",
+            "purpose": "Context manager artifacts and knowledge base",
+            "lastScanned": "2025-08-09T16:54:06Z",
+            "files": ["context-manager.json"],
+            "subdirectories": {}
+          }
+        }
+      }
+    }
+  },
+  "apiEndpoints": {
+    "ocr": {
+      "upload": {
+        "method": "POST",
+        "path": "/api/ocr",
+        "description": "Upload image for OCR processing",
+        "returns": "jobId for status polling"
+      },
+      "status": {
+        "method": "GET",
+        "path": "/api/ocr/status/:jobId",
+        "description": "Check OCR processing status",
+        "returns": "Processing status and results when complete"
+      }
+    },
+    "cards": {
+      "search": {
+        "method": "GET",
+        "path": "/api/cards/search",
+        "description": "Search Scryfall for card names",
+        "params": ["q (query string)"]
+      },
+      "validate": {
+        "method": "POST",
+        "path": "/api/cards/validate",
+        "description": "Validate and correct card names",
+        "body": "Array of card names to validate"
+      }
+    },
+    "export": {
+      "formats": {
+        "method": "POST",
+        "path": "/api/export",
+        "description": "Export deck to various formats",
+        "formats": ["MTGA", "Moxfield", "Archidekt", "TappedOut", "text"]
+      }
+    }
+  },
+  "testCoverage": {
+    "backend": {
+      "framework": "Jest",
+      "configFile": "server/jest.config.js",
+      "testFiles": [
+        "tests/test-enhanced-ocr.spec.ts",
+        "tests/test-scryfall-validation.spec.ts"
+      ],
+      "coverage": "Not measured"
+    },
+    "frontend": {
+      "framework": "Vite test runner",
+      "testFiles": [],
+      "coverage": "No tests configured"
+    },
+    "discordBot": {
+      "framework": "pytest",
+      "testFiles": [
+        "discord-bot/tests/test_parser.py",
+        "discord-bot/tests/test_scryfall.py",
+        "discord-bot/tests/test_export.py"
+      ],
+      "coverage": "Not measured"
+    }
+  },
+  "environmentConfiguration": {
+    "required": {
+      "OPENAI_API_KEY": {
+        "status": "TO_BE_SET",
+        "purpose": "OpenAI Vision API for web OCR"
+      }
+    },
+    "optional": {
+      "DISCORD_TOKEN": {
+        "status": "Not configured",
+        "purpose": "Discord bot authentication"
+      },
+      "REDIS_URL": {
+        "status": "Not configured",
+        "purpose": "Redis cache connection"
+      },
+      "SUPABASE_URL": {
+        "status": "Not configured",
+        "purpose": "Supabase database URL"
+      },
+      "CORS_ORIGIN": {
+        "status": "Configured",
+        "value": "http://192.168.1.39:5173",
+        "purpose": "CORS allowed origin"
+      },
+      "VITE_API_URL": {
+        "status": "Configured",
+        "value": "http://localhost:3001/api",
+        "purpose": "Frontend API endpoint"
+      }
+    }
+  },
+  "issues": {
+    "critical": [
+      {
+        "type": "Configuration",
+        "description": "OPENAI_API_KEY not set - OCR functionality will not work",
+        "location": ".env",
+        "severity": "HIGH"
+      }
+    ],
+    "warnings": [
+      {
+        "type": "Dependencies",
+        "description": "Discord bot has both tesseract and EasyOCR dependencies, but tesseract was removed per recent commits",
+        "location": "discord-bot/requirements.txt",
+        "severity": "MEDIUM"
+      },
+      {
+        "type": "Testing",
+        "description": "Frontend has no test files configured",
+        "location": "client/",
+        "severity": "LOW"
+      },
+      {
+        "type": "Configuration",
+        "description": "CORS_ORIGIN uses hardcoded IP address instead of environment variable",
+        "location": ".env",
+        "severity": "LOW"
+      }
+    ],
+    "recommendations": [
+      {
+        "type": "Security",
+        "description": "Set up proper environment variables for production deployment"
+      },
+      {
+        "type": "Testing",
+        "description": "Add frontend test suite with Vitest or Jest"
+      },
+      {
+        "type": "Documentation",
+        "description": "Update README with current architecture after OCR refactoring"
+      }
+    ]
+  },
+  "dataFlow": {
+    "webApplication": {
+      "steps": [
+        "User uploads image via React frontend (port 5173)",
+        "Frontend sends image to backend API (port 3001)",
+        "Backend processes with OpenAI Vision API",
+        "Card names validated via Scryfall API with fuzzy matching",
+        "Results cached (Redis/LRU) and returned",
+        "Export options available (MTGA, Moxfield, etc.)"
+      ]
+    },
+    "discordBot": {
+      "steps": [
+        "User sends image in Discord channel",
+        "Bot downloads and processes with EasyOCR",
+        "Intelligent text grouping and column detection",
+        "Scryfall validation with auto-correction",
+        "Results formatted and sent back to channel",
+        "Export commands available"
+      ]
+    }
+  },
+  "agentActivityLog": {},
+  "metadata": {
+    "contextManagerVersion": "1.0.0",
+    "lastUpdated": "2025-08-09T16:54:06Z",
+    "fileCount": {
+      "total": "Unknown",
+      "tracked": 89,
+      "documentation": 45
+    }
+  }
+}
