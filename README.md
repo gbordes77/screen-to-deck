@@ -59,6 +59,10 @@ Enhanced Discord integration with AI-powered features
 
 ## 📋 Quick Start
 
+For self-hosting on macOS (frontend + backend served from your machine and accessible on your LAN), see:
+
+- QUICK_START_README.md
+
 ### **Discord Bot (Recommended)**
 
 1. **Clone & Setup**
