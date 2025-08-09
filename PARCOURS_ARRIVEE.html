@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Parcours d’arrivée — Screen‑to‑Deck</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b1220;--card:#111827;--muted:#9ca3af;--accent:#22c55e;--link:#60a5fa;--code:#0f172a;--border:#1f2937
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Helvetica,Arial,sans-serif;background:linear-gradient(135deg,#0b1220,#0b1220 40%,#0f172a);color:#e5e7eb;line-height:1.6}
+    .wrap{max-width:980px;margin:0 auto;padding:48px 24px}
+    h1{font-size:40px;line-height:1.2;margin:0 0 8px;font-weight:800}
+    h2{font-size:24px;margin:32px 0 12px;font-weight:800;color:#f3f4f6}
+    p.lead{color:#9ca3af;margin:0 0 24px}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));border:1px solid var(--border);border-radius:16px;padding:24px;margin:16px 0}
+    .step{display:flex;gap:16px;align-items:flex-start}
+    .num{flex:0 0 40px;height:40px;border-radius:10px;background:#111827;color:#a7f3d0;display:flex;align-items:center;justify-content:center;font-weight:800;border:1px solid var(--border)}
+    .title{font-weight:800;color:#f9fafb}
+    .muted{color:var(--muted)}
+    pre{background:#0b1020;border:1px solid var(--border);padding:16px;border-radius:12px;overflow:auto}
+    code{color:#a7f3d0}
+    a{color:var(--link);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .cta{display:inline-flex;align-items:center;gap:8px;background:#16a34a;border:none;color:white;padding:10px 14px;border-radius:10px;font-weight:700;cursor:pointer}
+    .cta:hover{background:#22c55e}
+    .note{border-left:4px solid #3b82f6;padding:8px 12px;background:rgba(59,130,246,.08);border-radius:8px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Parcours d’arrivée</h1>
+    <p class="lead">Le guide express pour lancer, valider et contribuer — en une commande — avec une base solide et documentée.</p>
+
+    <div class="card">
+      <div class="step">
+        <div class="num">0</div>
+        <div>
+          <div class="title">Lire d’abord (contexte)</div>
+          <div class="muted">Vision → Architecture → Dev/Ops → Qualité/CI → Contribution</div>
+          <ul>
+            <li>Vision: <code>PROJECT_OVERVIEW.md</code></li>
+            <li>Architecture: <code>ARCHITECTURE.md</code></li>
+            <li>Dev/Ops: <code>DEVELOPMENT.md</code>, <code>SELF_HOSTING.md</code></li>
+            <li>Qualité/CI: <code>.github/workflows</code>, <code>AUDIT.md</code>, <code>CHANGELOG.md</code>, <code>ROLLBACK.md</code></li>
+            <li>Contribution: <code>CONTRIBUTING.md</code>, <code>.github/</code>, <code>MISSION_CLOSEOUT.md</code></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="step">
+        <div class="num">1</div>
+        <div>
+          <div class="title">Tout lancer (one‑button)</div>
+          <p class="muted">Bootstrap → Redis (si dispo) → API+Front → Health → URLs</p>
+          <pre><code>./scripts/one-button.sh</code></pre>
+          <p class="note">Pas de config manuelle: le script détecte l’IP LAN, configure CORS, et lance front+API en arrière‑plan.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card grid">
+      <div>
+        <div class="title">Vérifier</div>
+        <ul>
+          <li>UI: <code>http://&lt;IP_LAN&gt;:5173</code></li>
+          <li>API: <code>/health</code>, <code>/api/health</code></li>
+          <li>Docs API: <code>/api/docs</code></li>
+          <li>Metrics: <code>/metrics</code></li>
+        </ul>
+      </div>
+      <div>
+        <div class="title">Valider E2E</div>
+        <p>Ouvre <code>TEST_PLAN.html</code> et suis le pas‑à‑pas (upload OCR → validation Scryfall (batch) → export).</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="title">Contribuer</div>
+      <ul>
+        <li>Petites PR testées; mets à jour doc/changelog si besoin</li>
+        <li>Paramètres (optionnels) dans <code>server/.env</code>: <code>MAX_JOBS_PER_HOUR</code>, <code>MAX_DAILY_COST_EUR</code>, <code>OCR_CONCURRENCY</code></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="title">Avant livraison / fin de mission</div>
+      <ul>
+        <li>Vérifie <code>CHANGELOG.md</code>, teste <code>ROLLBACK.md</code></li>
+        <li>Checklist passation: <code>MISSION_CLOSEOUT.md</code></li>
+      </ul>
+    </div>
+
+    <p class="muted">Besoin d’aide rapide? Démarre par <code>./scripts/one-button.sh</code> puis ouvre <code>TEST_PLAN.html</code>.</p>
+  </div>
+</body>
+</html>
