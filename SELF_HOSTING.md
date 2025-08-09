@@ -14,14 +14,16 @@ Prerequisites
   - `ipconfig getifaddr en0` (often works for Wi‑Fi)
 - Example: 192.168.1.42
 
-2) Configure environment
+2) Configure environment & secret (Keychain)
 - Copy example env:
 ```bash
 cp server/env.example server/.env
 ```
 - Edit `server/.env`:
   - `OFFLINE_MODE=false`
-  - `OPENAI_API_KEY=sk-...` (your key)
+  - `OPENAI_API_KEY=sk-...` (your key) — ou utilisez le Trousseau (Keychain):
+    - `bash scripts/secret-store.sh set sk-...` (stockage sécurisé macOS)
+    - le script `self-host.sh` l’injectera automatiquement si la clé existe dans le Trousseau
   - `CORS_ORIGIN=http://<YOUR_LAN_IP>:5173` (e.g., http://192.168.1.42:5173)
 
 Optional root env (for Docker Compose):

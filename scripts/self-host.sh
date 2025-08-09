@@ -43,7 +43,21 @@ else
   sed -i '' "s|^CORS_ORIGIN=.*|CORS_ORIGIN=http://${LAN_IP}:5173|" .env || true
 fi
 
-echo "Env prepared. Please export OPENAI_API_KEY in your shell or edit server/.env and ./.env to add your key."
+# Try to hydrate OPENAI_API_KEY from macOS Keychain if not present
+if ! grep -q '^OPENAI_API_KEY=' server/.env || grep -q '^OPENAI_API_KEY=$' server/.env; then
+  KEY_FROM_KC=$(bash scripts/secret-store.sh get || true)
+  if [[ -n "${KEY_FROM_KC}" ]]; then
+    if grep -q '^OPENAI_API_KEY=' server/.env; then
+      sed -i '' "s|^OPENAI_API_KEY=.*|OPENAI_API_KEY=${KEY_FROM_KC}|" server/.env || true
+    else
+      echo "OPENAI_API_KEY=${KEY_FROM_KC}" >> server/.env
+    fi
+    echo "OPENAI_API_KEY injected from Keychain into server/.env"
+  else
+    echo "No OPENAI_API_KEY found in Keychain. Set it once with:"
+    echo "  bash scripts/secret-store.sh set sk-..."
+  fi
+fi
 
 echo "Starting server and client (client bound to 0.0.0.0)..."
 # Start server and client (client on 0.0.0.0 for LAN)
