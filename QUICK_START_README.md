@@ -1,3 +1,40 @@
+Quick start (self-hosted on macOS)
+
+1) Prerequisites
+- Node.js >= 20, npm >= 9
+- OpenAI API key
+
+2) Setup env
+```bash
+cp server/env.example server/.env
+# Edit server/.env:
+# - OFFLINE_MODE=false
+# - OPENAI_API_KEY=sk-...
+# - CORS_ORIGIN=http://<your-lan-ip>:5173
+```
+
+3) Install & run (no Docker)
+```bash
+npm install
+npm run dev:server
+# In another terminal, expose the client to LAN:
+npm run dev:client -- --host 0.0.0.0
+```
+Access:
+- Front:  http://<your-lan-ip>:5173
+- API:    http://<your-lan-ip>:3001  (health: /health, /api/health)
+
+Alternative: Docker compose
+```bash
+export OPENAI_API_KEY=sk-...
+export CORS_ORIGIN=http://<your-lan-ip>:5173
+docker-compose up -d web-api web-frontend
+```
+
+Notes
+- Pare-feu macOS: autoriser les ports 3001 (API) et 5173 (Front)
+- Le bot Discord est optionnel et non requis pour le web
+- Pour production, préférer des images prod (client build + nginx)
 # 🃏 Screen-to-Deck SaaS - Quick Start
 
 **🎉 TON SAAS EST PRÊT ! Infrastructure complète générée !**
