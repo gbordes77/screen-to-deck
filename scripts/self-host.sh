@@ -59,6 +59,10 @@ if ! grep -q '^OPENAI_API_KEY=' server/.env || grep -q '^OPENAI_API_KEY=$' serve
   fi
 fi
 
+# Optional flag: --no-wait (do not wait on processes)
+NO_WAIT=0
+if [[ "${1:-}" == "--no-wait" ]]; then NO_WAIT=1; fi
+
 echo "Starting server and client (client bound to 0.0.0.0)..."
 # Start server and client (client on 0.0.0.0 for LAN)
 npm run dev:server &
@@ -79,5 +83,9 @@ Access URLs:
 If the browser shows CORS errors, ensure CORS_ORIGIN matches the frontend URL in server/.env
 MSG
 
-# Wait for background processes
-wait
+if [[ ${NO_WAIT} -eq 0 ]]; then
+  # Wait for background processes
+  wait
+else
+  echo "Processes started in background (PIDs: $SERVER_PID, $CLIENT_PID). Exiting without waiting."
+fi
