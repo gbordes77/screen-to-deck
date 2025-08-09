@@ -41,7 +41,7 @@ Transform your MTG deck screenshots into intelligent, validated deck lists using
 
 ### 🌐 **Web Application**
 
-Full-featured React + TypeScript frontend with FastAPI backend
+Full-featured React + TypeScript frontend with Express (Node.js) backend
 
 - Drag & drop image upload
 - Real-time processing updates
@@ -316,6 +316,10 @@ MIT License - see [LICENSE](LICENSE) for details.
 - **Issues**: [GitHub Issues](https://github.com/your-repo/issues)
 - **Documentation**: [Full API Docs](https://docs.mtgscanner.com)
 - **Changelog**: [See what's new](CHANGELOG.md)
+
+### 📚 Additional docs
+- Self-host quick start: `QUICK_START_README.md`
+- Bot technical docs: `discord-bot/TECHNICAL_DOCUMENTATION.md`, `discord-bot/ETAT_DES_LIEUX.md`
 
 ## 🏆 **Recognition**
 
