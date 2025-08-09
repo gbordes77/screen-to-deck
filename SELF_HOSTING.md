@@ -30,14 +30,10 @@ cp docker-compose.env.example .env
 # Set OPENAI_API_KEY and CORS_ORIGIN=http://<YOUR_LAN_IP>:5173
 ```
 
-3) Run without Docker (simple/local dev)
-- Terminal 1 (API):
+3) Run without Docker (one-command)
+- One command (auto-detects your LAN IP, configures CORS, starts both):
 ```bash
-npm run dev:server
-```
-- Terminal 2 (Frontend exposed to LAN):
-```bash
-npm run dev:client -- --host 0.0.0.0
+./scripts/self-host.sh
 ```
 - Access:
   - Frontend: http://<YOUR_LAN_IP>:5173
