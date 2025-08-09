@@ -1,0 +1,85 @@
+openapi: 3.0.3
+info:
+  title: Screen-to-Deck API
+  version: 2.0.1
+servers:
+  - url: http://localhost:3001/api
+paths:
+  /health:
+    get:
+      summary: API health check
+      responses:
+        '200': { description: OK }
+  /ocr/upload:
+    post:
+      summary: Upload deck screenshot
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+                validateCards:
+                  type: boolean
+                deckName:
+                  type: string
+      responses:
+        '202': { description: Accepted }
+  /ocr/status/{id}:
+    get:
+      summary: Get OCR job status
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        '200': { description: OK }
+  /cards/validate:
+    post:
+      summary: Validate cards via Scryfall
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cards:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name: { type: string }
+                      quantity: { type: integer, minimum: 1, maximum: 250 }
+      responses:
+        '200': { description: OK }
+  /export/{format}:
+    post:
+      summary: Export deck to a format
+      parameters:
+        - in: path
+          name: format
+          schema: { type: string, enum: [mtga, moxfield, archidekt, tappedout, txt] }
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cards:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name: { type: string }
+                      quantity: { type: integer, minimum: 1, maximum: 250 }
+                deckName: { type: string }
+      responses:
+        '200': { description: OK }

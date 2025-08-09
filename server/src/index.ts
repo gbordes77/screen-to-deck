@@ -14,6 +14,8 @@ import { validateEnv } from './utils/validateEnv';
 import routes from './routes';
 import { initOcrWorker } from './queue/ocr.queue';
 import clientProm from 'prom-client';
+import swaggerUi from 'swagger-ui-express';
+import YAML from 'yamljs';
 
 // Load environment variables
 dotenv.config();
@@ -23,6 +25,7 @@ validateEnv();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+const HOST = process.env.HOST || '127.0.0.1';
 
 // Security middleware
 app.use(helmet({
@@ -87,6 +90,13 @@ app.get('/health', (req, res) => {
 
 // API routes
 app.use('/api', routes);
+// Swagger (OpenAPI)
+try {
+  const openapi = YAML.load(require('path').join(__dirname, 'openapi.yaml'));
+  app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(openapi));
+} catch (e) {
+  console.warn('OpenAPI load failed:', (e as Error).message);
+}
 
 // Initialize OCR worker (BullMQ)
 initOcrWorker(async (data: any) => {
@@ -117,10 +127,10 @@ app.use('*', (req, res) => {
 app.use(errorHandler);
 
 // Start server
-app.listen(PORT, () => {
+app.listen(Number(PORT), HOST, () => {
   console.log(`🚀 MTG Deck Converter Server running on port ${PORT}`);
   console.log(`📸 Ready to convert deck screenshots!`);
-  console.log(`🔗 Health check: http://localhost:${PORT}/health`);
+  console.log(`🔗 Health check: http://${HOST}:${PORT}/health`);
 });
 
 export default app; 

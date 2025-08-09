@@ -6,8 +6,8 @@ services:
   # ==============================================
   app:
     build:
-      context: .
-      dockerfile: Dockerfile.saas
+      context: ./server
+      dockerfile: Dockerfile
     ports:
       - "3001:3001"
     environment:
@@ -40,13 +40,12 @@ services:
   # LOAD BALANCER NGINX
   # ==============================================
   nginx:
-    image: nginx:alpine
+    build:
+      context: .
+      dockerfile: client/Dockerfile.prod
     ports:
       - "80:80"
-      - "443:443"
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./nginx/ssl:/etc/nginx/ssl:ro
       - nginx-logs:/var/log/nginx
     depends_on:
       - app
