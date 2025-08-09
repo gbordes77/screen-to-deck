@@ -4,6 +4,7 @@ import path from 'path';
 import fs from 'fs';
 import { v4 as uuidv4 } from 'uuid';
 import Joi from 'joi';
+import { z } from 'zod';
 
 import { asyncHandler, createError } from '../middleware/errorHandler';
 import { APIResponse, ProcessingStatus } from '../types';
@@ -96,18 +97,16 @@ router.get('/status/:id', asyncHandler(async (req: Request, res: Response) => {
  * Process image with base64 data (alternative endpoint)
  */
 router.post('/process-base64', asyncHandler(async (req: Request, res: Response) => {
-  const schema = Joi.object({
-    image: Joi.string().required().description('Base64 encoded image data'),
-    validateCards: Joi.boolean().default(true),
-    deckName: Joi.string().optional(),
+  const Body = z.object({
+    image: z.string().min(10),
+    validateCards: z.boolean().optional().default(true),
+    deckName: z.string().optional(),
   });
-
-  const { error, value } = schema.validate(req.body);
-  if (error) {
-    throw createError(error.details[0].message, 400);
+  const parsed = Body.safeParse(req.body);
+  if (!parsed.success) {
+    throw createError(parsed.error.issues.map(i => i.message).join(', '), 400);
   }
-
-  const { image, validateCards, deckName } = value;
+  const { image, validateCards, deckName } = parsed.data;
 
   // Decode base64 and save temporarily
   const imageBuffer = Buffer.from(image, 'base64');

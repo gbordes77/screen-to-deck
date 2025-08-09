@@ -1,7 +1,9 @@
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import morgan from 'morgan';
+import pino from 'pino';
+import pinoHttp from 'pino-http';
+import { v4 as uuidv4 } from 'uuid';
 import compression from 'compression';
 import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
@@ -24,11 +26,18 @@ const PORT = process.env.PORT || 3001;
 app.use(helmet({
   crossOriginResourcePolicy: { policy: "cross-origin" },
   contentSecurityPolicy: {
+    useDefaults: true,
     directives: {
-      defaultSrc: ["'self'"],
-      imgSrc: ["'self'", "data:", "https:"],
-      scriptSrc: ["'self'"],
-      styleSrc: ["'self'", "'unsafe-inline'"],
+      "default-src": ["'self'"],
+      "img-src": ["'self'", "data:", "https://c2.scryfall.com"],
+      "connect-src": [
+        "'self'",
+        process.env.SCRYFALL_API_URL || 'https://api.scryfall.com',
+        process.env.OPENAI_BASE || 'https://api.openai.com'
+      ],
+      "script-src": ["'self'"],
+      "object-src": ["'none'"],
+      "style-src": ["'self'", "'unsafe-inline'"],
     },
   },
 }));
@@ -55,7 +64,9 @@ app.use(limiter);
 
 // General middleware
 app.use(compression());
-app.use(morgan('combined'));
+const logger = pino({ level: process.env.LOG_LEVEL || 'info' });
+app.use((req, _res, next) => { (req as any).id = req.headers['x-request-id']?.toString() || uuidv4(); next(); });
+app.use(pinoHttp({ logger, customProps: (req) => ({ requestId: (req as any).id }) }));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 

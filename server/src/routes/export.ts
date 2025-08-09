@@ -1,5 +1,6 @@
 import { Router, Request, Response } from 'express';
 import Joi from 'joi';
+import { z } from 'zod';
 
 import { asyncHandler, createError } from '../middleware/errorHandler';
 import { APIResponse, MTGCard, ExportFormat } from '../types';
@@ -40,17 +41,13 @@ router.post('/:format', asyncHandler(async (req: Request, res: Response) => {
   }
 
   // Validate request body
-  const schema = Joi.object({
-    cards: cardsArraySchema,
-    deckName: Joi.string().optional(),
-  });
-
-  const { error, value } = schema.validate(req.body);
-  if (error) {
-    throw createError(error.details[0].message, 400);
+  const CardIn = z.object({ name: z.string().min(1), quantity: z.number().int().min(1).max(250) });
+  const Body = z.object({ cards: z.array(CardIn).min(1), deckName: z.string().optional() });
+  const parsed = Body.safeParse(req.body);
+  if (!parsed.success) {
+    throw createError(parsed.error.issues.map(i => i.message).join(', '), 400);
   }
-
-  const { cards, deckName } = value;
+  const { cards, deckName } = parsed.data;
 
   try {
     const exportResult = await exportService.exportDeck(cards, format, deckName);

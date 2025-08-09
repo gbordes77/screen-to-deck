@@ -1,5 +1,6 @@
 import { Router, Request, Response } from 'express';
 import Joi from 'joi';
+import { z } from 'zod';
 
 import { asyncHandler, createError } from '../middleware/errorHandler';
 import { APIResponse, MTGCard } from '../types';
@@ -128,21 +129,13 @@ router.get('/:id', asyncHandler(async (req: Request, res: Response) => {
  * Validate a list of cards
  */
 router.post('/validate', asyncHandler(async (req: Request, res: Response) => {
-  const cardSchema = Joi.object({
-    name: Joi.string().required(),
-    quantity: Joi.number().integer().min(1).max(20).required(),
-  });
-
-  const schema = Joi.object({
-    cards: Joi.array().items(cardSchema).min(1).max(100).required(),
-  });
-
-  const { error, value } = schema.validate(req.body);
-  if (error) {
-    throw createError(error.details[0].message, 400);
+  const CardIn = z.object({ name: z.string().min(1), quantity: z.number().int().min(1).max(250) });
+  const Body = z.object({ cards: z.array(CardIn).min(1).max(100) });
+  const parsed = Body.safeParse(req.body);
+  if (!parsed.success) {
+    throw createError(parsed.error.issues.map(i => i.message).join(', '), 400);
   }
-
-  const { cards } = value;
+  const { cards } = parsed.data;
 
   try {
     const { validatedCards, validationResult } = await scryfallService.validateAndEnrichCards(cards);
