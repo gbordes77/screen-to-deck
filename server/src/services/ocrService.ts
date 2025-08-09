@@ -10,13 +10,10 @@ class OCRService {
   private openai: OpenAI | null = null;
 
   constructor() {
-    const offline = ((process.env as any)['OFFLINE_MODE']) === 'true';
-    if (!offline) {
-      if (!((process.env as any)['OPENAI_API_KEY'])) {
-        throw createError('OpenAI API key not configured', 500);
-      }
-      this.openai = new OpenAI({ apiKey: ((process.env as any)['OPENAI_API_KEY']) });
+    if (!((process.env as any)['OPENAI_API_KEY'])) {
+      throw createError('OpenAI API key not configured', 500);
     }
+    this.openai = new OpenAI({ apiKey: ((process.env as any)['OPENAI_API_KEY']) });
   }
 
   /**
@@ -34,27 +31,22 @@ class OCRService {
       
       let cards: MTGCard[] = [];
 
-      if (((process.env as any)['OFFLINE_MODE']) === 'true') {
-        // Offline: call local OCR via Tesseract (through a small Python helper from discord-bot)
-        const content = await this.runLocalOcr(base64Image);
-        cards = this.parseCardsFromResponse(content);
-      } else {
-        // Online: use OpenAI Vision
+      // Primary OCR: EasyOCR via Python helper
+      const easyOcrContent = await this.runLocalOcr(base64Image);
+      cards = this.parseCardsFromResponse(easyOcrContent);
+
+      // If low confidence / empty, confirm with OpenAI Vision (tie‑breaker)
+      const needConfirmation = cards.length === 0 || this.calculateConfidence(cards) < 0.6;
+      if (needConfirmation) {
         if (!this.openai) {
           throw createError('OpenAI client not initialized', 500);
         }
         const messages: OpenAIVisionMessage[] = [
-          {
-            role: 'system',
-            content: [{ type: 'text', text: this.getSystemPrompt() }]
-          },
-          {
-            role: 'user',
-            content: [
-              { type: 'text', text: 'Please extract all Magic: The Gathering cards from this image and return them in the specified JSON format.' },
-              { type: 'image_url', image_url: { url: `data:image/jpeg;base64,${base64Image}`, detail: 'high' } }
-            ]
-          }
+          { role: 'system', content: [{ type: 'text', text: this.getSystemPrompt() }] },
+          { role: 'user', content: [
+            { type: 'text', text: 'Please extract all Magic: The Gathering cards from this image and return them in the specified JSON format.' },
+            { type: 'image_url', image_url: { url: `data:image/jpeg;base64,${base64Image}`, detail: 'high' } }
+          ]}
         ];
         const response = await this.openai.chat.completions.create({
           model: 'gpt-4o',
@@ -63,8 +55,12 @@ class OCRService {
           temperature: 0.1,
         });
         const content = response.choices[0]?.message?.content;
-        if (!content) throw createError('No response from OpenAI Vision API', 500);
-        cards = this.parseCardsFromResponse(content);
+        if (content) {
+          const aiCards = this.parseCardsFromResponse(content);
+          if (aiCards.length > cards.length) {
+            cards = aiCards;
+          }
+        }
       }
       
       // Clean up optimized image
@@ -98,7 +94,7 @@ class OCRService {
   }
 
   /**
-   * Run local OCR by delegating to a Python helper that uses Tesseract/EasyOCR if available.
+   * Run local OCR by delegating to the EasyOCR Python helper.
    * Returns a string content that mimics the JSON block expected by parseCardsFromResponse.
    */
   private runLocalOcr(base64Jpeg: string): Promise<string> {

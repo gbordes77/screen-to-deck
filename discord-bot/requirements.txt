@@ -8,9 +8,8 @@ py-cord>=2.4.1
 # Async HTTP
 aiohttp>=3.8.0
 
-# OCR et traitement d'image
+# OCR et traitement d'image (EasyOCR uniquement)
 opencv-python>=4.9.0
-pytesseract>=0.3.10
 Pillow>=9.0.0
 numpy>=1.24.0
 
@@ -60,8 +59,7 @@ dataclasses>=0.6; python_version < "3.7"
 scipy>=1.10.0  # Pour la détection automatique de colonnes
 pandas>=2.0.0  # Pour l'analyse de données de deck
 
-# Regular Expressions (built-in)
-# re - built-in
+## Retiré: pytesseract (remplacé par EasyOCR)
 
 # Async Programming (built-in)
 # asyncio - built-in
