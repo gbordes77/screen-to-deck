@@ -24,7 +24,7 @@
     "tailwind-merge": "^2.0.0",
     "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^2.0.18",
-    "framer-motion": "^10.16.5"
+    "framer-motion": "^12.23.12"
   },
   "devDependencies": {
     "@types/react": "^18.2.37",
