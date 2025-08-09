@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Guide Admin & Utilisateur — Bot Discord MTG Scanner</title>
+  <style>
+    body { font-family: -apple-system, system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif; line-height: 1.55; color: #0f172a; margin: 2rem; }
+    h1 { font-size: 1.8rem; margin-bottom: 0.25rem; }
+    h2 { font-size: 1.25rem; margin-top: 1.75rem; }
+    code, pre { background: #f1f5f9; padding: 0.2rem 0.35rem; border-radius: 4px; }
+    pre { padding: 0.75rem; overflow: auto; }
+    .muted { color: #475569; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+    .card { border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; background: white; }
+    ul { margin-top: 0.25rem; }
+  </style>
+</head>
+<body>
+  <h1>Guide Admin & Utilisateur — Bot Discord MTG Scanner</h1>
+  <p class="muted">Détecte les images postées dans Discord, extrait la liste des cartes avec OCR, valide via Scryfall et propose des exports.</p>
+
+  <h2>Admin — Pré-requis</h2>
+  <ul>
+    <li>Python 3.10+ (macOS), Discord bot créé, Intent « Message Content » activé</li>
+    <li>Inviter le bot sur votre serveur (scope <code>bot</code>, permissions Lire/Écrire)</li>
+  </ul>
+
+  <h2>Installation (one‑button)</h2>
+  <pre>
+./scripts/one-button-bot.sh
+  </pre>
+  <p>Le script:</p>
+  <ul>
+    <li>Crée un venv <code>discord-bot/.venv</code> et installe <code>requirements.txt</code></li>
+    <li>Vérifie <code>DISCORD_BOT_TOKEN</code> dans <code>discord-bot/.env</code></li>
+    <li>Lance <code>bot.py</code> en arrière-plan et vérifie <code>http://127.0.0.1:8080/healthz</code></li>
+  </ul>
+
+  <h3>Fichier .env</h3>
+  <pre>
+DISCORD_BOT_TOKEN=xxxxxxxxxxxxxxxx
+# Optionnel si vous voulez lier au serveur Node
+API_BASE_URL=http://localhost:3001/api
+  </pre>
+
+  <h2>Utilisation — côté Discord</h2>
+  <ol>
+    <li>Postez un message avec une image (png/jpg/jpeg/webp)</li>
+    <li>Le bot ajoute l’emoji 📷</li>
+    <li>Cliquez 📷 → le bot télécharge, scanne, valide et répond</li>
+  </ol>
+
+  <h2>Résultat</h2>
+  <ul>
+    <li>Embed récap: cartes identifiées, confiance, corrections, format détecté</li>
+    <li>Boutons: export MTGA, Moxfield; statistiques; rapport d’analyse</li>
+    <li>Fichier d’export joint (txt/json selon format)</li>
+  </ul>
+
+  <h2>Maintenance / Ops</h2>
+  <ul>
+    <li>Arrêt: <code>kill $(cat discord-bot/bot.pid)</code></li>
+    <li>Logs: <code>tail -f discord-bot/bot.log</code></li>
+    <li>Health: <code>GET http://127.0.0.1:8080/healthz</code></li>
+  </ul>
+
+  <h2>Détails techniques</h2>
+  <ul>
+    <li>OCR: EasyOCR/Tesseract (offline). OpenAI Vision possible côté serveur Node.</li>
+    <li>Validation: Scryfall (fuzzy + exact, batch si via API Node)</li>
+    <li>Anti‑crash: champs tronqués pour Discord, gestion d’erreurs</li>
+  </ul>
+
+  <p class="muted">Voir aussi: <code>discord-bot/TECHNICAL_DOCUMENTATION.md</code>, <code>OCR_STATUS_REPORT.md</code></p>
+</body>
+</html>

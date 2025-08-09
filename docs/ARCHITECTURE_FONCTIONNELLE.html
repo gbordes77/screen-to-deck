@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Screen‑to‑Deck — Architecture Fonctionnelle</title>
+  <style>
+    body { font-family: -apple-system, system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif; line-height: 1.5; color: #0f172a; margin: 2rem; }
+    h1 { font-size: 1.8rem; margin-bottom: 0.25rem; }
+    h2 { font-size: 1.25rem; margin-top: 1.75rem; }
+    code, pre { background: #f1f5f9; padding: 0.2rem 0.35rem; border-radius: 4px; }
+    pre { padding: 0.75rem; overflow: auto; }
+    .muted { color: #475569; }
+    ul { margin-top: 0.25rem; }
+    .pill { background:#eef2ff; color:#3730a3; padding:2px 8px; border-radius:999px; font-size: 0.85rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+    .card { border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; background: white; }
+  </style>
+</head>
+<body>
+  <h1>Screen‑to‑Deck — Architecture Fonctionnelle</h1>
+  <p class="muted">Monorepo: Client React/Vite • Serveur Express/TypeScript • Bot Discord (Python) • Queue BullMQ/Redis • OCR OpenAI/EasyOCR • Scryfall</p>
+
+  <h2>Vue d’ensemble</h2>
+  <div class="grid">
+    <div class="card">
+      <strong>Client Web</strong>
+      <ul>
+        <li>React + Vite, port <code>5173</code></li>
+        <li>Upload image → <code>/api/ocr/upload</code></li>
+        <li>Suivi job → <code>/api/ocr/status/:id</code></li>
+        <li>Export → <code>/api/export/:format</code></li>
+      </ul>
+    </div>
+    <div class="card">
+      <strong>API Serveur</strong>
+      <ul>
+        <li>Express TS, port <code>3001</code>, <span class="pill">/api/docs</span> (OpenAPI)</li>
+        <li>CSP (helmet), CORS, rate‑limit, budgetGuard</li>
+        <li>Prometheus <span class="pill">/metrics</span>, Pino logs (request‑id)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <strong>File d’attente</strong>
+      <ul>
+        <li>BullMQ + Redis (retries, persistance)</li>
+        <li>Workers OCR (concurrence configurable)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <strong>OCR & Canonicalisation</strong>
+      <ul>
+        <li>OCR: OpenAI Vision (online) ou EasyOCR/Tesseract (offline)</li>
+        <li>Validation: Scryfall (batch via <code>/cards/collection</code>)</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Flux fonctionnel</h2>
+  <pre>
+[UI | Bot] → (image) → API /ocr/upload → Queue BullMQ → Worker OCR
+   → OCR (OpenAI/EasyOCR) → Résultat brut → Validation Scryfall (batch)
+   → Mise en forme → Statut "completed" → [UI | Bot] récupère & exporte
+  </pre>
+
+  <h2>Sécurité & Garde‑fous</h2>
+  <ul>
+    <li><strong>CSP strict</strong> (helmet), <strong>CORS</strong> limité à l’UI</li>
+    <li><strong>Rate‑limiter</strong> global + <strong>budgetGuard</strong> (MAX_JOBS_PER_HOUR, MAX_DAILY_COST_EUR)</li>
+    <li><strong>Secrets</strong> hors repo (macOS Keychain via <code>scripts/secret-store.sh</code>)</li>
+  </ul>
+
+  <h2>Observabilité</h2>
+  <ul>
+    <li><code>/health</code>, <code>/api/health</code> (probes)</li>
+    <li><code>/metrics</code> Prometheus</li>
+    <li>Logs Pino (corrélation <code>x-request-id</code>)</li>
+  </ul>
+
+  <h2>Ports et endpoints</h2>
+  <ul>
+    <li>Client: <code>http://&lt;IP_LAN&gt;:5173</code></li>
+    <li>API: <code>http://&lt;IP_LAN&gt;:3001</code> — <code>/health</code>, <code>/api/health</code>, <code>/api/docs</code>, <code>/metrics</code></li>
+  </ul>
+
+  <h2>Scripts “one‑button”</h2>
+  <ul>
+    <li>Arrivée: <code>./scripts/arrivee.sh</code></li>
+    <li>One‑button (web): <code>./scripts/one-button.sh</code></li>
+    <li>One‑button (bot Discord): <code>./scripts/one-button-bot.sh</code></li>
+  </ul>
+
+  <h2>Déploiement / Prod</h2>
+  <ul>
+    <li>Docker compose (prod): Nginx pour le client, API Node, Redis</li>
+    <li>Healthcheck, utilisateur non‑root</li>
+  </ul>
+
+  <p class="muted">Voir aussi: <code>PROJECT_OVERVIEW.md</code>, <code>ARCHITECTURE.md</code>, <code>SELF_HOSTING.md</code>, <code>DEVELOPMENT.md</code></p>
+</body>
+</html>

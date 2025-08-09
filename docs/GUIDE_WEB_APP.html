@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Guide Utilisateur — Application Web Screen‑to‑Deck</title>
+  <style>
+    body { font-family: -apple-system, system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif; line-height: 1.55; color: #0f172a; margin: 2rem; }
+    h1 { font-size: 1.8rem; margin-bottom: 0.25rem; }
+    h2 { font-size: 1.25rem; margin-top: 1.75rem; }
+    code, pre { background: #f1f5f9; padding: 0.2rem 0.35rem; border-radius: 4px; }
+    pre { padding: 0.75rem; overflow: auto; }
+    .muted { color: #475569; }
+    ul { margin-top: 0.25rem; }
+    .callout { background: #fef3c7; border: 1px solid #fcd34d; padding: 10px; border-radius: 6px; }
+  </style>
+</head>
+<body>
+  <h1>Guide Utilisateur — Application Web</h1>
+  <p class="muted">Glissez-déposez une capture de deck MTG; l’app extrait les cartes, valide via Scryfall et propose des exports.</p>
+
+  <h2>Lancement</h2>
+  <ol>
+    <li>Installer et valider:
+      <pre>bash scripts/bootstrap-local.sh</pre>
+    </li>
+    <li>Clé OpenAI (si mode online):
+      <pre>bash scripts/secret-store.sh set sk-...</pre>
+    </li>
+    <li>Démarrer:
+      <pre>./scripts/arrivee.sh
+# ou
+./scripts/one-button.sh</pre>
+    </li>
+  </ol>
+
+  <h2>Accès</h2>
+  <ul>
+    <li>UI: <code>http://&lt;IP_LAN&gt;:5173</code></li>
+    <li>API: <code>http://&lt;IP_LAN&gt;:3001</code> (<code>/health</code>, <code>/api/health</code>, <code>/api/docs</code>, <code>/metrics</code>)</li>
+  </ul>
+
+  <h2>Parcours utilisateur</h2>
+  <ol>
+    <li>Page d’accueil → “Convertir une capture”</li>
+    <li>Déposez votre image (png/jpg/webp) → Envoi à <code>/api/ocr/upload</code></li>
+    <li>L’app affiche un identifiant de traitement puis suit <code>/api/ocr/status/:id</code></li>
+    <li>À la fin: affichage du deck, corrections/warnings et actions d’export</li>
+  </ol>
+
+  <h2>Exports</h2>
+  <ul>
+    <li><code>POST /api/export/:format</code> avec <code>format ∈ {mtga, moxfield, archidekt, tappedout, txt}</code></li>
+    <li>Prévisualisation: <code>/api/export/preview/:format</code></li>
+    <li>Téléchargement: <code>/api/export/download/:format</code></li>
+  </ul>
+
+  <h2>Dépannage</h2>
+  <ul>
+    <li>Vérifier <code>/health</code> et <code>/api/health</code></li>
+    <li>OpenAPI: <code>/api/docs</code> doit charger</li>
+    <li><em>Budget</em>: si limite atteinte, le serveur retourne 429/402 (budgetGuard)</li>
+    <li>Mode offline: sans clé OpenAI, l’API peut basculer EasyOCR/Tesseract</li>
+  </ul>
+
+  <div class="callout">
+    <strong>Note:</strong> Dans cette version, l’UI inclut des écrans minimaux pour garantir le build. Les écrans complets peuvent être rétablis/ajoutés sans changer le flux.
+  </div>
+
+  <p class="muted">Voir aussi: <code>SELF_HOSTING.md</code>, <code>DEVELOPMENT.md</code>, <code>PROJECT_OVERVIEW.md</code></p>
+</body>
+</html>
