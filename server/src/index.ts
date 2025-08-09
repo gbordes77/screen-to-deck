@@ -12,6 +12,8 @@ import path from 'path';
 import { errorHandler } from './middleware/errorHandler';
 import { validateEnv } from './utils/validateEnv';
 import routes from './routes';
+import { initOcrWorker } from './queue/ocr.queue';
+import clientProm from 'prom-client';
 
 // Load environment variables
 dotenv.config();
@@ -85,6 +87,23 @@ app.get('/health', (req, res) => {
 
 // API routes
 app.use('/api', routes);
+
+// Initialize OCR worker (BullMQ)
+initOcrWorker(async (data: any) => {
+  // Reuse existing process function from ocr route
+  const { default: scryfallService } = await import('./services/scryfallService');
+  const { default: ocrSvc } = await import('./services/ocrService');
+  const { processImageAsync } = await import('./routes/ocr');
+  // process in same process to keep it simple; BullMQ provides persistence and retries
+  await (processImageAsync as any)(data.processId, data.filePath, { validateCards: data.validateCards, deckName: data.deckName });
+});
+
+// Prometheus metrics endpoint
+clientProm.collectDefaultMetrics();
+app.get('/metrics', async (_req, res) => {
+  res.set('Content-Type', clientProm.register.contentType);
+  res.end(await clientProm.register.metrics());
+});
 
 // 404 handler
 app.use('*', (req, res) => {

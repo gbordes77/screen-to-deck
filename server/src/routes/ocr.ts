@@ -9,6 +9,7 @@ import { z } from 'zod';
 import { asyncHandler, createError } from '../middleware/errorHandler';
 import { APIResponse, ProcessingStatus } from '../types';
 import ocrService from '../services/ocrService';
+import { ocrQueue } from '../queue/ocr.queue';
 import scryfallService from '../services/scryfallService';
 
 const router = Router();
@@ -57,8 +58,8 @@ router.post('/upload', upload.single('image'), asyncHandler(async (req: Request,
 
   processingStatus.set(processId, status);
 
-  // Start async processing
-  processImageAsync(processId, req.file.path, { validateCards, deckName });
+  // Enqueue async processing (BullMQ)
+  await ocrQueue.add('run', { processId, filePath: req.file.path, validateCards, deckName });
 
   const response: APIResponse = {
     success: true,
@@ -133,8 +134,8 @@ router.post('/process-base64', asyncHandler(async (req: Request, res: Response) 
 
   processingStatus.set(processId, status);
 
-  // Start async processing
-  processImageAsync(processId, tempFilePath, { validateCards, deckName });
+  // Enqueue async processing (BullMQ)
+  await ocrQueue.add('run', { processId, filePath: tempFilePath, validateCards, deckName });
 
   const response: APIResponse = {
     success: true,
@@ -301,3 +302,4 @@ async function processImageAsync(
 }
 
 export default router; 
+export { processImageAsync };
