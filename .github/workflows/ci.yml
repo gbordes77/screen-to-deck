@@ -19,9 +19,9 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
-      - name: Install dependencies (workspace)
+      - name: Bootstrap local deps (simulate dev env)
         run: |
-          npm install
+          bash scripts/bootstrap-local.sh
 
       - name: Lint (server)
         run: npm run lint:server

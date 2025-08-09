@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Ensure local deps are installed before committing
+bash scripts/bootstrap-local.sh >/dev/null 2>&1 || true
+
+# Lint staged (optional enhancement)
+# npx lint-staged
