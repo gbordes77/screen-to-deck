@@ -7,6 +7,7 @@ import Joi from 'joi';
 import { z } from 'zod';
 
 import { asyncHandler, createError } from '../middleware/errorHandler';
+import { budgetGuard } from '../middleware/budgetGuard';
 import { APIResponse, ProcessingStatus } from '../types';
 import ocrService from '../services/ocrService';
 import { ocrQueue } from '../queue/ocr.queue';
@@ -38,7 +39,7 @@ const processingStatus: Map<string, ProcessingStatus> = new Map();
 /**
  * Upload and process deck screenshot
  */
-router.post('/upload', upload.single('image'), asyncHandler(async (req: Request, res: Response) => {
+router.post('/upload', upload.single('image'), budgetGuard, asyncHandler(async (req: Request, res: Response) => {
   if (!req.file) {
     throw createError('No image file provided', 400);
   }
@@ -97,7 +98,7 @@ router.get('/status/:id', asyncHandler(async (req: Request, res: Response) => {
 /**
  * Process image with base64 data (alternative endpoint)
  */
-router.post('/process-base64', asyncHandler(async (req: Request, res: Response) => {
+router.post('/process-base64', budgetGuard, asyncHandler(async (req: Request, res: Response) => {
   const Body = z.object({
     image: z.string().min(10),
     validateCards: z.boolean().optional().default(true),
