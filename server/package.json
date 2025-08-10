@@ -12,6 +12,10 @@
     "test:real": "jest real-images.test.ts",
     "test:generate-images": "node tests/test-images/create-mtg-test-images.js",
     "test:e2e": "npm run test:generate-images && npm run test:real",
+    "test:integration": "jest tests/integration/ocr-e2e.test.ts --testTimeout=300000",
+    "test:integration:real": "OPENAI_API_KEY=$OPENAI_API_KEY ts-node tests/integration/ocr-e2e.test.ts",
+    "test:integration:runner": "OPENAI_API_KEY=$OPENAI_API_KEY ts-node tests/integration/test-runner.ts",
+    "test:all": "npm run test && npm run test:integration",
     "lint": "eslint src --ext .ts",
     "lint:fix": "eslint src --ext .ts --fix"
   },
