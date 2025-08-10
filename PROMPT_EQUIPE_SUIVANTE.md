@@ -4,6 +4,95 @@
 
 Vous êtes l'équipe de développement senior chargée de finaliser et déployer en production le projet **MTG Screen-to-Deck**, un système d'OCR avancé pour Magic: The Gathering qui DOIT GARANTIR l'extraction de exactement 60 cartes mainboard + 15 cartes sideboard depuis n'importe quelle image de deck.
 
+## 📚 PARCOURS DE LECTURE OBLIGATOIRE (ORDRE IMPORTANT)
+
+### Phase 1: Compréhension Générale (2-3 heures)
+1. **README.md** - Vue d'ensemble du projet et fonctionnalités
+2. **CLAUDE.md** - Instructions spécifiques pour l'IA et architecture
+3. **ARCHITECTURE.md** - Architecture technique détaillée
+4. **PROJECT_OVERVIEW.md** - Vision produit et objectifs business
+
+### Phase 2: État Actuel & Problèmes (2-3 heures)
+5. **QA_CRITICAL_ISSUES_REPORT.md** ⚠️ - 15 problèmes critiques identifiés (PRIORITAIRE)
+6. **QA_FINAL_REPORT_2025.md** - Rapport exhaustif avec métriques actuelles
+7. **TEST_EXECUTION_REPORT.md** - Résultats des tests et pourquoi ils échouent
+8. **MIGRATION_GUIDE_FIXES.md** - Corrections nécessaires pour la migration
+
+### Phase 3: Solutions & Implémentations (3-4 heures)
+9. **CRITICAL_FIXES_REQUIRED.md** - Guide détaillé des corrections avec code
+10. **OCR_DEBUGGING_REPORT.md** - Analyse approfondie du service OCR
+11. **QA_TEST_COVERAGE_REPORT.md** - Tests créés et à implémenter
+12. **OCR_ENHANCED_ARCHITECTURE.md** - Architecture OCR améliorée
+
+### Phase 4: Documentation Technique Spécifique (2-3 heures)
+
+#### Web Application
+13. **DOCUMENTATION_COMPLETE_WEBAPP/** (dans l'ordre):
+    - `01_WEB_APP_COMPLETE_GUIDE.md` - Guide complet webapp
+    - `02_MASTER_OCR_RULES.md` - Règles OCR critiques
+    - `03_OCR_METHODS_TECHNICAL.md` - Méthodes techniques
+    - `05_ENHANCED_OCR_SUMMARY.md` - Résumé améliorations
+
+#### Discord Bot
+14. **DOCUMENTATION_COMPLETE_DISCORD_BOT/** (dans l'ordre):
+    - `01_DISCORD_BOT_COMPLETE_GUIDE.md` - Guide complet bot
+    - `02_BOT_CONFIGURATION_SETUP.md` - Configuration
+    - `03_SHARED_OCR_METHODS.md` - Méthodes partagées
+    - `04_MASTER_OCR_RULES.md` - Règles maîtres
+
+15. **discord-bot/TECHNICAL_DOCUMENTATION.md** - Documentation technique bot
+16. **discord-bot/ETAT_DES_LIEUX.md** - État actuel du bot
+
+### Phase 5: Procédures Opérationnelles (1-2 heures)
+17. **QUICKSTART.md** / **QUICK_START_README.md** - Démarrage rapide
+18. **DEVELOPMENT.md** - Workflow développement
+19. **SELF_HOSTING.md** - Guide auto-hébergement
+20. **DEPLOYMENT_OPTIONS.md** - Options de déploiement
+
+### Phase 6: Infrastructure & DevOps (Optionnel - 2 heures)
+21. **INFRASTRUCTURE_SUMMARY.md** - Résumé infrastructure
+22. **SAAS_MIGRATION_PLAN.md** - Plan migration SaaS
+23. **SECURE_API_KEY_SETUP.md** - Configuration sécurisée
+24. **docker-compose.prod.yml** - Configuration production
+
+### Phase 7: Historique & Contexte (Optionnel - 1 heure)
+25. **CHANGELOG.md** - Historique des changements (voir v2.0.3)
+26. **HANDOVER_GUIDE_COMPLETE.md** - Guide de passation précédent
+27. **RAPPORT_FINAL_MTG.md** - Rapport final précédent
+
+## 📖 DOCUMENTS CRITIQUES À GARDER OUVERTS
+
+Pendant le développement, gardez ces 5 documents ouverts en permanence:
+
+1. **QA_CRITICAL_ISSUES_REPORT.md** - Liste des problèmes à résoudre
+2. **CRITICAL_FIXES_REQUIRED.md** - Solutions avec code
+3. **CLAUDE.md** - Architecture et commandes
+4. **server/src/services/enhancedOcrServiceGuaranteed.ts** - Service à utiliser
+5. **validate-60-15-guarantee.js** - Script de validation
+
+## 🔍 OÙ CHERCHER QUOI
+
+| Besoin | Document(s) | Localisation |
+|--------|------------|--------------|
+| Comprendre l'architecture | ARCHITECTURE.md, CLAUDE.md | Racine |
+| Problèmes actuels | QA_CRITICAL_ISSUES_REPORT.md | Racine |
+| Solutions code | CRITICAL_FIXES_REQUIRED.md | Racine |
+| Tests à faire passer | QA_TEST_COVERAGE_REPORT.md | Racine |
+| Configuration Discord Bot | discord-bot/TECHNICAL_DOCUMENTATION.md | discord-bot/ |
+| API endpoints | server/src/openapi.yaml | server/src/ |
+| Types TypeScript | server/src/types/index.ts | server/src/types/ |
+| Commandes dev | CLAUDE.md (section Commands) | Racine |
+| Variables d'environnement | server/env.example | server/ |
+| Docker config | docker-compose.prod.yml | Racine |
+
+## ⏱️ TEMPS ESTIMÉ DE LECTURE
+
+- **Lecture critique (Phases 1-3):** 7-10 heures
+- **Lecture technique (Phases 4-5):** 3-5 heures  
+- **Lecture complète (tout):** 15-20 heures
+
+**Recommandation:** Commencez par les phases 1-3 (documents 1-12) qui sont OBLIGATOIRES avant de toucher au code.
+
 ## 📋 CONTEXTE DU PROJET
 
 ### Vue d'Ensemble
@@ -98,6 +187,53 @@ const scriptPath = path.resolve(__dirname, '../../../../super_resolution_free.py
 if (!fs.existsSync(scriptPath)) {
   // Fallback sur Sharp natif
 }
+```
+
+## 🔥 FICHIERS DE CODE À EXAMINER EN PRIORITÉ
+
+### Niveau 1: CRITIQUE - À modifier obligatoirement
+```javascript
+// 1. Service OCR principal (À REMPLACER)
+server/src/services/enhancedOcrService.ts
+↓ REMPLACER PAR ↓
+server/src/services/enhancedOcrServiceGuaranteed.ts
+
+// 2. Route API OCR (À METTRE À JOUR)
+server/src/routes/ocr.enhanced.ts
+// Ligne 5: import { EnhancedOCRService } from '../services/enhancedOcrServiceGuaranteed';
+
+// 3. Bot Discord parser (À REMPLACER)
+discord-bot/ocr_parser_easyocr.py
+↓ INTÉGRER ↓
+discord-bot/ocr_parser_unified.py
+```
+
+### Niveau 2: IMPORTANT - Tests à corriger
+```javascript
+// 4. Configuration Jest
+server/jest.config.js
+server/tests/setup.ts
+
+// 5. Tests E2E critiques
+server/tests/e2e/ocr-guarantee.test.ts
+discord-bot/tests/test_ocr_guarantee.py
+
+// 6. Script de validation
+validate-60-15-guarantee.js
+```
+
+### Niveau 3: À COMPRENDRE - Ne pas modifier
+```javascript
+// 7. Types TypeScript
+server/src/types/index.ts
+
+// 8. Service Scryfall
+server/src/services/scryfallService.ts
+discord-bot/scryfall_service.py
+
+// 9. Service Export
+server/src/services/exportService.ts
+discord-bot/export_deck.py
 ```
 
 ## 📁 STRUCTURE DES FICHIERS CRITIQUES
@@ -330,6 +466,68 @@ curl -X POST http://localhost:3001/api/ocr/enhanced \
   -H "Content-Type: multipart/form-data"
 
 # Devrait retourner un JSON avec les cartes détectées
+```
+
+## ✅ CHECKLIST DE PRISE EN MAIN
+
+### Jour 1: Lecture & Compréhension
+- [ ] Lire README.md et CLAUDE.md
+- [ ] Lire QA_CRITICAL_ISSUES_REPORT.md (CRITIQUE)
+- [ ] Identifier les 4 problèmes majeurs
+- [ ] Comprendre la garantie 60+15
+- [ ] Installer l'environnement de dev local
+
+### Jour 2: Analyse Technique
+- [ ] Étudier enhancedOcrServiceGuaranteed.ts
+- [ ] Comprendre les différences avec enhancedOcrService.ts
+- [ ] Analyser ocr_parser_unified.py
+- [ ] Revoir CRITICAL_FIXES_REQUIRED.md
+- [ ] Tester manuellement l'API OCR
+
+### Jour 3: Tests & Validation
+- [ ] Corriger la configuration Jest
+- [ ] Faire passer au moins 1 test
+- [ ] Tester sur 10 images réelles
+- [ ] Valider les totaux 60+15
+- [ ] Documenter les résultats
+
+### Jour 4-5: Implémentation
+- [ ] Remplacer enhancedOcrService par la version Guaranteed
+- [ ] Intégrer ocr_parser_unified dans le bot Discord
+- [ ] Implémenter le retry avec backoff
+- [ ] Ajouter la logique de force completion
+
+### Jour 6-7: Validation Finale
+- [ ] Faire passer 100% des tests
+- [ ] Tester sur 100+ images
+- [ ] Déployer en staging
+- [ ] 24h de test sans erreur
+- [ ] Documentation mise à jour
+
+## 📝 TEMPLATE DE RAPPORT QUOTIDIEN
+
+```markdown
+# Rapport Jour X - [Date]
+
+## Accomplissements
+- [ ] Tâche 1
+- [ ] Tâche 2
+
+## Problèmes Rencontrés
+- Problème 1: [Description]
+  Solution: [Action prise]
+
+## Métriques
+- Tests passants: X/30
+- Images testées: X/100
+- Garantie 60+15: OUI/NON
+
+## Prochaines Étapes
+- Action 1
+- Action 2
+
+## Blocages
+- [Si applicable]
 ```
 
 ## 🔴 DERNIER AVERTISSEMENT
