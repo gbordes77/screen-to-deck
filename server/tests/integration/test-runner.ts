@@ -15,7 +15,7 @@ import { spawn, ChildProcess } from 'child_process';
 // Configuration
 const SERVER_URL = process.env.API_BASE_URL || 'http://localhost:3001';
 const API_URL = `${SERVER_URL}/api`;
-const VALIDATED_IMAGES_DIR = path.join(__dirname, '../../../../validated_decklists');
+const VALIDATED_IMAGES_DIR = path.join(__dirname, '../../../test-images');
 const REPORT_DIR = path.join(__dirname, 'reports');
 
 // Ensure report directory exists
@@ -34,23 +34,23 @@ interface TestImage {
 
 const TEST_IMAGES: TestImage[] = [
   // MTGA
-  { category: 'MTGA', file: 'MTGA deck list 4_1920x1080.jpeg', description: 'High resolution MTGA' },
-  { category: 'MTGA', file: 'MTGA deck list special_1334x886.jpeg', description: 'Special case MTGA' },
+  { category: 'MTGA', file: 'MTGA/MTGA_high_res_1920x1080.jpeg', description: 'High resolution MTGA' },
+  { category: 'MTGA', file: 'MTGA/MTGA_special_1334x886.jpeg', description: 'Special case MTGA' },
   
   // MTGO
-  { category: 'MTGO', file: 'MTGO deck list usual_1763x791.jpeg', description: 'Standard MTGO' },
-  { category: 'MTGO', file: 'MTGO deck list usual 4_1254x432.jpeg', description: 'Low height MTGO' },
+  { category: 'MTGO', file: 'MTGO/MTGO_standard_1763x791.jpeg', description: 'Standard MTGO' },
+  { category: 'MTGO', file: 'MTGO/MTGO_low_height_1254x432.jpeg', description: 'Low height MTGO' },
   
   // MTGGoldfish
-  { category: 'MTGGoldfish', file: 'mtggoldfish deck list 2_1383x1518.jpg', description: 'High res MTGGoldfish' },
-  { category: 'MTGGoldfish', file: 'mtggoldfish deck list 10_1239x1362.jpg', description: 'Standard MTGGoldfish' },
+  { category: 'MTGGoldfish', file: 'MTGGoldfish/MTGGoldfish_high_res_1383x1518.jpg', description: 'High res MTGGoldfish' },
+  { category: 'MTGGoldfish', file: 'MTGGoldfish/MTGGoldfish_standard_1239x1362.jpg', description: 'Standard MTGGoldfish' },
   
   // Paper/Physical
-  { category: 'Paper', file: 'real deck paper cards 4_2336x1098.jpeg', description: 'Physical cards photo' },
-  { category: 'Paper', file: 'real deck cartes cachés_2048x1542.jpeg', description: 'Partially hidden cards' },
+  { category: 'Paper', file: 'Paper/Paper_clear_2336x1098.jpeg', description: 'Physical cards photo' },
+  { category: 'Paper', file: 'Paper/Paper_hidden_2048x1542.jpeg', description: 'Partially hidden cards' },
   
   // Website
-  { category: 'Website', file: 'web site  deck list_2300x2210.jpeg', description: 'Large website screenshot' }
+  { category: 'Website', file: 'Website/Website_large_2300x2210.jpeg', description: 'Large website screenshot' }
 ];
 
 // Export formats to test
@@ -279,7 +279,7 @@ ${colors.reset}`);
       const formData = new FormData();
       formData.append('image', fs.createReadStream(imagePath));
       
-      const uploadResponse = await axios.post(`${API_URL}/ocr`, formData, {
+      const uploadResponse = await axios.post(`${API_URL}/ocr/upload`, formData, {
         headers: {
           ...formData.getHeaders()
         },
@@ -289,9 +289,10 @@ ${colors.reset}`);
       });
       
       result.apiCalls++;
-      result.jobId = uploadResponse.data.jobId;
+      result.jobId = uploadResponse.data.data?.processId || uploadResponse.data.processId || uploadResponse.data.jobId;
       
       if (!result.jobId) {
+        console.log('Upload response:', JSON.stringify(uploadResponse.data, null, 2));
         throw new Error('No job ID returned from OCR endpoint');
       }
       
@@ -301,7 +302,7 @@ ${colors.reset}`);
       console.log(`     Processing OCR...`);
       let ocrResult: any = null;
       let pollAttempts = 0;
-      const maxPolls = 30;
+      const maxPolls = 60; // Increased from 30 to 60 (2 minutes max)
       
       while (pollAttempts < maxPolls) {
         await this.sleep(2000);
@@ -312,12 +313,12 @@ ${colors.reset}`);
         
         result.apiCalls++;
         
-        if (statusResponse.data.status === 'completed') {
-          ocrResult = statusResponse.data.result;
+        if (statusResponse.data.data?.status === 'completed' || statusResponse.data.status === 'completed') {
+          ocrResult = statusResponse.data.data?.result || statusResponse.data.result;
           result.responseSize = JSON.stringify(ocrResult).length;
           break;
-        } else if (statusResponse.data.status === 'failed') {
-          throw new Error(`OCR failed: ${statusResponse.data.error || 'Unknown error'}`);
+        } else if (statusResponse.data.data?.status === 'failed' || statusResponse.data.status === 'failed') {
+          throw new Error(`OCR failed: ${statusResponse.data.data?.error || statusResponse.data.error || 'Unknown error'}`);
         }
         
         pollAttempts++;

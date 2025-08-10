@@ -1,0 +1,10 @@
+File,Category,Success,Duration(ms),Memory(MB),Mainboard,Sideboard,Accuracy(%),Errors
+"MTGA/MTGA_high_res_1920x1080.jpeg","MTGA",false,16102,-1.52,78,0,0.0,"Mainboard count is 78, expected 60; Sideboard count is 0, expected 15; Request failed with status code 400"
+"MTGA/MTGA_special_1334x886.jpeg","MTGA",false,20063,1.56,69,0,0.0,"Mainboard count is 69, expected 60; Sideboard count is 0, expected 15; Request failed with status code 400"
+"MTGO/MTGO_standard_1763x791.jpeg","MTGO",false,28055,1.26,0,0,0.0,"Request failed with status code 429"
+"MTGO/MTGO_low_height_1254x432.jpeg","MTGO",false,5,-1.66,0,0,0.0,"Request failed with status code 429"
+"MTGGoldfish/MTGGoldfish_high_res_1383x1518.jpg","MTGGoldfish",false,5,-0.28,0,0,0.0,"Request failed with status code 429"
+"MTGGoldfish/MTGGoldfish_standard_1239x1362.jpg","MTGGoldfish",false,2,-0.23,0,0,0.0,"Request failed with status code 429"
+"Paper/Paper_clear_2336x1098.jpeg","Paper",false,3,-0.21,0,0,0.0,"Request failed with status code 429"
+"Paper/Paper_hidden_2048x1542.jpeg","Paper",false,2,-0.24,0,0,0.0,"Request failed with status code 429"
+"Website/Website_large_2300x2210.jpeg","Website",false,3,0.38,0,0,0.0,"Request failed with status code 429"

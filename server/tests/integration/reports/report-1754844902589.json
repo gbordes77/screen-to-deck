@@ -1,0 +1,188 @@
+{
+  "summary": {
+    "totalTests": 9,
+    "successfulTests": 0,
+    "failedTests": 9,
+    "successRate": 0,
+    "totalDuration": 131,
+    "avgDuration": 11.88888888888889,
+    "avgMemory": -0.41875627305772567,
+    "avgAccuracy": 0,
+    "all60_15": false,
+    "timestamp": "2025-08-10T16:55:02.587Z"
+  },
+  "byCategory": [
+    {
+      "category": "MTGA",
+      "tests": 2,
+      "passed": 0,
+      "avgTime": 14,
+      "avgAccuracy": 0
+    },
+    {
+      "category": "MTGO",
+      "tests": 2,
+      "passed": 0,
+      "avgTime": 2.5,
+      "avgAccuracy": 0
+    },
+    {
+      "category": "MTGGoldfish",
+      "tests": 2,
+      "passed": 0,
+      "avgTime": 24.5,
+      "avgAccuracy": 0
+    },
+    {
+      "category": "Paper",
+      "tests": 2,
+      "passed": 0,
+      "avgTime": 9,
+      "avgAccuracy": 0
+    },
+    {
+      "category": "Website",
+      "tests": 1,
+      "passed": 0,
+      "avgTime": 7,
+      "avgAccuracy": 0
+    }
+  ],
+  "results": [
+    {
+      "file": "MTGA/MTGA_high_res_1920x1080.jpeg",
+      "category": "MTGA",
+      "success": false,
+      "duration": 24,
+      "memory": -6.0391387939453125,
+      "mainboard": 0,
+      "sideboard": 0,
+      "accuracy": 0,
+      "exports": {},
+      "errors": [
+        "No job ID returned from OCR endpoint"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "MTGA/MTGA_special_1334x886.jpeg",
+      "category": "MTGA",
+      "success": false,
+      "duration": 4,
+      "memory": 0.25290679931640625,
+      "mainboard": 0,
+      "sideboard": 0,
+      "accuracy": 0,
+      "exports": {},
+      "errors": [
+        "No job ID returned from OCR endpoint"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "MTGO/MTGO_standard_1763x791.jpeg",
+      "category": "MTGO",
+      "success": false,
+      "duration": 3,
+      "memory": 0.22620391845703125,
+      "mainboard": 0,
+      "sideboard": 0,
+      "accuracy": 0,
+      "exports": {},
+      "errors": [
+        "No job ID returned from OCR endpoint"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "MTGO/MTGO_low_height_1254x432.jpeg",
+      "category": "MTGO",
+      "success": false,
+      "duration": 2,
+      "memory": 0.23635101318359375,
+      "mainboard": 0,
+      "sideboard": 0,
+      "accuracy": 0,
+      "exports": {},
+      "errors": [
+        "No job ID returned from OCR endpoint"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "MTGGoldfish/MTGGoldfish_high_res_1383x1518.jpg",
+      "category": "MTGGoldfish",
+      "success": false,
+      "duration": 41,
+      "memory": 0.26904296875,
+      "mainboard": 0,
+      "sideboard": 0,
+      "accuracy": 0,
+      "exports": {},
+      "errors": [
+        "No job ID returned from OCR endpoint"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "MTGGoldfish/MTGGoldfish_standard_1239x1362.jpg",
+      "category": "MTGGoldfish",
+      "success": false,
+      "duration": 8,
+      "memory": 0.2571563720703125,
+      "mainboard": 0,
+      "sideboard": 0,
+      "accuracy": 0,
+      "exports": {},
+      "errors": [
+        "No job ID returned from OCR endpoint"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "Paper/Paper_clear_2336x1098.jpeg",
+      "category": "Paper",
+      "success": false,
+      "duration": 5,
+      "memory": 0.23606109619140625,
+      "mainboard": 0,
+      "sideboard": 0,
+      "accuracy": 0,
+      "exports": {},
+      "errors": [
+        "No job ID returned from OCR endpoint"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "Paper/Paper_hidden_2048x1542.jpeg",
+      "category": "Paper",
+      "success": false,
+      "duration": 13,
+      "memory": 0.49334716796875,
+      "mainboard": 0,
+      "sideboard": 0,
+      "accuracy": 0,
+      "exports": {},
+      "errors": [
+        "No job ID returned from OCR endpoint"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "Website/Website_large_2300x2210.jpeg",
+      "category": "Website",
+      "success": false,
+      "duration": 7,
+      "memory": 0.29926300048828125,
+      "mainboard": 0,
+      "sideboard": 0,
+      "accuracy": 0,
+      "exports": {},
+      "errors": [
+        "No job ID returned from OCR endpoint"
+      ],
+      "warnings": []
+    }
+  ]
+}

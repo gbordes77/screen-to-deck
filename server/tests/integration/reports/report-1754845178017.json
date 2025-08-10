@@ -1,0 +1,192 @@
+{
+  "summary": {
+    "totalTests": 9,
+    "successfulTests": 0,
+    "failedTests": 9,
+    "successRate": 0,
+    "totalDuration": 64257,
+    "avgDuration": 7137.777777777777,
+    "avgMemory": -0.1042293972439236,
+    "avgAccuracy": 0,
+    "all60_15": false,
+    "timestamp": "2025-08-10T16:59:38.016Z"
+  },
+  "byCategory": [
+    {
+      "category": "MTGA",
+      "tests": 2,
+      "passed": 0,
+      "avgTime": 18082.5,
+      "avgAccuracy": 0
+    },
+    {
+      "category": "MTGO",
+      "tests": 2,
+      "passed": 0,
+      "avgTime": 14030,
+      "avgAccuracy": 0
+    },
+    {
+      "category": "MTGGoldfish",
+      "tests": 2,
+      "passed": 0,
+      "avgTime": 3.5,
+      "avgAccuracy": 0
+    },
+    {
+      "category": "Paper",
+      "tests": 2,
+      "passed": 0,
+      "avgTime": 2.5,
+      "avgAccuracy": 0
+    },
+    {
+      "category": "Website",
+      "tests": 1,
+      "passed": 0,
+      "avgTime": 3,
+      "avgAccuracy": 0
+    }
+  ],
+  "results": [
+    {
+      "file": "MTGA/MTGA_high_res_1920x1080.jpeg",
+      "category": "MTGA",
+      "success": false,
+      "duration": 16102,
+      "memory": -1.5245513916015625,
+      "mainboard": 78,
+      "sideboard": 0,
+      "accuracy": 0,
+      "exports": {},
+      "errors": [
+        "Mainboard count is 78, expected 60",
+        "Sideboard count is 0, expected 15",
+        "Request failed with status code 400"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "MTGA/MTGA_special_1334x886.jpeg",
+      "category": "MTGA",
+      "success": false,
+      "duration": 20063,
+      "memory": 1.5637969970703125,
+      "mainboard": 69,
+      "sideboard": 0,
+      "accuracy": 0,
+      "exports": {},
+      "errors": [
+        "Mainboard count is 69, expected 60",
+        "Sideboard count is 0, expected 15",
+        "Request failed with status code 400"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "MTGO/MTGO_standard_1763x791.jpeg",
+      "category": "MTGO",
+      "success": false,
+      "duration": 28055,
+      "memory": 1.2595672607421875,
+      "mainboard": 0,
+      "sideboard": 0,
+      "accuracy": 0,
+      "exports": {},
+      "errors": [
+        "Request failed with status code 429"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "MTGO/MTGO_low_height_1254x432.jpeg",
+      "category": "MTGO",
+      "success": false,
+      "duration": 5,
+      "memory": -1.6568527221679688,
+      "mainboard": 0,
+      "sideboard": 0,
+      "accuracy": 0,
+      "exports": {},
+      "errors": [
+        "Request failed with status code 429"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "MTGGoldfish/MTGGoldfish_high_res_1383x1518.jpg",
+      "category": "MTGGoldfish",
+      "success": false,
+      "duration": 5,
+      "memory": -0.284271240234375,
+      "mainboard": 0,
+      "sideboard": 0,
+      "accuracy": 0,
+      "exports": {},
+      "errors": [
+        "Request failed with status code 429"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "MTGGoldfish/MTGGoldfish_standard_1239x1362.jpg",
+      "category": "MTGGoldfish",
+      "success": false,
+      "duration": 2,
+      "memory": -0.2319183349609375,
+      "mainboard": 0,
+      "sideboard": 0,
+      "accuracy": 0,
+      "exports": {},
+      "errors": [
+        "Request failed with status code 429"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "Paper/Paper_clear_2336x1098.jpeg",
+      "category": "Paper",
+      "success": false,
+      "duration": 3,
+      "memory": -0.20511627197265625,
+      "mainboard": 0,
+      "sideboard": 0,
+      "accuracy": 0,
+      "exports": {},
+      "errors": [
+        "Request failed with status code 429"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "Paper/Paper_hidden_2048x1542.jpeg",
+      "category": "Paper",
+      "success": false,
+      "duration": 2,
+      "memory": -0.23944091796875,
+      "mainboard": 0,
+      "sideboard": 0,
+      "accuracy": 0,
+      "exports": {},
+      "errors": [
+        "Request failed with status code 429"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "Website/Website_large_2300x2210.jpeg",
+      "category": "Website",
+      "success": false,
+      "duration": 3,
+      "memory": 0.3807220458984375,
+      "mainboard": 0,
+      "sideboard": 0,
+      "accuracy": 0,
+      "exports": {},
+      "errors": [
+        "Request failed with status code 429"
+      ],
+      "warnings": []
+    }
+  ]
+}

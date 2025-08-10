@@ -1,0 +1,188 @@
+{
+  "summary": {
+    "totalTests": 9,
+    "successfulTests": 0,
+    "failedTests": 9,
+    "successRate": 0,
+    "totalDuration": 55,
+    "avgDuration": 3.888888888888889,
+    "avgMemory": 0.25604502360026044,
+    "avgAccuracy": 0,
+    "all60_15": false,
+    "timestamp": "2025-08-10T16:53:51.968Z"
+  },
+  "byCategory": [
+    {
+      "category": "MTGA",
+      "tests": 2,
+      "passed": 0,
+      "avgTime": 11.5,
+      "avgAccuracy": 0
+    },
+    {
+      "category": "MTGO",
+      "tests": 2,
+      "passed": 0,
+      "avgTime": 2.5,
+      "avgAccuracy": 0
+    },
+    {
+      "category": "MTGGoldfish",
+      "tests": 2,
+      "passed": 0,
+      "avgTime": 1.5,
+      "avgAccuracy": 0
+    },
+    {
+      "category": "Paper",
+      "tests": 2,
+      "passed": 0,
+      "avgTime": 1.5,
+      "avgAccuracy": 0
+    },
+    {
+      "category": "Website",
+      "tests": 1,
+      "passed": 0,
+      "avgTime": 1,
+      "avgAccuracy": 0
+    }
+  ],
+  "results": [
+    {
+      "file": "MTGA/MTGA_high_res_1920x1080.jpeg",
+      "category": "MTGA",
+      "success": false,
+      "duration": 21,
+      "memory": -0.7801361083984375,
+      "mainboard": 0,
+      "sideboard": 0,
+      "accuracy": 0,
+      "exports": {},
+      "errors": [
+        "Request failed with status code 404"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "MTGA/MTGA_special_1334x886.jpeg",
+      "category": "MTGA",
+      "success": false,
+      "duration": 2,
+      "memory": 0.3600921630859375,
+      "mainboard": 0,
+      "sideboard": 0,
+      "accuracy": 0,
+      "exports": {},
+      "errors": [
+        "Request failed with status code 404"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "MTGO/MTGO_standard_1763x791.jpeg",
+      "category": "MTGO",
+      "success": false,
+      "duration": 3,
+      "memory": 0.40338134765625,
+      "mainboard": 0,
+      "sideboard": 0,
+      "accuracy": 0,
+      "exports": {},
+      "errors": [
+        "Request failed with status code 404"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "MTGO/MTGO_low_height_1254x432.jpeg",
+      "category": "MTGO",
+      "success": false,
+      "duration": 2,
+      "memory": 0.34942626953125,
+      "mainboard": 0,
+      "sideboard": 0,
+      "accuracy": 0,
+      "exports": {},
+      "errors": [
+        "Request failed with status code 404"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "MTGGoldfish/MTGGoldfish_high_res_1383x1518.jpg",
+      "category": "MTGGoldfish",
+      "success": false,
+      "duration": 2,
+      "memory": 0.315643310546875,
+      "mainboard": 0,
+      "sideboard": 0,
+      "accuracy": 0,
+      "exports": {},
+      "errors": [
+        "Request failed with status code 404"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "MTGGoldfish/MTGGoldfish_standard_1239x1362.jpg",
+      "category": "MTGGoldfish",
+      "success": false,
+      "duration": 1,
+      "memory": 0.33460235595703125,
+      "mainboard": 0,
+      "sideboard": 0,
+      "accuracy": 0,
+      "exports": {},
+      "errors": [
+        "Request failed with status code 404"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "Paper/Paper_clear_2336x1098.jpeg",
+      "category": "Paper",
+      "success": false,
+      "duration": 2,
+      "memory": 0.4443511962890625,
+      "mainboard": 0,
+      "sideboard": 0,
+      "accuracy": 0,
+      "exports": {},
+      "errors": [
+        "Request failed with status code 404"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "Paper/Paper_hidden_2048x1542.jpeg",
+      "category": "Paper",
+      "success": false,
+      "duration": 1,
+      "memory": 0.4571990966796875,
+      "mainboard": 0,
+      "sideboard": 0,
+      "accuracy": 0,
+      "exports": {},
+      "errors": [
+        "Request failed with status code 404"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "Website/Website_large_2300x2210.jpeg",
+      "category": "Website",
+      "success": false,
+      "duration": 1,
+      "memory": 0.4198455810546875,
+      "mainboard": 0,
+      "sideboard": 0,
+      "accuracy": 0,
+      "exports": {},
+      "errors": [
+        "Request failed with status code 404"
+      ],
+      "warnings": []
+    }
+  ]
+}

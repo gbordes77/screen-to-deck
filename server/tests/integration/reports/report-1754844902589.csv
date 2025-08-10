@@ -1,0 +1,10 @@
+File,Category,Success,Duration(ms),Memory(MB),Mainboard,Sideboard,Accuracy(%),Errors
+"MTGA/MTGA_high_res_1920x1080.jpeg","MTGA",false,24,-6.04,0,0,0.0,"No job ID returned from OCR endpoint"
+"MTGA/MTGA_special_1334x886.jpeg","MTGA",false,4,0.25,0,0,0.0,"No job ID returned from OCR endpoint"
+"MTGO/MTGO_standard_1763x791.jpeg","MTGO",false,3,0.23,0,0,0.0,"No job ID returned from OCR endpoint"
+"MTGO/MTGO_low_height_1254x432.jpeg","MTGO",false,2,0.24,0,0,0.0,"No job ID returned from OCR endpoint"
+"MTGGoldfish/MTGGoldfish_high_res_1383x1518.jpg","MTGGoldfish",false,41,0.27,0,0,0.0,"No job ID returned from OCR endpoint"
+"MTGGoldfish/MTGGoldfish_standard_1239x1362.jpg","MTGGoldfish",false,8,0.26,0,0,0.0,"No job ID returned from OCR endpoint"
+"Paper/Paper_clear_2336x1098.jpeg","Paper",false,5,0.24,0,0,0.0,"No job ID returned from OCR endpoint"
+"Paper/Paper_hidden_2048x1542.jpeg","Paper",false,13,0.49,0,0,0.0,"No job ID returned from OCR endpoint"
+"Website/Website_large_2300x2210.jpeg","Website",false,7,0.30,0,0,0.0,"No job ID returned from OCR endpoint"
