@@ -2,6 +2,60 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.3] - 2025-08-10
+### Added
+- **QA & Testing Infrastructure**
+  - Comprehensive QA audit with 4 specialized AI agents (QA Expert, Test Automator, Debugger, Documentation Expert)
+  - Created 30+ critical tests for 60+15 card guarantee validation
+  - E2E test suite for OCR pipeline (`/server/tests/e2e/ocr-guarantee.test.ts`)
+  - Python tests for Discord bot (`/discord-bot/tests/test_ocr_guarantee.py`)
+  - Test automation scripts (`run-critical-tests.sh`, `validate-60-15-guarantee.js`)
+
+- **Enhanced OCR Service Improvements**
+  - Created `enhancedOcrServiceGuaranteed.ts` with absolute 60+15 card guarantee
+  - Implemented retry mechanism with exponential backoff (up to 10 attempts)
+  - Added force completion mechanism for partial results
+  - Emergency fallback deck generation for catastrophic failures
+  - Fixed Python script paths (super-resolution, EasyOCR integration)
+
+- **Discord Bot Unification**
+  - Created `ocr_parser_unified.py` for consistency between Discord and Web
+  - Option to use web API or local processing with same guarantee logic
+  - Fixed import issues and parameter mismatches
+
+- **Documentation & Reports**
+  - `QA_CRITICAL_ISSUES_REPORT.md` - 15 critical issues identified
+  - `QA_FINAL_REPORT_2025.md` - Comprehensive final QA report with metrics
+  - `TEST_EXECUTION_REPORT.md` - Test execution results and failures
+  - `CRITICAL_FIXES_REQUIRED.md` - Detailed fix guide with code solutions
+  - `OCR_DEBUGGING_REPORT.md` - OCR service error analysis
+  - `QA_TEST_COVERAGE_REPORT.md` - Test coverage metrics and gaps
+
+### Changed
+- Updated TypeScript interfaces to include `section` and `format` properties for MTGCard
+- Fixed Jest/TypeScript configuration issues (partial)
+- Improved error handling across all OCR pipelines
+- Enhanced validation logic to enforce strict 60+15 totals
+
+### Fixed
+- Python script path resolution using `path.resolve()` instead of relative paths
+- TypeScript type definitions for OCR results
+- Import errors in Discord bot tests
+- Memory leak potential in temporary file handling
+
+### Known Issues
+- Tests not fully functional due to Jest/TypeScript configuration
+- OpenAI mock imports incorrect
+- Python pytest missing scryfall_service parameter
+- 0% test coverage - configuration needs complete overhaul
+
+### Status
+- **⚠️ CRITICAL** - Not ready for production
+- Estimated time to production: 1-2 weeks (40-60 hours)
+- Guarantee 60+15: Code implemented but NOT validated
+- Test coverage: 0% functional
+- Recommendation: DO NOT DEPLOY until all tests pass
+
 ## [2.0.2] - 2025-08-09
 ### Added
 - Scryfall batching: use `/cards/collection` (chunks of 75), normalized cache keys; fuzzy fallback.

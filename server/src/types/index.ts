@@ -2,6 +2,7 @@
 export interface MTGCard {
   name: string;
   quantity: number;
+  section?: 'mainboard' | 'sideboard'; // Added for 60+15 guarantee tracking
   set?: string;
   collector_number?: string;
   rarity?: string;
@@ -40,6 +41,8 @@ export interface OCRResult {
   cards: MTGCard[];
   confidence: number;
   processing_time: number;
+  format?: string; // Added for format detection (arena/mtgo/paper)
+  guaranteed?: boolean; // Added to indicate if 60+15 guarantee was met
   errors?: string[];
   warnings?: string[];
 }

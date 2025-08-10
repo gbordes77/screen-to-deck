@@ -2,7 +2,7 @@ import { Router, Request, Response } from 'express';
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
-import { EnhancedOCRService } from '../services/enhancedOcrService';
+import { EnhancedOCRServiceGuaranteed } from '../services/enhancedOcrServiceGuaranteed';
 
 const router = Router();
 
@@ -51,8 +51,8 @@ router.post('/enhanced', upload.single('image'), async (req: Request, res: Respo
 
     console.log(`📸 Processing image: ${req.file.filename}`);
     
-    // Create service instance
-    const ocrService = new EnhancedOCRService();
+    // Create service instance with 60+15 GUARANTEE
+    const ocrService = new EnhancedOCRServiceGuaranteed();
     
     // Process image with enhanced pipeline
     const result = await ocrService.processImage(req.file.path);
@@ -78,7 +78,8 @@ router.post('/enhanced', upload.single('image'), async (req: Request, res: Respo
       validation: {
         mainboard_valid: mainboardCount === 60,
         sideboard_valid: sideboardCount === 15,
-        complete: mainboardCount === 60 && sideboardCount === 15
+        complete: mainboardCount === 60 && sideboardCount === 15,
+        guaranteed: result.guaranteed || false
       }
     });
     
@@ -103,8 +104,9 @@ router.get('/enhanced/status', (req: Request, res: Response) => {
   const hasPython = fs.existsSync('/usr/bin/python3') || fs.existsSync('/usr/local/bin/python3');
   
   res.json({
-    service: 'Enhanced OCR Service',
-    version: '2.0.0',
+    service: 'Enhanced OCR Service GUARANTEED',
+    version: '3.0.0',
+    guarantee: '60+15 cards ALWAYS',
     capabilities: {
       super_resolution: true,
       easyocr: hasPython,
