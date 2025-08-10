@@ -208,6 +208,12 @@ ${colors.reset}`);
       const testImage = TEST_IMAGES[i];
       const testNumber = i + 1;
       
+      // Add delay between tests to avoid rate limiting
+      if (i > 0) {
+        console.log(`${colors.yellow}     ⏱️  Waiting 5s to avoid rate limiting...${colors.reset}`);
+        await this.sleep(5000);
+      }
+      
       console.log(`${colors.bright}[${testNumber}/${TEST_IMAGES.length}] Testing: ${testImage.file}${colors.reset}`);
       console.log(`     Category: ${testImage.category}`);
       console.log(`     Description: ${testImage.description}`);
@@ -357,22 +363,28 @@ ${colors.reset}`);
       // Step 4: Validate cards
       console.log(`     Validating card names...`);
       
-      const cardNames = result.ocrCards.map((c: any) => c.name);
+      // Format cards correctly for validation endpoint
+      const cardsForValidation = result.ocrCards.map((c: any) => ({
+        name: c.name,
+        quantity: c.quantity || 1
+      }));
+      
       const validationResponse = await axios.post(`${API_URL}/cards/validate`, {
-        cardNames: cardNames
+        cards: cardsForValidation
       }, {
         timeout: 10000
       });
       
       result.apiCalls++;
       
-      const validationData = validationResponse.data;
-      result.validatedCards = validationData.validCards || [];
-      result.invalidCards = validationData.invalidCards || [];
+      const validationData = validationResponse.data.data || validationResponse.data;
+      result.validatedCards = validationData.validatedCards || [];
+      result.invalidCards = validationData.validation?.invalidCards || [];
       
       // Calculate accuracy
-      if (cardNames.length > 0) {
-        result.ocrAccuracy = (result.validatedCards.length / cardNames.length) * 100;
+      const totalCards = result.ocrCards.length;
+      if (totalCards > 0) {
+        result.ocrAccuracy = (result.validatedCards.length / totalCards) * 100;
       }
       
       console.log(`     OCR Accuracy: ${result.ocrAccuracy.toFixed(1)}%`);

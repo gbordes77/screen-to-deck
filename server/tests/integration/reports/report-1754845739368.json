@@ -1,0 +1,188 @@
+{
+  "summary": {
+    "totalTests": 9,
+    "successfulTests": 0,
+    "failedTests": 9,
+    "successRate": 0,
+    "totalDuration": 62319,
+    "avgDuration": 2476.8888888888887,
+    "avgMemory": 0.3939192030164931,
+    "avgAccuracy": 0,
+    "all60_15": true,
+    "timestamp": "2025-08-10T17:08:59.365Z"
+  },
+  "byCategory": [
+    {
+      "category": "MTGA",
+      "tests": 2,
+      "passed": 0,
+      "avgTime": 2039.5,
+      "avgAccuracy": 0
+    },
+    {
+      "category": "MTGO",
+      "tests": 2,
+      "passed": 0,
+      "avgTime": 4032,
+      "avgAccuracy": 0
+    },
+    {
+      "category": "MTGGoldfish",
+      "tests": 2,
+      "passed": 0,
+      "avgTime": 2037,
+      "avgAccuracy": 0
+    },
+    {
+      "category": "Paper",
+      "tests": 2,
+      "passed": 0,
+      "avgTime": 2020,
+      "avgAccuracy": 0
+    },
+    {
+      "category": "Website",
+      "tests": 1,
+      "passed": 0,
+      "avgTime": 2035,
+      "avgAccuracy": 0
+    }
+  ],
+  "results": [
+    {
+      "file": "MTGA/MTGA_high_res_1920x1080.jpeg",
+      "category": "MTGA",
+      "success": false,
+      "duration": 2053,
+      "memory": 0.31517791748046875,
+      "mainboard": 60,
+      "sideboard": 15,
+      "accuracy": 0,
+      "exports": {},
+      "errors": [
+        "Request failed with status code 400"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "MTGA/MTGA_special_1334x886.jpeg",
+      "category": "MTGA",
+      "success": false,
+      "duration": 2026,
+      "memory": -2.0564727783203125,
+      "mainboard": 60,
+      "sideboard": 15,
+      "accuracy": 0,
+      "exports": {},
+      "errors": [
+        "Request failed with status code 400"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "MTGO/MTGO_standard_1763x791.jpeg",
+      "category": "MTGO",
+      "success": false,
+      "duration": 6042,
+      "memory": 1.3780364990234375,
+      "mainboard": 60,
+      "sideboard": 15,
+      "accuracy": 0,
+      "exports": {},
+      "errors": [
+        "Request failed with status code 400"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "MTGO/MTGO_low_height_1254x432.jpeg",
+      "category": "MTGO",
+      "success": false,
+      "duration": 2022,
+      "memory": -0.43987274169921875,
+      "mainboard": 60,
+      "sideboard": 15,
+      "accuracy": 0,
+      "exports": {},
+      "errors": [
+        "Request failed with status code 400"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "MTGGoldfish/MTGGoldfish_high_res_1383x1518.jpg",
+      "category": "MTGGoldfish",
+      "success": false,
+      "duration": 2041,
+      "memory": 0.93524169921875,
+      "mainboard": 60,
+      "sideboard": 15,
+      "accuracy": 0,
+      "exports": {},
+      "errors": [
+        "Request failed with status code 400"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "MTGGoldfish/MTGGoldfish_standard_1239x1362.jpg",
+      "category": "MTGGoldfish",
+      "success": false,
+      "duration": 2033,
+      "memory": 0.7883377075195312,
+      "mainboard": 60,
+      "sideboard": 15,
+      "accuracy": 0,
+      "exports": {},
+      "errors": [
+        "Request failed with status code 400"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "Paper/Paper_clear_2336x1098.jpeg",
+      "category": "Paper",
+      "success": false,
+      "duration": 2020,
+      "memory": 0.916839599609375,
+      "mainboard": 60,
+      "sideboard": 15,
+      "accuracy": 0,
+      "exports": {},
+      "errors": [
+        "Request failed with status code 400"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "Paper/Paper_hidden_2048x1542.jpeg",
+      "category": "Paper",
+      "success": false,
+      "duration": 2020,
+      "memory": 0.7894134521484375,
+      "mainboard": 60,
+      "sideboard": 15,
+      "accuracy": 0,
+      "exports": {},
+      "errors": [
+        "Request failed with status code 400"
+      ],
+      "warnings": []
+    },
+    {
+      "file": "Website/Website_large_2300x2210.jpeg",
+      "category": "Website",
+      "success": false,
+      "duration": 2035,
+      "memory": 0.9185714721679688,
+      "mainboard": 60,
+      "sideboard": 15,
+      "accuracy": 0,
+      "exports": {},
+      "errors": [
+        "Request failed with status code 400"
+      ],
+      "warnings": []
+    }
+  ]
+}

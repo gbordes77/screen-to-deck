@@ -9,7 +9,7 @@ import { z } from 'zod';
 import { asyncHandler, createError } from '../middleware/errorHandler';
 import { budgetGuard } from '../middleware/budgetGuard';
 import { APIResponse, ProcessingStatus } from '../types';
-import ocrService from '../services/ocrService';
+import ocrService from '../services/enhancedOcrServiceGuaranteed';
 import { ocrQueue } from '../queue/ocr.queue';
 import scryfallService from '../services/scryfallService';
 

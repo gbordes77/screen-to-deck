@@ -1,0 +1,278 @@
+{
+  "summary": {
+    "totalTests": 9,
+    "successfulTests": 9,
+    "failedTests": 0,
+    "successRate": 100,
+    "totalDuration": 67600,
+    "avgDuration": 3063.5555555555557,
+    "avgMemory": 0.5074369642469618,
+    "avgAccuracy": 100,
+    "all60_15": true,
+    "timestamp": "2025-08-10T17:13:04.111Z"
+  },
+  "byCategory": [
+    {
+      "category": "MTGA",
+      "tests": 2,
+      "passed": 2,
+      "avgTime": 2787.5,
+      "avgAccuracy": 100
+    },
+    {
+      "category": "MTGO",
+      "tests": 2,
+      "passed": 2,
+      "avgTime": 3693,
+      "avgAccuracy": 100
+    },
+    {
+      "category": "MTGGoldfish",
+      "tests": 2,
+      "passed": 2,
+      "avgTime": 2531,
+      "avgAccuracy": 100
+    },
+    {
+      "category": "Paper",
+      "tests": 2,
+      "passed": 2,
+      "avgTime": 3146,
+      "avgAccuracy": 100
+    },
+    {
+      "category": "Website",
+      "tests": 1,
+      "passed": 1,
+      "avgTime": 3257,
+      "avgAccuracy": 100
+    }
+  ],
+  "results": [
+    {
+      "file": "MTGA/MTGA_high_res_1920x1080.jpeg",
+      "category": "MTGA",
+      "success": true,
+      "duration": 3059,
+      "memory": 1.7871932983398438,
+      "mainboard": 60,
+      "sideboard": 15,
+      "accuracy": 100,
+      "exports": {
+        "mtga": false,
+        "moxfield": false,
+        "archidekt": false,
+        "tappedout": false,
+        "json": false
+      },
+      "errors": [],
+      "warnings": [
+        "Export format mtga failed: Request failed with status code 404",
+        "Export format moxfield failed: Request failed with status code 404",
+        "Export format archidekt failed: Request failed with status code 404",
+        "Export format tappedout failed: Request failed with status code 404",
+        "Export format json failed: Request failed with status code 404"
+      ]
+    },
+    {
+      "file": "MTGA/MTGA_special_1334x886.jpeg",
+      "category": "MTGA",
+      "success": true,
+      "duration": 2516,
+      "memory": -2.8893356323242188,
+      "mainboard": 60,
+      "sideboard": 15,
+      "accuracy": 100,
+      "exports": {
+        "mtga": false,
+        "moxfield": false,
+        "archidekt": false,
+        "tappedout": false,
+        "json": false
+      },
+      "errors": [],
+      "warnings": [
+        "Export format mtga failed: Request failed with status code 404",
+        "Export format moxfield failed: Request failed with status code 404",
+        "Export format archidekt failed: Request failed with status code 404",
+        "Export format tappedout failed: Request failed with status code 404",
+        "Export format json failed: Request failed with status code 404"
+      ]
+    },
+    {
+      "file": "MTGO/MTGO_standard_1763x791.jpeg",
+      "category": "MTGO",
+      "success": true,
+      "duration": 4805,
+      "memory": 0.7477493286132812,
+      "mainboard": 60,
+      "sideboard": 15,
+      "accuracy": 100,
+      "exports": {
+        "mtga": false,
+        "moxfield": false,
+        "archidekt": false,
+        "tappedout": false,
+        "json": false
+      },
+      "errors": [],
+      "warnings": [
+        "Export format mtga failed: Request failed with status code 404",
+        "Export format moxfield failed: Request failed with status code 404",
+        "Export format archidekt failed: Request failed with status code 404",
+        "Export format tappedout failed: Request failed with status code 404",
+        "Export format json failed: Request failed with status code 404"
+      ]
+    },
+    {
+      "file": "MTGO/MTGO_low_height_1254x432.jpeg",
+      "category": "MTGO",
+      "success": true,
+      "duration": 2581,
+      "memory": 1.0897674560546875,
+      "mainboard": 60,
+      "sideboard": 15,
+      "accuracy": 100,
+      "exports": {
+        "mtga": false,
+        "moxfield": false,
+        "archidekt": false,
+        "tappedout": false,
+        "json": false
+      },
+      "errors": [],
+      "warnings": [
+        "Export format mtga failed: Request failed with status code 404",
+        "Export format moxfield failed: Request failed with status code 404",
+        "Export format archidekt failed: Request failed with status code 404",
+        "Export format tappedout failed: Request failed with status code 404",
+        "Export format json failed: Request failed with status code 404"
+      ]
+    },
+    {
+      "file": "MTGGoldfish/MTGGoldfish_high_res_1383x1518.jpg",
+      "category": "MTGGoldfish",
+      "success": true,
+      "duration": 2558,
+      "memory": 1.1754074096679688,
+      "mainboard": 60,
+      "sideboard": 15,
+      "accuracy": 100,
+      "exports": {
+        "mtga": false,
+        "moxfield": false,
+        "archidekt": false,
+        "tappedout": false,
+        "json": false
+      },
+      "errors": [],
+      "warnings": [
+        "Export format mtga failed: Request failed with status code 404",
+        "Export format moxfield failed: Request failed with status code 404",
+        "Export format archidekt failed: Request failed with status code 404",
+        "Export format tappedout failed: Request failed with status code 404",
+        "Export format json failed: Request failed with status code 404"
+      ]
+    },
+    {
+      "file": "MTGGoldfish/MTGGoldfish_standard_1239x1362.jpg",
+      "category": "MTGGoldfish",
+      "success": true,
+      "duration": 2504,
+      "memory": 0.8973388671875,
+      "mainboard": 60,
+      "sideboard": 15,
+      "accuracy": 100,
+      "exports": {
+        "mtga": false,
+        "moxfield": false,
+        "archidekt": false,
+        "tappedout": false,
+        "json": false
+      },
+      "errors": [],
+      "warnings": [
+        "Export format mtga failed: Request failed with status code 404",
+        "Export format moxfield failed: Request failed with status code 404",
+        "Export format archidekt failed: Request failed with status code 404",
+        "Export format tappedout failed: Request failed with status code 404",
+        "Export format json failed: Request failed with status code 404"
+      ]
+    },
+    {
+      "file": "Paper/Paper_clear_2336x1098.jpeg",
+      "category": "Paper",
+      "success": true,
+      "duration": 3508,
+      "memory": 0.553375244140625,
+      "mainboard": 60,
+      "sideboard": 15,
+      "accuracy": 100,
+      "exports": {
+        "mtga": false,
+        "moxfield": false,
+        "archidekt": false,
+        "tappedout": false,
+        "json": false
+      },
+      "errors": [],
+      "warnings": [
+        "Export format mtga failed: Request failed with status code 404",
+        "Export format moxfield failed: Request failed with status code 404",
+        "Export format archidekt failed: Request failed with status code 404",
+        "Export format tappedout failed: Request failed with status code 404",
+        "Export format json failed: Request failed with status code 404"
+      ]
+    },
+    {
+      "file": "Paper/Paper_hidden_2048x1542.jpeg",
+      "category": "Paper",
+      "success": true,
+      "duration": 2784,
+      "memory": 0.47135162353515625,
+      "mainboard": 60,
+      "sideboard": 15,
+      "accuracy": 100,
+      "exports": {
+        "mtga": false,
+        "moxfield": false,
+        "archidekt": false,
+        "tappedout": false,
+        "json": false
+      },
+      "errors": [],
+      "warnings": [
+        "Export format mtga failed: Request failed with status code 404",
+        "Export format moxfield failed: Request failed with status code 404",
+        "Export format archidekt failed: Request failed with status code 404",
+        "Export format tappedout failed: Request failed with status code 404",
+        "Export format json failed: Request failed with status code 404"
+      ]
+    },
+    {
+      "file": "Website/Website_large_2300x2210.jpeg",
+      "category": "Website",
+      "success": true,
+      "duration": 3257,
+      "memory": 0.7340850830078125,
+      "mainboard": 60,
+      "sideboard": 15,
+      "accuracy": 100,
+      "exports": {
+        "mtga": false,
+        "moxfield": false,
+        "archidekt": false,
+        "tappedout": false,
+        "json": false
+      },
+      "errors": [],
+      "warnings": [
+        "Export format mtga failed: Request failed with status code 429",
+        "Export format moxfield failed: Request failed with status code 429",
+        "Export format archidekt failed: Request failed with status code 429",
+        "Export format tappedout failed: Request failed with status code 429",
+        "Export format json failed: Request failed with status code 429"
+      ]
+    }
+  ]
+}

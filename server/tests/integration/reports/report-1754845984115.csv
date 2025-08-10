@@ -1,0 +1,10 @@
+File,Category,Success,Duration(ms),Memory(MB),Mainboard,Sideboard,Accuracy(%),Errors
+"MTGA/MTGA_high_res_1920x1080.jpeg","MTGA",true,3059,1.79,60,15,100.0,""
+"MTGA/MTGA_special_1334x886.jpeg","MTGA",true,2516,-2.89,60,15,100.0,""
+"MTGO/MTGO_standard_1763x791.jpeg","MTGO",true,4805,0.75,60,15,100.0,""
+"MTGO/MTGO_low_height_1254x432.jpeg","MTGO",true,2581,1.09,60,15,100.0,""
+"MTGGoldfish/MTGGoldfish_high_res_1383x1518.jpg","MTGGoldfish",true,2558,1.18,60,15,100.0,""
+"MTGGoldfish/MTGGoldfish_standard_1239x1362.jpg","MTGGoldfish",true,2504,0.90,60,15,100.0,""
+"Paper/Paper_clear_2336x1098.jpeg","Paper",true,3508,0.55,60,15,100.0,""
+"Paper/Paper_hidden_2048x1542.jpeg","Paper",true,2784,0.47,60,15,100.0,""
+"Website/Website_large_2300x2210.jpeg","Website",true,3257,0.73,60,15,100.0,""

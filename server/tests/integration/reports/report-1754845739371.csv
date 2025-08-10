@@ -1,0 +1,10 @@
+File,Category,Success,Duration(ms),Memory(MB),Mainboard,Sideboard,Accuracy(%),Errors
+"MTGA/MTGA_high_res_1920x1080.jpeg","MTGA",false,2053,0.32,60,15,0.0,"Request failed with status code 400"
+"MTGA/MTGA_special_1334x886.jpeg","MTGA",false,2026,-2.06,60,15,0.0,"Request failed with status code 400"
+"MTGO/MTGO_standard_1763x791.jpeg","MTGO",false,6042,1.38,60,15,0.0,"Request failed with status code 400"
+"MTGO/MTGO_low_height_1254x432.jpeg","MTGO",false,2022,-0.44,60,15,0.0,"Request failed with status code 400"
+"MTGGoldfish/MTGGoldfish_high_res_1383x1518.jpg","MTGGoldfish",false,2041,0.94,60,15,0.0,"Request failed with status code 400"
+"MTGGoldfish/MTGGoldfish_standard_1239x1362.jpg","MTGGoldfish",false,2033,0.79,60,15,0.0,"Request failed with status code 400"
+"Paper/Paper_clear_2336x1098.jpeg","Paper",false,2020,0.92,60,15,0.0,"Request failed with status code 400"
+"Paper/Paper_hidden_2048x1542.jpeg","Paper",false,2020,0.79,60,15,0.0,"Request failed with status code 400"
+"Website/Website_large_2300x2210.jpeg","Website",false,2035,0.92,60,15,0.0,"Request failed with status code 400"
