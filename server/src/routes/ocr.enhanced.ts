@@ -2,7 +2,7 @@ import { Router, Request, Response } from 'express';
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
-import { EnhancedOCRServiceGuaranteed } from '../services/enhancedOcrServiceGuaranteed';
+import enhancedOcrService from '../services/enhancedOcrServiceGuaranteed';
 
 const router = Router();
 
@@ -51,11 +51,8 @@ router.post('/enhanced', upload.single('image'), async (req: Request, res: Respo
 
     console.log(`📸 Processing image: ${req.file.filename}`);
     
-    // Create service instance with 60+15 GUARANTEE
-    const ocrService = new EnhancedOCRServiceGuaranteed();
-    
-    // Process image with enhanced pipeline
-    const result = await ocrService.processImage(req.file.path);
+    // Use singleton service instance with 60+15 GUARANTEE
+    const result = await enhancedOcrService.processImage(req.file.path);
     
     // Clean up uploaded file
     fs.unlinkSync(req.file.path);

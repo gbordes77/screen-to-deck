@@ -9,6 +9,9 @@
     "build": "tsc",
     "test": "jest",
     "test:watch": "jest --watch",
+    "test:real": "jest real-images.test.ts",
+    "test:generate-images": "node tests/test-images/create-mtg-test-images.js",
+    "test:e2e": "npm run test:generate-images && npm run test:real",
     "lint": "eslint src --ext .ts",
     "lint:fix": "eslint src --ext .ts --fix"
   },

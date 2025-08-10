@@ -20,8 +20,10 @@ class TestOCRGuarantee:
     
     @pytest.fixture
     def parser(self):
-        """Create OCR parser instance"""
-        return OCRParser()
+        """Create OCR parser instance with mock scryfall service"""
+        mock_scryfall = Mock()
+        mock_scryfall.validate_cards.return_value = []
+        return OCRParser(scryfall_service=mock_scryfall)
     
     def count_cards(self, cards, section='mainboard'):
         """Helper to count cards in a section"""

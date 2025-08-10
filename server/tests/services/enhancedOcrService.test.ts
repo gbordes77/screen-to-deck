@@ -3,34 +3,21 @@
  * REQUIREMENT: Must ALWAYS extract exactly 60 mainboard + 15 sideboard cards
  */
 
-import { EnhancedOCRService } from '../../src/services/enhancedOcrService';
+import { EnhancedOCRServiceGuaranteed } from '../../src/services/enhancedOcrServiceGuaranteed';
 import { OCRResult, MTGCard } from '../../src/types';
 import fs from 'fs';
 import path from 'path';
 import sharp from 'sharp';
 
-// Mock OpenAI to control test behavior
-jest.mock('openai', () => {
-  return {
-    default: jest.fn().mockImplementation(() => ({
-      chat: {
-        completions: {
-          create: jest.fn()
-        }
-      }
-    }))
-  };
-});
+// No mocks - tests must use real services or be skipped
 
-// Mock file system for test images
-jest.mock('fs');
-jest.mock('sharp');
+// No mocks - real implementation only
 
 describe('🚨 CRITICAL: Enhanced OCR Service - 60+15 Guarantee', () => {
-  let service: EnhancedOCRService;
+  let service: EnhancedOCRServiceGuaranteed;
   
   beforeEach(() => {
-    service = new EnhancedOCRService();
+    service = new EnhancedOCRServiceGuaranteed();
     jest.clearAllMocks();
   });
 
