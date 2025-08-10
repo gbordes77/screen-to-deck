@@ -1,0 +1,2029 @@
+{
+  "analysis": [
+    {
+      "folder": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images",
+      "total_files": 100,
+      "likely_decklists": [
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx9fu7uXIAArgST.jpg",
+          "filename": "Gx9fu7uXIAArgST.jpg",
+          "width": 1416,
+          "height": 932,
+          "aspect_ratio": 1.51931330472103,
+          "contrast": 49.45864510768868,
+          "likely_decklist": "True",
+          "file_size": 130627
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx1KsQiXkAAi0RM.jpg",
+          "filename": "Gx1KsQiXkAAi0RM.jpg",
+          "width": 672,
+          "height": 936,
+          "aspect_ratio": 0.717948717948718,
+          "contrast": 84.81598195942658,
+          "likely_decklist": "True",
+          "file_size": 116333
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gxx6d4YWwAAHBff.jpg",
+          "filename": "Gxx6d4YWwAAHBff.jpg",
+          "width": 1411,
+          "height": 892,
+          "aspect_ratio": 1.5818385650224216,
+          "contrast": 51.83504932845525,
+          "likely_decklist": "True",
+          "file_size": 112411
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx8hsYUXAAEkWEC.jpg",
+          "filename": "Gx8hsYUXAAEkWEC.jpg",
+          "width": 1414,
+          "height": 989,
+          "aspect_ratio": 1.4297269969666329,
+          "contrast": 54.03124843670588,
+          "likely_decklist": "True",
+          "file_size": 134090
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gxx7FSRW4AAil_C.jpg",
+          "filename": "Gxx7FSRW4AAil_C.jpg",
+          "width": 1404,
+          "height": 880,
+          "aspect_ratio": 1.5954545454545455,
+          "contrast": 63.186143579301614,
+          "likely_decklist": "True",
+          "file_size": 142665
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/GxuS19RXYAAKNw3.jpg",
+          "filename": "GxuS19RXYAAKNw3.jpg",
+          "width": 1422,
+          "height": 850,
+          "aspect_ratio": 1.6729411764705882,
+          "contrast": 56.22743426270322,
+          "likely_decklist": "True",
+          "file_size": 115836
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/GxuTqQuXkAAinjg.jpg",
+          "filename": "GxuTqQuXkAAinjg.jpg",
+          "width": 1417,
+          "height": 753,
+          "aspect_ratio": 1.8818061088977425,
+          "contrast": 52.86561114253428,
+          "likely_decklist": "True",
+          "file_size": 107311
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gxx6uwUWIAAbST8.jpg",
+          "filename": "Gxx6uwUWIAAbST8.jpg",
+          "width": 1410,
+          "height": 778,
+          "aspect_ratio": 1.8123393316195373,
+          "contrast": 71.8123330175265,
+          "likely_decklist": "True",
+          "file_size": 102076
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx1A3R5X0AAedya.jpg",
+          "filename": "Gx1A3R5X0AAedya.jpg",
+          "width": 1419,
+          "height": 899,
+          "aspect_ratio": 1.578420467185762,
+          "contrast": 52.68461144844091,
+          "likely_decklist": "True",
+          "file_size": 127543
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gxwm8KaXwAA1dLF.jpg",
+          "filename": "Gxwm8KaXwAA1dLF.jpg",
+          "width": 1240,
+          "height": 1362,
+          "aspect_ratio": 0.9104258443465492,
+          "contrast": 83.58436432090835,
+          "likely_decklist": "True",
+          "file_size": 416573
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gxwl2OgW4AE_AFu.jpg",
+          "filename": "Gxwl2OgW4AE_AFu.jpg",
+          "width": 1238,
+          "height": 1360,
+          "aspect_ratio": 0.9102941176470588,
+          "contrast": 83.12148457909778,
+          "likely_decklist": "True",
+          "file_size": 431835
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/GxwlUu0WQAE1BL_.jpg",
+          "filename": "GxwlUu0WQAE1BL_.jpg",
+          "width": 1241,
+          "height": 1366,
+          "aspect_ratio": 0.9084919472913616,
+          "contrast": 84.60402729401764,
+          "likely_decklist": "True",
+          "file_size": 420835
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx1EKK_XcAAhkWU.jpg",
+          "filename": "Gx1EKK_XcAAhkWU.jpg",
+          "width": 1418,
+          "height": 830,
+          "aspect_ratio": 1.7084337349397591,
+          "contrast": 52.120415268303354,
+          "likely_decklist": "True",
+          "file_size": 115913
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx8jH5gWgAEPIcy.jpg",
+          "filename": "Gx8jH5gWgAEPIcy.jpg",
+          "width": 1411,
+          "height": 845,
+          "aspect_ratio": 1.6698224852071006,
+          "contrast": 50.58569247325939,
+          "likely_decklist": "True",
+          "file_size": 118450
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/GxthvzmWQAAVJFg.jpg",
+          "filename": "GxthvzmWQAAVJFg.jpg",
+          "width": 1418,
+          "height": 1691,
+          "aspect_ratio": 0.8385570668243643,
+          "contrast": 40.76518847527556,
+          "likely_decklist": "True",
+          "file_size": 177569
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx1BIkdWYAAGfUY.jpg",
+          "filename": "Gx1BIkdWYAAGfUY.jpg",
+          "width": 1401,
+          "height": 919,
+          "aspect_ratio": 1.5244831338411318,
+          "contrast": 48.85618910905399,
+          "likely_decklist": "True",
+          "file_size": 126460
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx9A-NgXIAAckm6.jpg",
+          "filename": "Gx9A-NgXIAAckm6.jpg",
+          "width": 1412,
+          "height": 897,
+          "aspect_ratio": 1.5741360089186176,
+          "contrast": 48.9956170871671,
+          "likely_decklist": "True",
+          "file_size": 116870
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx8jaA6XAAAsUHC.jpg",
+          "filename": "Gx8jaA6XAAAsUHC.jpg",
+          "width": 1420,
+          "height": 802,
+          "aspect_ratio": 1.770573566084788,
+          "contrast": 70.7209268050756,
+          "likely_decklist": "True",
+          "file_size": 102684
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gxtha2dW4AA5lre.jpg",
+          "filename": "Gxtha2dW4AA5lre.jpg",
+          "width": 1422,
+          "height": 1554,
+          "aspect_ratio": 0.915057915057915,
+          "contrast": 48.410294923773066,
+          "likely_decklist": "True",
+          "file_size": 215517
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/GxwoHO8WoAIJuWE.jpg",
+          "filename": "GxwoHO8WoAIJuWE.jpg",
+          "width": 1235,
+          "height": 1364,
+          "aspect_ratio": 0.905425219941349,
+          "contrast": 84.40704490353714,
+          "likely_decklist": "True",
+          "file_size": 420711
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gxwki_XWwAErEY-.jpg",
+          "filename": "Gxwki_XWwAErEY-.jpg",
+          "width": 1235,
+          "height": 1369,
+          "aspect_ratio": 0.902118334550767,
+          "contrast": 82.03502890337629,
+          "likely_decklist": "True",
+          "file_size": 420011
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx8h0WdXMAAofiR.jpg",
+          "filename": "Gx8h0WdXMAAofiR.jpg",
+          "width": 1416,
+          "height": 851,
+          "aspect_ratio": 1.663924794359577,
+          "contrast": 47.44004299363131,
+          "likely_decklist": "True",
+          "file_size": 123390
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/GxuStkxXUAAoIAm.jpg",
+          "filename": "GxuStkxXUAAoIAm.jpg",
+          "width": 1414,
+          "height": 782,
+          "aspect_ratio": 1.8081841432225063,
+          "contrast": 59.65212750665242,
+          "likely_decklist": "True",
+          "file_size": 109775
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/GxwqOGzWAAAcqCg.jpg",
+          "filename": "GxwqOGzWAAAcqCg.jpg",
+          "width": 1243,
+          "height": 1356,
+          "aspect_ratio": 0.9166666666666666,
+          "contrast": 82.1336163800142,
+          "likely_decklist": "True",
+          "file_size": 415475
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/GxwLKDNW0AAyED7.jpg",
+          "filename": "GxwLKDNW0AAyED7.jpg",
+          "width": 1383,
+          "height": 1518,
+          "aspect_ratio": 0.9110671936758893,
+          "contrast": 83.11322325568801,
+          "likely_decklist": "True",
+          "file_size": 528248
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx9hTJmW8AAr8lc.jpg",
+          "filename": "Gx9hTJmW8AAr8lc.jpg",
+          "width": 1417,
+          "height": 964,
+          "aspect_ratio": 1.4699170124481329,
+          "contrast": 50.73778414332171,
+          "likely_decklist": "True",
+          "file_size": 123293
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx1DNmuXAAAxcF-.jpg",
+          "filename": "Gx1DNmuXAAAxcF-.jpg",
+          "width": 1416,
+          "height": 757,
+          "aspect_ratio": 1.8705416116248348,
+          "contrast": 61.74800697538639,
+          "likely_decklist": "True",
+          "file_size": 117462
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/GxuTIr6WcAAmSUH.jpg",
+          "filename": "GxuTIr6WcAAmSUH.jpg",
+          "width": 1409,
+          "height": 858,
+          "aspect_ratio": 1.6421911421911422,
+          "contrast": 51.69585370711867,
+          "likely_decklist": "True",
+          "file_size": 115181
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx9bmI6XUAAsqMY.jpg",
+          "filename": "Gx9bmI6XUAAsqMY.jpg",
+          "width": 1409,
+          "height": 910,
+          "aspect_ratio": 1.5483516483516484,
+          "contrast": 46.22004233198395,
+          "likely_decklist": "True",
+          "file_size": 122462
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/GxwnQ3jWsAAU0jW.jpg",
+          "filename": "GxwnQ3jWsAAU0jW.jpg",
+          "width": 1239,
+          "height": 1365,
+          "aspect_ratio": 0.9076923076923077,
+          "contrast": 84.86534217196383,
+          "likely_decklist": "True",
+          "file_size": 418340
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx9DWs4XEAA6xER.jpg",
+          "filename": "Gx9DWs4XEAA6xER.jpg",
+          "width": 1421,
+          "height": 807,
+          "aspect_ratio": 1.7608426270136308,
+          "contrast": 44.11688653272269,
+          "likely_decklist": "True",
+          "file_size": 108087
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx9eNl6XQAA3kh2.jpg",
+          "filename": "Gx9eNl6XQAA3kh2.jpg",
+          "width": 1414,
+          "height": 888,
+          "aspect_ratio": 1.5923423423423424,
+          "contrast": 52.02655251917108,
+          "likely_decklist": "True",
+          "file_size": 112469
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx69yIGXIAASkvb.jpeg",
+          "filename": "Gx69yIGXIAASkvb.jpeg",
+          "width": 2336,
+          "height": 1098,
+          "aspect_ratio": 2.1275045537340618,
+          "contrast": 88.66225872119178,
+          "likely_decklist": "True",
+          "file_size": 634247
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx9Ba8zWcAIE6nN.jpg",
+          "filename": "Gx9Ba8zWcAIE6nN.jpg",
+          "width": 1407,
+          "height": 737,
+          "aspect_ratio": 1.9090909090909092,
+          "contrast": 59.25345803657041,
+          "likely_decklist": "True",
+          "file_size": 101953
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx9gY75XgAAQ64A.jpg",
+          "filename": "Gx9gY75XgAAQ64A.jpg",
+          "width": 1414,
+          "height": 849,
+          "aspect_ratio": 1.6654888103651355,
+          "contrast": 52.520598556856335,
+          "likely_decklist": "True",
+          "file_size": 121885
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/GxuS8pZWMAAxf4y.jpg",
+          "filename": "GxuS8pZWMAAxf4y.jpg",
+          "width": 1424,
+          "height": 847,
+          "aspect_ratio": 1.6812278630460449,
+          "contrast": 49.43792497730438,
+          "likely_decklist": "True",
+          "file_size": 117904
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gxwoqi8XoAAuqkL.jpg",
+          "filename": "Gxwoqi8XoAAuqkL.jpg",
+          "width": 1229,
+          "height": 1362,
+          "aspect_ratio": 0.9023494860499266,
+          "contrast": 83.43444310470328,
+          "likely_decklist": "True",
+          "file_size": 421650
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/GxuTfuNXEAAEiMQ.jpg",
+          "filename": "GxuTfuNXEAAEiMQ.jpg",
+          "width": 1412,
+          "height": 851,
+          "aspect_ratio": 1.6592244418331374,
+          "contrast": 48.752551812234124,
+          "likely_decklist": "True",
+          "file_size": 133413
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx9bTBTXIAEltlH.jpg",
+          "filename": "Gx9bTBTXIAEltlH.jpg",
+          "width": 1415,
+          "height": 844,
+          "aspect_ratio": 1.6765402843601895,
+          "contrast": 57.13242749816579,
+          "likely_decklist": "True",
+          "file_size": 114264
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx9A-NeWcAADULB.jpg",
+          "filename": "Gx9A-NeWcAADULB.jpg",
+          "width": 1416,
+          "height": 890,
+          "aspect_ratio": 1.5910112359550561,
+          "contrast": 43.1778209942853,
+          "likely_decklist": "True",
+          "file_size": 116505
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx9iMIZXAAAP8ok.jpg",
+          "filename": "Gx9iMIZXAAAP8ok.jpg",
+          "width": 1420,
+          "height": 925,
+          "aspect_ratio": 1.5351351351351352,
+          "contrast": 51.22090784697407,
+          "likely_decklist": "True",
+          "file_size": 127002
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx9fXzVXAAAEaaJ.jpg",
+          "filename": "Gx9fXzVXAAAEaaJ.jpg",
+          "width": 1409,
+          "height": 991,
+          "aspect_ratio": 1.4217961654894047,
+          "contrast": 55.50577166275848,
+          "likely_decklist": "True",
+          "file_size": 128519
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gxx8faVXQAAxRjz.jpg",
+          "filename": "Gxx8faVXQAAxRjz.jpg",
+          "width": 1412,
+          "height": 879,
+          "aspect_ratio": 1.6063708759954494,
+          "contrast": 50.44606495952284,
+          "likely_decklist": "True",
+          "file_size": 119402
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gxx7cEbXoAA3VZr.jpg",
+          "filename": "Gxx7cEbXoAA3VZr.jpg",
+          "width": 1414,
+          "height": 797,
+          "aspect_ratio": 1.7741530740276035,
+          "contrast": 59.937539047269695,
+          "likely_decklist": "True",
+          "file_size": 117271
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gxx8yYoWYAA9izt.jpg",
+          "filename": "Gxx8yYoWYAA9izt.jpg",
+          "width": 1424,
+          "height": 800,
+          "aspect_ratio": 1.78,
+          "contrast": 50.93515954810623,
+          "likely_decklist": "True",
+          "file_size": 109001
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx7Ep1QWkAAVKDt.jpeg",
+          "filename": "Gx7Ep1QWkAAVKDt.jpeg",
+          "width": 2048,
+          "height": 1174,
+          "aspect_ratio": 1.7444633730834753,
+          "contrast": 63.216381330481816,
+          "likely_decklist": "True",
+          "file_size": 496216
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gxx8RlsWQAALTKW.jpg",
+          "filename": "Gxx8RlsWQAALTKW.jpg",
+          "width": 1421,
+          "height": 931,
+          "aspect_ratio": 1.5263157894736843,
+          "contrast": 54.88139214551731,
+          "likely_decklist": "True",
+          "file_size": 125226
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/GxwmVJxXgAAN1iU.jpg",
+          "filename": "GxwmVJxXgAAN1iU.jpg",
+          "width": 1246,
+          "height": 1364,
+          "aspect_ratio": 0.9134897360703812,
+          "contrast": 84.60854501261436,
+          "likely_decklist": "True",
+          "file_size": 428471
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gxx77JNWYAAcORB.jpg",
+          "filename": "Gxx77JNWYAAcORB.jpg",
+          "width": 1417,
+          "height": 874,
+          "aspect_ratio": 1.6212814645308924,
+          "contrast": 46.530116057533796,
+          "likely_decklist": "True",
+          "file_size": 118737
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx9hFm-XsAEoJnv.jpg",
+          "filename": "Gx9hFm-XsAEoJnv.jpg",
+          "width": 1409,
+          "height": 949,
+          "aspect_ratio": 1.4847207586933615,
+          "contrast": 54.09292321137867,
+          "likely_decklist": "True",
+          "file_size": 141747
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx8_2QOWoAI-r9M.jpg",
+          "filename": "Gx8_2QOWoAI-r9M.jpg",
+          "width": 1415,
+          "height": 710,
+          "aspect_ratio": 1.9929577464788732,
+          "contrast": 53.01983191572375,
+          "likely_decklist": "True",
+          "file_size": 93268
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx0_z8MXAAAVDiQ.jpg",
+          "filename": "Gx0_z8MXAAAVDiQ.jpg",
+          "width": 1409,
+          "height": 899,
+          "aspect_ratio": 1.5672969966629589,
+          "contrast": 53.15391373763102,
+          "likely_decklist": "True",
+          "file_size": 120089
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx9g27BWMAAO-ue.jpg",
+          "filename": "Gx9g27BWMAAO-ue.jpg",
+          "width": 1408,
+          "height": 970,
+          "aspect_ratio": 1.4515463917525773,
+          "contrast": 41.058104572974344,
+          "likely_decklist": "True",
+          "file_size": 146154
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gxx70E_X0AAfE8v.jpg",
+          "filename": "Gxx70E_X0AAfE8v.jpg",
+          "width": 1318,
+          "height": 894,
+          "aspect_ratio": 1.4742729306487696,
+          "contrast": 45.97605028245337,
+          "likely_decklist": "True",
+          "file_size": 118321
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx0_6iIW8AA23z4.jpg",
+          "filename": "Gx0_6iIW8AA23z4.jpg",
+          "width": 1411,
+          "height": 883,
+          "aspect_ratio": 1.5979614949037373,
+          "contrast": 50.73114336584272,
+          "likely_decklist": "True",
+          "file_size": 122779
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx9hf5aW4AAI4JN.jpg",
+          "filename": "Gx9hf5aW4AAI4JN.jpg",
+          "width": 1397,
+          "height": 871,
+          "aspect_ratio": 1.6039035591274398,
+          "contrast": 57.137761244694524,
+          "likely_decklist": "True",
+          "file_size": 120565
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx9h3ggXgAAu0I6.jpg",
+          "filename": "Gx9h3ggXgAAu0I6.jpg",
+          "width": 1418,
+          "height": 787,
+          "aspect_ratio": 1.8017789072426937,
+          "contrast": 71.44337069078557,
+          "likely_decklist": "True",
+          "file_size": 106713
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/GxuTyF4WgAAVmyV.jpg",
+          "filename": "GxuTyF4WgAAVmyV.jpg",
+          "width": 1413,
+          "height": 819,
+          "aspect_ratio": 1.7252747252747254,
+          "contrast": 60.326271740926565,
+          "likely_decklist": "True",
+          "file_size": 107300
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gxwn1zdWsAA7QKv.jpg",
+          "filename": "Gxwn1zdWsAA7QKv.jpg",
+          "width": 1232,
+          "height": 1365,
+          "aspect_ratio": 0.9025641025641026,
+          "contrast": 84.53194885108397,
+          "likely_decklist": "True",
+          "file_size": 434878
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx9g_8wXkAAryba.jpg",
+          "filename": "Gx9g_8wXkAAryba.jpg",
+          "width": 1411,
+          "height": 847,
+          "aspect_ratio": 1.665879574970484,
+          "contrast": 54.17264054867899,
+          "likely_decklist": "True",
+          "file_size": 123795
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx1A96cW8AAMLLs.jpg",
+          "filename": "Gx1A96cW8AAMLLs.jpg",
+          "width": 1409,
+          "height": 763,
+          "aspect_ratio": 1.8466579292267367,
+          "contrast": 63.40902743690572,
+          "likely_decklist": "True",
+          "file_size": 113550
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx8ip73WEAAeChO.jpg",
+          "filename": "Gx8ip73WEAAeChO.jpg",
+          "width": 1416,
+          "height": 819,
+          "aspect_ratio": 1.728937728937729,
+          "contrast": 56.789589978431195,
+          "likely_decklist": "True",
+          "file_size": 116306
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/GxuSmXkXQAAtaGU.jpg",
+          "filename": "GxuSmXkXQAAtaGU.jpg",
+          "width": 1413,
+          "height": 871,
+          "aspect_ratio": 1.6222732491389207,
+          "contrast": 46.69057882936515,
+          "likely_decklist": "True",
+          "file_size": 116975
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx86chtWcAA3P0c.jpg",
+          "filename": "Gx86chtWcAA3P0c.jpg",
+          "width": 1410,
+          "height": 783,
+          "aspect_ratio": 1.8007662835249043,
+          "contrast": 60.06747994077683,
+          "likely_decklist": "True",
+          "file_size": 99799
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx9i6fTWUAAk4nd.jpg",
+          "filename": "Gx9i6fTWUAAk4nd.jpg",
+          "width": 1418,
+          "height": 882,
+          "aspect_ratio": 1.6077097505668934,
+          "contrast": 53.52230490541207,
+          "likely_decklist": "True",
+          "file_size": 129426
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx8_11zXgAErRdU.jpg",
+          "filename": "Gx8_11zXgAErRdU.jpg",
+          "width": 1421,
+          "height": 754,
+          "aspect_ratio": 1.8846153846153846,
+          "contrast": 55.25507714322798,
+          "likely_decklist": "True",
+          "file_size": 99407
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gxx8ZSCXIAA7RwU.jpg",
+          "filename": "Gxx8ZSCXIAA7RwU.jpg",
+          "width": 1398,
+          "height": 942,
+          "aspect_ratio": 1.484076433121019,
+          "contrast": 51.019113850502926,
+          "likely_decklist": "True",
+          "file_size": 122871
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx8i99YX0AACYSI.jpg",
+          "filename": "Gx8i99YX0AACYSI.jpg",
+          "width": 1420,
+          "height": 824,
+          "aspect_ratio": 1.7233009708737863,
+          "contrast": 48.02071886704156,
+          "likely_decklist": "True",
+          "file_size": 116460
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gxx8o-lWIAA8nBC.jpg",
+          "filename": "Gxx8o-lWIAA8nBC.jpg",
+          "width": 1418,
+          "height": 915,
+          "aspect_ratio": 1.549726775956284,
+          "contrast": 59.20149687582775,
+          "likely_decklist": "True",
+          "file_size": 136096
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx8_11vXYAM89Xs.jpg",
+          "filename": "Gx8_11vXYAM89Xs.jpg",
+          "width": 1420,
+          "height": 864,
+          "aspect_ratio": 1.6435185185185186,
+          "contrast": 59.89017317252337,
+          "likely_decklist": "True",
+          "file_size": 105744
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx9fIjbX0AMU0Wj.jpg",
+          "filename": "Gx9fIjbX0AMU0Wj.jpg",
+          "width": 1415,
+          "height": 886,
+          "aspect_ratio": 1.5970654627539504,
+          "contrast": 54.9460431914512,
+          "likely_decklist": "True",
+          "file_size": 121336
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx1Ay3cXQAALFkJ.jpg",
+          "filename": "Gx1Ay3cXQAALFkJ.jpg",
+          "width": 1417,
+          "height": 897,
+          "aspect_ratio": 1.5797101449275361,
+          "contrast": 71.26665961682585,
+          "likely_decklist": "True",
+          "file_size": 159653
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx9DW6gXsAEztX3.jpg",
+          "filename": "Gx9DW6gXsAEztX3.jpg",
+          "width": 1416,
+          "height": 979,
+          "aspect_ratio": 1.446373850868233,
+          "contrast": 44.76224819683238,
+          "likely_decklist": "True",
+          "file_size": 114274
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx1AXJsXEAA3QO6.jpg",
+          "filename": "Gx1AXJsXEAA3QO6.jpg",
+          "width": 1417,
+          "height": 807,
+          "aspect_ratio": 1.7558859975216852,
+          "contrast": 64.95207088762287,
+          "likely_decklist": "True",
+          "file_size": 123511
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx1Ac__XQAAbIk7.jpg",
+          "filename": "Gx1Ac__XQAAbIk7.jpg",
+          "width": 1412,
+          "height": 918,
+          "aspect_ratio": 1.5381263616557734,
+          "contrast": 65.22722004575577,
+          "likely_decklist": "True",
+          "file_size": 117008
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gxx8CS4XMAE5p4M.jpg",
+          "filename": "Gxx8CS4XMAE5p4M.jpg",
+          "width": 1408,
+          "height": 921,
+          "aspect_ratio": 1.5287730727470141,
+          "contrast": 54.48885967348743,
+          "likely_decklist": "True",
+          "file_size": 130923
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/GxwkOt8XkAAlL9x.jpg",
+          "filename": "GxwkOt8XkAAlL9x.jpg",
+          "width": 1243,
+          "height": 1369,
+          "aspect_ratio": 0.9079620160701242,
+          "contrast": 83.11742516054605,
+          "likely_decklist": "True",
+          "file_size": 432926
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx8i1d5XwAA6bqu.jpg",
+          "filename": "Gx8i1d5XwAA6bqu.jpg",
+          "width": 1410,
+          "height": 806,
+          "aspect_ratio": 1.749379652605459,
+          "contrast": 49.28735658991318,
+          "likely_decklist": "True",
+          "file_size": 122861
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx9fqCFXAAEvbTu.jpg",
+          "filename": "Gx9fqCFXAAEvbTu.jpg",
+          "width": 1413,
+          "height": 825,
+          "aspect_ratio": 1.7127272727272727,
+          "contrast": 52.8581585513118,
+          "likely_decklist": "True",
+          "file_size": 123268
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx9iCu9WMAAIwq3.jpg",
+          "filename": "Gx9iCu9WMAAIwq3.jpg",
+          "width": 1411,
+          "height": 898,
+          "aspect_ratio": 1.5712694877505569,
+          "contrast": 51.04027343890079,
+          "likely_decklist": "True",
+          "file_size": 124374
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx1ALIcXcAEMCPs.jpg",
+          "filename": "Gx1ALIcXcAEMCPs.jpg",
+          "width": 1413,
+          "height": 846,
+          "aspect_ratio": 1.6702127659574468,
+          "contrast": 58.957758115936834,
+          "likely_decklist": "True",
+          "file_size": 132835
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx1EmUjXQAEMfZA.jpg",
+          "filename": "Gx1EmUjXQAEMfZA.jpg",
+          "width": 1408,
+          "height": 863,
+          "aspect_ratio": 1.6315179606025492,
+          "contrast": 62.43893180860242,
+          "likely_decklist": "True",
+          "file_size": 138470
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx9A-NmWEAAViAb.jpg",
+          "filename": "Gx9A-NmWEAAViAb.jpg",
+          "width": 1411,
+          "height": 789,
+          "aspect_ratio": 1.788339670468948,
+          "contrast": 47.98303229823601,
+          "likely_decklist": "True",
+          "file_size": 106484
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx11phQWsAA8Er0.jpg",
+          "filename": "Gx11phQWsAA8Er0.jpg",
+          "width": 680,
+          "height": 358,
+          "aspect_ratio": 1.899441340782123,
+          "contrast": 50.71654836086731,
+          "likely_decklist": "True",
+          "file_size": 23935
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx8hkqYW4AAOQLZ.jpg",
+          "filename": "Gx8hkqYW4AAOQLZ.jpg",
+          "width": 1418,
+          "height": 825,
+          "aspect_ratio": 1.7187878787878788,
+          "contrast": 61.258647123643264,
+          "likely_decklist": "True",
+          "file_size": 114482
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx9fgXuXsAEEgWy.jpg",
+          "filename": "Gx9fgXuXsAEEgWy.jpg",
+          "width": 1414,
+          "height": 800,
+          "aspect_ratio": 1.7675,
+          "contrast": 48.6272995537358,
+          "likely_decklist": "True",
+          "file_size": 119090
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/GxwmISlW0AI5Ohx.jpg",
+          "filename": "GxwmISlW0AI5Ohx.jpg",
+          "width": 1239,
+          "height": 1362,
+          "aspect_ratio": 0.9096916299559471,
+          "contrast": 82.77089519516316,
+          "likely_decklist": "True",
+          "file_size": 434680
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx9gENMWgAEXy7A.jpg",
+          "filename": "Gx9gENMWgAEXy7A.jpg",
+          "width": 1407,
+          "height": 878,
+          "aspect_ratio": 1.60250569476082,
+          "contrast": 60.51612186078671,
+          "likely_decklist": "True",
+          "file_size": 139658
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx86l-QWMAIE0Yd.jpg",
+          "filename": "Gx86l-QWMAIE0Yd.jpg",
+          "width": 1411,
+          "height": 713,
+          "aspect_ratio": 1.9789621318373072,
+          "contrast": 53.78029382257072,
+          "likely_decklist": "True",
+          "file_size": 96241
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/GxthmKcW0AAyH5q.jpg",
+          "filename": "GxthmKcW0AAyH5q.jpg",
+          "width": 1418,
+          "height": 1695,
+          "aspect_ratio": 0.8365781710914454,
+          "contrast": 41.411270611333066,
+          "likely_decklist": "True",
+          "file_size": 233368
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx1BPzJWAAAFQf8.jpg",
+          "filename": "Gx1BPzJWAAAFQf8.jpg",
+          "width": 1421,
+          "height": 864,
+          "aspect_ratio": 1.6446759259259258,
+          "contrast": 51.036298057451994,
+          "likely_decklist": "True",
+          "file_size": 114310
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx9behhW8AAJaHh.jpg",
+          "filename": "Gx9behhW8AAJaHh.jpg",
+          "width": 1428,
+          "height": 764,
+          "aspect_ratio": 1.869109947643979,
+          "contrast": 44.995579260088725,
+          "likely_decklist": "True",
+          "file_size": 124131
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gxx6ojEWYAAUmB9.jpg",
+          "filename": "Gxx6ojEWYAAUmB9.jpg",
+          "width": 1422,
+          "height": 804,
+          "aspect_ratio": 1.7686567164179106,
+          "contrast": 48.399824480663035,
+          "likely_decklist": "True",
+          "file_size": 115010
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx9hnpeWsAAKKw1.jpg",
+          "filename": "Gx9hnpeWsAAKKw1.jpg",
+          "width": 1419,
+          "height": 914,
+          "aspect_ratio": 1.552516411378556,
+          "contrast": 50.99983486430721,
+          "likely_decklist": "True",
+          "file_size": 123103
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx79PaVWEAApcn3.jpeg",
+          "filename": "Gx79PaVWEAApcn3.jpeg",
+          "width": 2478,
+          "height": 1301,
+          "aspect_ratio": 1.9046887009992313,
+          "contrast": 47.63456209806071,
+          "likely_decklist": "True",
+          "file_size": 588455
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx1DvOYW4AA2T_p.jpg",
+          "filename": "Gx1DvOYW4AA2T_p.jpg",
+          "width": 1416,
+          "height": 756,
+          "aspect_ratio": 1.873015873015873,
+          "contrast": 45.22690081623383,
+          "likely_decklist": "True",
+          "file_size": 121358
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx9ivlpW4AAHp15.jpg",
+          "filename": "Gx9ivlpW4AAHp15.jpg",
+          "width": 1411,
+          "height": 911,
+          "aspect_ratio": 1.548847420417124,
+          "contrast": 49.028121794403326,
+          "likely_decklist": "True",
+          "file_size": 125434
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/GxthRO1X0AAy-XS.jpg",
+          "filename": "GxthRO1X0AAy-XS.jpg",
+          "width": 1419,
+          "height": 1694,
+          "aspect_ratio": 0.8376623376623377,
+          "contrast": 41.58285165056304,
+          "likely_decklist": "True",
+          "file_size": 223850
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx9DW6nXEAAcaM5.jpg",
+          "filename": "Gx9DW6nXEAAcaM5.jpg",
+          "width": 1417,
+          "height": 676,
+          "aspect_ratio": 2.0961538461538463,
+          "contrast": 52.02324992280461,
+          "likely_decklist": "True",
+          "file_size": 91269
+        }
+      ],
+      "uncertain": [],
+      "not_decklists": [
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/final_decklist_images/Gx14Fh3WgAAl1IH.png",
+          "filename": "Gx14Fh3WgAAl1IH.png",
+          "width": 382,
+          "height": 239,
+          "aspect_ratio": 1.598326359832636,
+          "contrast": 30.102200344371713,
+          "likely_decklist": false,
+          "file_size": 14807
+        }
+      ],
+      "errors": []
+    },
+    {
+      "folder": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100",
+      "total_files": 100,
+      "likely_decklists": [
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx9fu7uXIAArgST.jpg",
+          "filename": "Gx9fu7uXIAArgST.jpg",
+          "width": 1416,
+          "height": 932,
+          "aspect_ratio": 1.51931330472103,
+          "contrast": 49.45864510768868,
+          "likely_decklist": "True",
+          "file_size": 130627
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gxx6d4YWwAAHBff.jpg",
+          "filename": "Gxx6d4YWwAAHBff.jpg",
+          "width": 1411,
+          "height": 892,
+          "aspect_ratio": 1.5818385650224216,
+          "contrast": 51.83504932845525,
+          "likely_decklist": "True",
+          "file_size": 112411
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx8hsYUXAAEkWEC.jpg",
+          "filename": "Gx8hsYUXAAEkWEC.jpg",
+          "width": 1414,
+          "height": 989,
+          "aspect_ratio": 1.4297269969666329,
+          "contrast": 54.03124843670588,
+          "likely_decklist": "True",
+          "file_size": 134090
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gxx7FSRW4AAil_C.jpg",
+          "filename": "Gxx7FSRW4AAil_C.jpg",
+          "width": 1404,
+          "height": 880,
+          "aspect_ratio": 1.5954545454545455,
+          "contrast": 63.186143579301614,
+          "likely_decklist": "True",
+          "file_size": 142665
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/GxuS19RXYAAKNw3.jpg",
+          "filename": "GxuS19RXYAAKNw3.jpg",
+          "width": 1422,
+          "height": 850,
+          "aspect_ratio": 1.6729411764705882,
+          "contrast": 56.22743426270322,
+          "likely_decklist": "True",
+          "file_size": 115836
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/GxuTqQuXkAAinjg.jpg",
+          "filename": "GxuTqQuXkAAinjg.jpg",
+          "width": 1417,
+          "height": 753,
+          "aspect_ratio": 1.8818061088977425,
+          "contrast": 52.86561114253428,
+          "likely_decklist": "True",
+          "file_size": 107311
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gxx6uwUWIAAbST8.jpg",
+          "filename": "Gxx6uwUWIAAbST8.jpg",
+          "width": 1410,
+          "height": 778,
+          "aspect_ratio": 1.8123393316195373,
+          "contrast": 71.8123330175265,
+          "likely_decklist": "True",
+          "file_size": 102076
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx1A3R5X0AAedya.jpg",
+          "filename": "Gx1A3R5X0AAedya.jpg",
+          "width": 1419,
+          "height": 899,
+          "aspect_ratio": 1.578420467185762,
+          "contrast": 52.68461144844091,
+          "likely_decklist": "True",
+          "file_size": 127543
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gxwm8KaXwAA1dLF.jpg",
+          "filename": "Gxwm8KaXwAA1dLF.jpg",
+          "width": 1240,
+          "height": 1362,
+          "aspect_ratio": 0.9104258443465492,
+          "contrast": 83.58436432090835,
+          "likely_decklist": "True",
+          "file_size": 416573
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gxwl2OgW4AE_AFu.jpg",
+          "filename": "Gxwl2OgW4AE_AFu.jpg",
+          "width": 1238,
+          "height": 1360,
+          "aspect_ratio": 0.9102941176470588,
+          "contrast": 83.12148457909778,
+          "likely_decklist": "True",
+          "file_size": 431835
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/GxwlUu0WQAE1BL_.jpg",
+          "filename": "GxwlUu0WQAE1BL_.jpg",
+          "width": 1241,
+          "height": 1366,
+          "aspect_ratio": 0.9084919472913616,
+          "contrast": 84.60402729401764,
+          "likely_decklist": "True",
+          "file_size": 420835
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx1EKK_XcAAhkWU.jpg",
+          "filename": "Gx1EKK_XcAAhkWU.jpg",
+          "width": 1418,
+          "height": 830,
+          "aspect_ratio": 1.7084337349397591,
+          "contrast": 52.120415268303354,
+          "likely_decklist": "True",
+          "file_size": 115913
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx8jH5gWgAEPIcy.jpg",
+          "filename": "Gx8jH5gWgAEPIcy.jpg",
+          "width": 1411,
+          "height": 845,
+          "aspect_ratio": 1.6698224852071006,
+          "contrast": 50.58569247325939,
+          "likely_decklist": "True",
+          "file_size": 118450
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/GxthvzmWQAAVJFg.jpg",
+          "filename": "GxthvzmWQAAVJFg.jpg",
+          "width": 1418,
+          "height": 1691,
+          "aspect_ratio": 0.8385570668243643,
+          "contrast": 40.76518847527556,
+          "likely_decklist": "True",
+          "file_size": 177569
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx1BIkdWYAAGfUY.jpg",
+          "filename": "Gx1BIkdWYAAGfUY.jpg",
+          "width": 1401,
+          "height": 919,
+          "aspect_ratio": 1.5244831338411318,
+          "contrast": 48.85618910905399,
+          "likely_decklist": "True",
+          "file_size": 126460
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gxy-i7AW8AAz9C6.jpg",
+          "filename": "Gxy-i7AW8AAz9C6.jpg",
+          "width": 1413,
+          "height": 800,
+          "aspect_ratio": 1.76625,
+          "contrast": 55.8737365098462,
+          "likely_decklist": "True",
+          "file_size": 110110
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx9A-NgXIAAckm6.jpg",
+          "filename": "Gx9A-NgXIAAckm6.jpg",
+          "width": 1412,
+          "height": 897,
+          "aspect_ratio": 1.5741360089186176,
+          "contrast": 48.9956170871671,
+          "likely_decklist": "True",
+          "file_size": 116870
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx8jaA6XAAAsUHC.jpg",
+          "filename": "Gx8jaA6XAAAsUHC.jpg",
+          "width": 1420,
+          "height": 802,
+          "aspect_ratio": 1.770573566084788,
+          "contrast": 70.7209268050756,
+          "likely_decklist": "True",
+          "file_size": 102684
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gxtha2dW4AA5lre.jpg",
+          "filename": "Gxtha2dW4AA5lre.jpg",
+          "width": 1422,
+          "height": 1554,
+          "aspect_ratio": 0.915057915057915,
+          "contrast": 48.410294923773066,
+          "likely_decklist": "True",
+          "file_size": 215517
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/GxwoHO8WoAIJuWE.jpg",
+          "filename": "GxwoHO8WoAIJuWE.jpg",
+          "width": 1235,
+          "height": 1364,
+          "aspect_ratio": 0.905425219941349,
+          "contrast": 84.40704490353714,
+          "likely_decklist": "True",
+          "file_size": 420711
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gxwki_XWwAErEY-.jpg",
+          "filename": "Gxwki_XWwAErEY-.jpg",
+          "width": 1235,
+          "height": 1369,
+          "aspect_ratio": 0.902118334550767,
+          "contrast": 82.03502890337629,
+          "likely_decklist": "True",
+          "file_size": 420011
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx8h0WdXMAAofiR.jpg",
+          "filename": "Gx8h0WdXMAAofiR.jpg",
+          "width": 1416,
+          "height": 851,
+          "aspect_ratio": 1.663924794359577,
+          "contrast": 47.44004299363131,
+          "likely_decklist": "True",
+          "file_size": 123390
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/GxuStkxXUAAoIAm.jpg",
+          "filename": "GxuStkxXUAAoIAm.jpg",
+          "width": 1414,
+          "height": 782,
+          "aspect_ratio": 1.8081841432225063,
+          "contrast": 59.65212750665242,
+          "likely_decklist": "True",
+          "file_size": 109775
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/GxwqOGzWAAAcqCg.jpg",
+          "filename": "GxwqOGzWAAAcqCg.jpg",
+          "width": 1243,
+          "height": 1356,
+          "aspect_ratio": 0.9166666666666666,
+          "contrast": 82.1336163800142,
+          "likely_decklist": "True",
+          "file_size": 415475
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/GxwLKDNW0AAyED7.jpg",
+          "filename": "GxwLKDNW0AAyED7.jpg",
+          "width": 1383,
+          "height": 1518,
+          "aspect_ratio": 0.9110671936758893,
+          "contrast": 83.11322325568801,
+          "likely_decklist": "True",
+          "file_size": 528248
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx9hTJmW8AAr8lc.jpg",
+          "filename": "Gx9hTJmW8AAr8lc.jpg",
+          "width": 1417,
+          "height": 964,
+          "aspect_ratio": 1.4699170124481329,
+          "contrast": 50.73778414332171,
+          "likely_decklist": "True",
+          "file_size": 123293
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx1DNmuXAAAxcF-.jpg",
+          "filename": "Gx1DNmuXAAAxcF-.jpg",
+          "width": 1416,
+          "height": 757,
+          "aspect_ratio": 1.8705416116248348,
+          "contrast": 61.74800697538639,
+          "likely_decklist": "True",
+          "file_size": 117462
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/GxuTIr6WcAAmSUH.jpg",
+          "filename": "GxuTIr6WcAAmSUH.jpg",
+          "width": 1409,
+          "height": 858,
+          "aspect_ratio": 1.6421911421911422,
+          "contrast": 51.69585370711867,
+          "likely_decklist": "True",
+          "file_size": 115181
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx9bmI6XUAAsqMY.jpg",
+          "filename": "Gx9bmI6XUAAsqMY.jpg",
+          "width": 1409,
+          "height": 910,
+          "aspect_ratio": 1.5483516483516484,
+          "contrast": 46.22004233198395,
+          "likely_decklist": "True",
+          "file_size": 122462
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/GxwnQ3jWsAAU0jW.jpg",
+          "filename": "GxwnQ3jWsAAU0jW.jpg",
+          "width": 1239,
+          "height": 1365,
+          "aspect_ratio": 0.9076923076923077,
+          "contrast": 84.86534217196383,
+          "likely_decklist": "True",
+          "file_size": 418340
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx9DWs4XEAA6xER.jpg",
+          "filename": "Gx9DWs4XEAA6xER.jpg",
+          "width": 1421,
+          "height": 807,
+          "aspect_ratio": 1.7608426270136308,
+          "contrast": 44.11688653272269,
+          "likely_decklist": "True",
+          "file_size": 108087
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx9eNl6XQAA3kh2.jpg",
+          "filename": "Gx9eNl6XQAA3kh2.jpg",
+          "width": 1414,
+          "height": 888,
+          "aspect_ratio": 1.5923423423423424,
+          "contrast": 52.02655251917108,
+          "likely_decklist": "True",
+          "file_size": 112469
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx9Ba8zWcAIE6nN.jpg",
+          "filename": "Gx9Ba8zWcAIE6nN.jpg",
+          "width": 1407,
+          "height": 737,
+          "aspect_ratio": 1.9090909090909092,
+          "contrast": 59.25345803657041,
+          "likely_decklist": "True",
+          "file_size": 101953
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gxy-NdnX0AA1yPl.jpg",
+          "filename": "Gxy-NdnX0AA1yPl.jpg",
+          "width": 1415,
+          "height": 756,
+          "aspect_ratio": 1.8716931216931216,
+          "contrast": 53.646605845211354,
+          "likely_decklist": "True",
+          "file_size": 113688
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx9gY75XgAAQ64A.jpg",
+          "filename": "Gx9gY75XgAAQ64A.jpg",
+          "width": 1414,
+          "height": 849,
+          "aspect_ratio": 1.6654888103651355,
+          "contrast": 52.520598556856335,
+          "likely_decklist": "True",
+          "file_size": 121885
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/GxuS8pZWMAAxf4y.jpg",
+          "filename": "GxuS8pZWMAAxf4y.jpg",
+          "width": 1424,
+          "height": 847,
+          "aspect_ratio": 1.6812278630460449,
+          "contrast": 49.43792497730438,
+          "likely_decklist": "True",
+          "file_size": 117904
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gxwoqi8XoAAuqkL.jpg",
+          "filename": "Gxwoqi8XoAAuqkL.jpg",
+          "width": 1229,
+          "height": 1362,
+          "aspect_ratio": 0.9023494860499266,
+          "contrast": 83.43444310470328,
+          "likely_decklist": "True",
+          "file_size": 421650
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gxy-AScWQAEjA76.jpg",
+          "filename": "Gxy-AScWQAEjA76.jpg",
+          "width": 1415,
+          "height": 894,
+          "aspect_ratio": 1.5827740492170022,
+          "contrast": 54.33021193981403,
+          "likely_decklist": "True",
+          "file_size": 122153
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/GxuTfuNXEAAEiMQ.jpg",
+          "filename": "GxuTfuNXEAAEiMQ.jpg",
+          "width": 1412,
+          "height": 851,
+          "aspect_ratio": 1.6592244418331374,
+          "contrast": 48.752551812234124,
+          "likely_decklist": "True",
+          "file_size": 133413
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx9bTBTXIAEltlH.jpg",
+          "filename": "Gx9bTBTXIAEltlH.jpg",
+          "width": 1415,
+          "height": 844,
+          "aspect_ratio": 1.6765402843601895,
+          "contrast": 57.13242749816579,
+          "likely_decklist": "True",
+          "file_size": 114264
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gxy-U3DXAAA5T-v.jpg",
+          "filename": "Gxy-U3DXAAA5T-v.jpg",
+          "width": 1414,
+          "height": 834,
+          "aspect_ratio": 1.6954436450839327,
+          "contrast": 65.15667811170108,
+          "likely_decklist": "True",
+          "file_size": 128156
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx9A-NeWcAADULB.jpg",
+          "filename": "Gx9A-NeWcAADULB.jpg",
+          "width": 1416,
+          "height": 890,
+          "aspect_ratio": 1.5910112359550561,
+          "contrast": 43.1778209942853,
+          "likely_decklist": "True",
+          "file_size": 116505
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx9iMIZXAAAP8ok.jpg",
+          "filename": "Gx9iMIZXAAAP8ok.jpg",
+          "width": 1420,
+          "height": 925,
+          "aspect_ratio": 1.5351351351351352,
+          "contrast": 51.22090784697407,
+          "likely_decklist": "True",
+          "file_size": 127002
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx9fXzVXAAAEaaJ.jpg",
+          "filename": "Gx9fXzVXAAAEaaJ.jpg",
+          "width": 1409,
+          "height": 991,
+          "aspect_ratio": 1.4217961654894047,
+          "contrast": 55.50577166275848,
+          "likely_decklist": "True",
+          "file_size": 128519
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gxx8faVXQAAxRjz.jpg",
+          "filename": "Gxx8faVXQAAxRjz.jpg",
+          "width": 1412,
+          "height": 879,
+          "aspect_ratio": 1.6063708759954494,
+          "contrast": 50.44606495952284,
+          "likely_decklist": "True",
+          "file_size": 119402
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gxx7cEbXoAA3VZr.jpg",
+          "filename": "Gxx7cEbXoAA3VZr.jpg",
+          "width": 1414,
+          "height": 797,
+          "aspect_ratio": 1.7741530740276035,
+          "contrast": 59.937539047269695,
+          "likely_decklist": "True",
+          "file_size": 117271
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gxx8yYoWYAA9izt.jpg",
+          "filename": "Gxx8yYoWYAA9izt.jpg",
+          "width": 1424,
+          "height": 800,
+          "aspect_ratio": 1.78,
+          "contrast": 50.93515954810623,
+          "likely_decklist": "True",
+          "file_size": 109001
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gxx8RlsWQAALTKW.jpg",
+          "filename": "Gxx8RlsWQAALTKW.jpg",
+          "width": 1421,
+          "height": 931,
+          "aspect_ratio": 1.5263157894736843,
+          "contrast": 54.88139214551731,
+          "likely_decklist": "True",
+          "file_size": 125226
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/GxwmVJxXgAAN1iU.jpg",
+          "filename": "GxwmVJxXgAAN1iU.jpg",
+          "width": 1246,
+          "height": 1364,
+          "aspect_ratio": 0.9134897360703812,
+          "contrast": 84.60854501261436,
+          "likely_decklist": "True",
+          "file_size": 428471
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gxx77JNWYAAcORB.jpg",
+          "filename": "Gxx77JNWYAAcORB.jpg",
+          "width": 1417,
+          "height": 874,
+          "aspect_ratio": 1.6212814645308924,
+          "contrast": 46.530116057533796,
+          "likely_decklist": "True",
+          "file_size": 118737
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx9hFm-XsAEoJnv.jpg",
+          "filename": "Gx9hFm-XsAEoJnv.jpg",
+          "width": 1409,
+          "height": 949,
+          "aspect_ratio": 1.4847207586933615,
+          "contrast": 54.09292321137867,
+          "likely_decklist": "True",
+          "file_size": 141747
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx8_2QOWoAI-r9M.jpg",
+          "filename": "Gx8_2QOWoAI-r9M.jpg",
+          "width": 1415,
+          "height": 710,
+          "aspect_ratio": 1.9929577464788732,
+          "contrast": 53.01983191572375,
+          "likely_decklist": "True",
+          "file_size": 93268
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx0_z8MXAAAVDiQ.jpg",
+          "filename": "Gx0_z8MXAAAVDiQ.jpg",
+          "width": 1409,
+          "height": 899,
+          "aspect_ratio": 1.5672969966629589,
+          "contrast": 53.15391373763102,
+          "likely_decklist": "True",
+          "file_size": 120089
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx9g27BWMAAO-ue.jpg",
+          "filename": "Gx9g27BWMAAO-ue.jpg",
+          "width": 1408,
+          "height": 970,
+          "aspect_ratio": 1.4515463917525773,
+          "contrast": 41.058104572974344,
+          "likely_decklist": "True",
+          "file_size": 146154
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gxx70E_X0AAfE8v.jpg",
+          "filename": "Gxx70E_X0AAfE8v.jpg",
+          "width": 1318,
+          "height": 894,
+          "aspect_ratio": 1.4742729306487696,
+          "contrast": 45.97605028245337,
+          "likely_decklist": "True",
+          "file_size": 118321
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx0_6iIW8AA23z4.jpg",
+          "filename": "Gx0_6iIW8AA23z4.jpg",
+          "width": 1411,
+          "height": 883,
+          "aspect_ratio": 1.5979614949037373,
+          "contrast": 50.73114336584272,
+          "likely_decklist": "True",
+          "file_size": 122779
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx9hf5aW4AAI4JN.jpg",
+          "filename": "Gx9hf5aW4AAI4JN.jpg",
+          "width": 1397,
+          "height": 871,
+          "aspect_ratio": 1.6039035591274398,
+          "contrast": 57.137761244694524,
+          "likely_decklist": "True",
+          "file_size": 120565
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx9h3ggXgAAu0I6.jpg",
+          "filename": "Gx9h3ggXgAAu0I6.jpg",
+          "width": 1418,
+          "height": 787,
+          "aspect_ratio": 1.8017789072426937,
+          "contrast": 71.44337069078557,
+          "likely_decklist": "True",
+          "file_size": 106713
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/GxuTyF4WgAAVmyV.jpg",
+          "filename": "GxuTyF4WgAAVmyV.jpg",
+          "width": 1413,
+          "height": 819,
+          "aspect_ratio": 1.7252747252747254,
+          "contrast": 60.326271740926565,
+          "likely_decklist": "True",
+          "file_size": 107300
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gxwn1zdWsAA7QKv.jpg",
+          "filename": "Gxwn1zdWsAA7QKv.jpg",
+          "width": 1232,
+          "height": 1365,
+          "aspect_ratio": 0.9025641025641026,
+          "contrast": 84.53194885108397,
+          "likely_decklist": "True",
+          "file_size": 434878
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx9g_8wXkAAryba.jpg",
+          "filename": "Gx9g_8wXkAAryba.jpg",
+          "width": 1411,
+          "height": 847,
+          "aspect_ratio": 1.665879574970484,
+          "contrast": 54.17264054867899,
+          "likely_decklist": "True",
+          "file_size": 123795
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx1A96cW8AAMLLs.jpg",
+          "filename": "Gx1A96cW8AAMLLs.jpg",
+          "width": 1409,
+          "height": 763,
+          "aspect_ratio": 1.8466579292267367,
+          "contrast": 63.40902743690572,
+          "likely_decklist": "True",
+          "file_size": 113550
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx8ip73WEAAeChO.jpg",
+          "filename": "Gx8ip73WEAAeChO.jpg",
+          "width": 1416,
+          "height": 819,
+          "aspect_ratio": 1.728937728937729,
+          "contrast": 56.789589978431195,
+          "likely_decklist": "True",
+          "file_size": 116306
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/GxuSmXkXQAAtaGU.jpg",
+          "filename": "GxuSmXkXQAAtaGU.jpg",
+          "width": 1413,
+          "height": 871,
+          "aspect_ratio": 1.6222732491389207,
+          "contrast": 46.69057882936515,
+          "likely_decklist": "True",
+          "file_size": 116975
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx86chtWcAA3P0c.jpg",
+          "filename": "Gx86chtWcAA3P0c.jpg",
+          "width": 1410,
+          "height": 783,
+          "aspect_ratio": 1.8007662835249043,
+          "contrast": 60.06747994077683,
+          "likely_decklist": "True",
+          "file_size": 99799
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gxx9ItMXkAA2r3d.jpg",
+          "filename": "Gxx9ItMXkAA2r3d.jpg",
+          "width": 1414,
+          "height": 811,
+          "aspect_ratio": 1.7435265104808877,
+          "contrast": 69.82926331285815,
+          "likely_decklist": "True",
+          "file_size": 140045
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx9i6fTWUAAk4nd.jpg",
+          "filename": "Gx9i6fTWUAAk4nd.jpg",
+          "width": 1418,
+          "height": 882,
+          "aspect_ratio": 1.6077097505668934,
+          "contrast": 53.52230490541207,
+          "likely_decklist": "True",
+          "file_size": 129426
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx8_11zXgAErRdU.jpg",
+          "filename": "Gx8_11zXgAErRdU.jpg",
+          "width": 1421,
+          "height": 754,
+          "aspect_ratio": 1.8846153846153846,
+          "contrast": 55.25507714322798,
+          "likely_decklist": "True",
+          "file_size": 99407
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gxx8ZSCXIAA7RwU.jpg",
+          "filename": "Gxx8ZSCXIAA7RwU.jpg",
+          "width": 1398,
+          "height": 942,
+          "aspect_ratio": 1.484076433121019,
+          "contrast": 51.019113850502926,
+          "likely_decklist": "True",
+          "file_size": 122871
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx8i99YX0AACYSI.jpg",
+          "filename": "Gx8i99YX0AACYSI.jpg",
+          "width": 1420,
+          "height": 824,
+          "aspect_ratio": 1.7233009708737863,
+          "contrast": 48.02071886704156,
+          "likely_decklist": "True",
+          "file_size": 116460
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gxy-oPyWkAAcgo6.jpg",
+          "filename": "Gxy-oPyWkAAcgo6.jpg",
+          "width": 1421,
+          "height": 853,
+          "aspect_ratio": 1.6658851113716295,
+          "contrast": 61.02635939795607,
+          "likely_decklist": "True",
+          "file_size": 124373
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gxx8o-lWIAA8nBC.jpg",
+          "filename": "Gxx8o-lWIAA8nBC.jpg",
+          "width": 1418,
+          "height": 915,
+          "aspect_ratio": 1.549726775956284,
+          "contrast": 59.20149687582775,
+          "likely_decklist": "True",
+          "file_size": 136096
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx8_11vXYAM89Xs.jpg",
+          "filename": "Gx8_11vXYAM89Xs.jpg",
+          "width": 1420,
+          "height": 864,
+          "aspect_ratio": 1.6435185185185186,
+          "contrast": 59.89017317252337,
+          "likely_decklist": "True",
+          "file_size": 105744
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx9fIjbX0AMU0Wj.jpg",
+          "filename": "Gx9fIjbX0AMU0Wj.jpg",
+          "width": 1415,
+          "height": 886,
+          "aspect_ratio": 1.5970654627539504,
+          "contrast": 54.9460431914512,
+          "likely_decklist": "True",
+          "file_size": 121336
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx1Ay3cXQAALFkJ.jpg",
+          "filename": "Gx1Ay3cXQAALFkJ.jpg",
+          "width": 1417,
+          "height": 897,
+          "aspect_ratio": 1.5797101449275361,
+          "contrast": 71.26665961682585,
+          "likely_decklist": "True",
+          "file_size": 159653
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx9DW6gXsAEztX3.jpg",
+          "filename": "Gx9DW6gXsAEztX3.jpg",
+          "width": 1416,
+          "height": 979,
+          "aspect_ratio": 1.446373850868233,
+          "contrast": 44.76224819683238,
+          "likely_decklist": "True",
+          "file_size": 114274
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx1AXJsXEAA3QO6.jpg",
+          "filename": "Gx1AXJsXEAA3QO6.jpg",
+          "width": 1417,
+          "height": 807,
+          "aspect_ratio": 1.7558859975216852,
+          "contrast": 64.95207088762287,
+          "likely_decklist": "True",
+          "file_size": 123511
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx1Ac__XQAAbIk7.jpg",
+          "filename": "Gx1Ac__XQAAbIk7.jpg",
+          "width": 1412,
+          "height": 918,
+          "aspect_ratio": 1.5381263616557734,
+          "contrast": 65.22722004575577,
+          "likely_decklist": "True",
+          "file_size": 117008
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gxx8CS4XMAE5p4M.jpg",
+          "filename": "Gxx8CS4XMAE5p4M.jpg",
+          "width": 1408,
+          "height": 921,
+          "aspect_ratio": 1.5287730727470141,
+          "contrast": 54.48885967348743,
+          "likely_decklist": "True",
+          "file_size": 130923
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/GxwkOt8XkAAlL9x.jpg",
+          "filename": "GxwkOt8XkAAlL9x.jpg",
+          "width": 1243,
+          "height": 1369,
+          "aspect_ratio": 0.9079620160701242,
+          "contrast": 83.11742516054605,
+          "likely_decklist": "True",
+          "file_size": 432926
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx8i1d5XwAA6bqu.jpg",
+          "filename": "Gx8i1d5XwAA6bqu.jpg",
+          "width": 1410,
+          "height": 806,
+          "aspect_ratio": 1.749379652605459,
+          "contrast": 49.28735658991318,
+          "likely_decklist": "True",
+          "file_size": 122861
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx9fqCFXAAEvbTu.jpg",
+          "filename": "Gx9fqCFXAAEvbTu.jpg",
+          "width": 1413,
+          "height": 825,
+          "aspect_ratio": 1.7127272727272727,
+          "contrast": 52.8581585513118,
+          "likely_decklist": "True",
+          "file_size": 123268
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx9iCu9WMAAIwq3.jpg",
+          "filename": "Gx9iCu9WMAAIwq3.jpg",
+          "width": 1411,
+          "height": 898,
+          "aspect_ratio": 1.5712694877505569,
+          "contrast": 51.04027343890079,
+          "likely_decklist": "True",
+          "file_size": 124374
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx1ALIcXcAEMCPs.jpg",
+          "filename": "Gx1ALIcXcAEMCPs.jpg",
+          "width": 1413,
+          "height": 846,
+          "aspect_ratio": 1.6702127659574468,
+          "contrast": 58.957758115936834,
+          "likely_decklist": "True",
+          "file_size": 132835
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx1EmUjXQAEMfZA.jpg",
+          "filename": "Gx1EmUjXQAEMfZA.jpg",
+          "width": 1408,
+          "height": 863,
+          "aspect_ratio": 1.6315179606025492,
+          "contrast": 62.43893180860242,
+          "likely_decklist": "True",
+          "file_size": 138470
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx9A-NmWEAAViAb.jpg",
+          "filename": "Gx9A-NmWEAAViAb.jpg",
+          "width": 1411,
+          "height": 789,
+          "aspect_ratio": 1.788339670468948,
+          "contrast": 47.98303229823601,
+          "likely_decklist": "True",
+          "file_size": 106484
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx8hkqYW4AAOQLZ.jpg",
+          "filename": "Gx8hkqYW4AAOQLZ.jpg",
+          "width": 1418,
+          "height": 825,
+          "aspect_ratio": 1.7187878787878788,
+          "contrast": 61.258647123643264,
+          "likely_decklist": "True",
+          "file_size": 114482
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx9fgXuXsAEEgWy.jpg",
+          "filename": "Gx9fgXuXsAEEgWy.jpg",
+          "width": 1414,
+          "height": 800,
+          "aspect_ratio": 1.7675,
+          "contrast": 48.6272995537358,
+          "likely_decklist": "True",
+          "file_size": 119090
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/GxwmISlW0AI5Ohx.jpg",
+          "filename": "GxwmISlW0AI5Ohx.jpg",
+          "width": 1239,
+          "height": 1362,
+          "aspect_ratio": 0.9096916299559471,
+          "contrast": 82.77089519516316,
+          "likely_decklist": "True",
+          "file_size": 434680
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx9gENMWgAEXy7A.jpg",
+          "filename": "Gx9gENMWgAEXy7A.jpg",
+          "width": 1407,
+          "height": 878,
+          "aspect_ratio": 1.60250569476082,
+          "contrast": 60.51612186078671,
+          "likely_decklist": "True",
+          "file_size": 139658
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx86l-QWMAIE0Yd.jpg",
+          "filename": "Gx86l-QWMAIE0Yd.jpg",
+          "width": 1411,
+          "height": 713,
+          "aspect_ratio": 1.9789621318373072,
+          "contrast": 53.78029382257072,
+          "likely_decklist": "True",
+          "file_size": 96241
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/GxthmKcW0AAyH5q.jpg",
+          "filename": "GxthmKcW0AAyH5q.jpg",
+          "width": 1418,
+          "height": 1695,
+          "aspect_ratio": 0.8365781710914454,
+          "contrast": 41.411270611333066,
+          "likely_decklist": "True",
+          "file_size": 233368
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx1BPzJWAAAFQf8.jpg",
+          "filename": "Gx1BPzJWAAAFQf8.jpg",
+          "width": 1421,
+          "height": 864,
+          "aspect_ratio": 1.6446759259259258,
+          "contrast": 51.036298057451994,
+          "likely_decklist": "True",
+          "file_size": 114310
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx9behhW8AAJaHh.jpg",
+          "filename": "Gx9behhW8AAJaHh.jpg",
+          "width": 1428,
+          "height": 764,
+          "aspect_ratio": 1.869109947643979,
+          "contrast": 44.995579260088725,
+          "likely_decklist": "True",
+          "file_size": 124131
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gxx6ojEWYAAUmB9.jpg",
+          "filename": "Gxx6ojEWYAAUmB9.jpg",
+          "width": 1422,
+          "height": 804,
+          "aspect_ratio": 1.7686567164179106,
+          "contrast": 48.399824480663035,
+          "likely_decklist": "True",
+          "file_size": 115010
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx9hnpeWsAAKKw1.jpg",
+          "filename": "Gx9hnpeWsAAKKw1.jpg",
+          "width": 1419,
+          "height": 914,
+          "aspect_ratio": 1.552516411378556,
+          "contrast": 50.99983486430721,
+          "likely_decklist": "True",
+          "file_size": 123103
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx1DvOYW4AA2T_p.jpg",
+          "filename": "Gx1DvOYW4AA2T_p.jpg",
+          "width": 1416,
+          "height": 756,
+          "aspect_ratio": 1.873015873015873,
+          "contrast": 45.22690081623383,
+          "likely_decklist": "True",
+          "file_size": 121358
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx9ivlpW4AAHp15.jpg",
+          "filename": "Gx9ivlpW4AAHp15.jpg",
+          "width": 1411,
+          "height": 911,
+          "aspect_ratio": 1.548847420417124,
+          "contrast": 49.028121794403326,
+          "likely_decklist": "True",
+          "file_size": 125434
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/GxthRO1X0AAy-XS.jpg",
+          "filename": "GxthRO1X0AAy-XS.jpg",
+          "width": 1419,
+          "height": 1694,
+          "aspect_ratio": 0.8376623376623377,
+          "contrast": 41.58285165056304,
+          "likely_decklist": "True",
+          "file_size": 223850
+        },
+        {
+          "path": "/Volumes/DataDisk/_Projects/screen to deck/fireshoes_decklist_100/Gx9DW6nXEAAcaM5.jpg",
+          "filename": "Gx9DW6nXEAAcaM5.jpg",
+          "width": 1417,
+          "height": 676,
+          "aspect_ratio": 2.0961538461538463,
+          "contrast": 52.02324992280461,
+          "likely_decklist": "True",
+          "file_size": 91269
+        }
+      ],
+      "uncertain": [],
+      "not_decklists": [],
+      "errors": []
+    }
+  ],
+  "summary": {
+    "total_analyzed": 200,
+    "total_likely_decks": 199,
+    "total_uncertain": 0,
+    "total_not_decks": 1
+  }
+}
