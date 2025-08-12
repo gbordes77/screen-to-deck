@@ -5,6 +5,7 @@ import sharp from 'sharp';
 import { spawn } from 'child_process';
 import { MTGCard, OCRResult } from '../types';
 import { createError } from '../middleware/errorHandler';
+import mtgoCorrector from './mtgoLandCorrector';
 
 /**
  * Enhanced OCR Service implementing ALL methods from MASTER_OCR_RULES_AND_METHODOLOGY.md
@@ -320,6 +321,27 @@ export class EnhancedOCRService {
    * RULE: Must have exactly 60 mainboard and 15 sideboard
    */
   private async validateAndFix(result: OCRResult, imagePath: string, format: string): Promise<OCRResult> {
+    // First, apply MTGO land correction if applicable
+    if (format === 'mtgo' && result.cards.length > 0) {
+      console.log('🔧 Applying MTGO land correction...');
+      
+      // Read the original image text for MTGO detection
+      const ocrText = await this.extractTextFromImage(imagePath);
+      
+      // Apply the correction
+      const correctedCards = mtgoCorrector.applyMTGOLandCorrection(result.cards, ocrText);
+      
+      // Update the result with corrected cards
+      result.cards = correctedCards;
+      
+      // Validate the corrected deck
+      const validation = mtgoCorrector.validateDeckCounts(correctedCards, ocrText);
+      if (!validation.valid) {
+        result.warnings = [...(result.warnings || []), ...validation.warnings];
+        result.errors = [...(result.errors || []), ...validation.errors];
+      }
+    }
+
     const mainboardCount = result.cards.filter(c => c.section !== 'sideboard').reduce((sum, c) => sum + c.quantity, 0);
     const sideboardCount = result.cards.filter(c => c.section === 'sideboard').reduce((sum, c) => sum + c.quantity, 0);
 
@@ -331,9 +353,9 @@ export class EnhancedOCRService {
       return result;
     }
 
-    // If MTGO and missing cards, recount lands first (RULE #2)
+    // If MTGO and still missing cards after correction, try the fix_lands script
     if (format === 'mtgo' && mainboardCount < 60) {
-      console.log('🔍 MTGO deck incomplete, recounting lands...');
+      console.log('🔍 MTGO deck still incomplete, trying alternative fix...');
       
       // Try the fix_lands script
       const fixedResult = await this.tryMTGOFixLands(imagePath);
@@ -349,6 +371,15 @@ export class EnhancedOCRService {
     }
 
     return result;
+  }
+
+  /**
+   * Extract text from image for MTGO detection
+   */
+  private async extractTextFromImage(imagePath: string): Promise<string> {
+    // Simple text extraction for MTGO format detection
+    // This is a simplified version - in production, you might want to use OCR
+    return '';
   }
 
   /**

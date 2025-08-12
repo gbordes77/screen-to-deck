@@ -24,6 +24,15 @@ from utils.logger import setup_logger, trace_ocr_performance
 from deck_processor import DeckProcessor, ProcessedCard, ValidationResult
 from scryfall_service import ScryfallService
 
+# Import du correcteur MTGO
+import sys
+sys.path.append('..')
+try:
+    from mtgo_land_correction_rule import MTGOLandCorrector
+except ImportError:
+    # Fallback si le module n'est pas trouvé
+    MTGOLandCorrector = None
+
 # Configuration du logger
 logger = setup_logger()
 
@@ -172,6 +181,8 @@ class MTGOCRParser:
         self.arena_ocr = UltraAdvancedOCR()
         self.deck_processor = DeckProcessor(strict_mode=False)
         self.logger = logger
+        # Initialiser le correcteur MTGO si disponible
+        self.mtgo_corrector = MTGOLandCorrector() if MTGOLandCorrector else None
 
     def _filter_and_clean_text(self, text: str) -> str:
         """
@@ -352,6 +363,17 @@ class MTGOCRParser:
                     errors=["Aucune carte détectée dans le texte EasyOCR"],
                     processing_notes=[f"Texte EasyOCR brut: {raw_text[:200]}..."]
                 )
+
+            # 2.5. Appliquer la correction MTGO si nécessaire
+            if self.mtgo_corrector and raw_text:
+                logger.info("🔧 Phase 2.5: Vérification et correction MTGO")
+                if self.mtgo_corrector.detect_mtgo_format(raw_text):
+                    logger.info("  📊 Format MTGO détecté - application de la correction des lands")
+                    raw_main = self.mtgo_corrector.apply_mtgo_land_correction(
+                        raw_main, raw_text, is_sideboard=False
+                    )
+                    # Le sideboard n'a pas besoin de correction
+                    logger.info(f"  ✅ Correction MTGO appliquée: {sum(q for _, q in raw_main)} cartes main")
 
             # 3. Validation et normalisation avec Scryfall (recherche floue)
             logger.info("🔍 Phase 3: Validation Scryfall avec recherche floue")

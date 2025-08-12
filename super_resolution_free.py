@@ -1,31 +1,49 @@
 #!/usr/bin/env python3
 """
-Super-Résolution GRATUITE pour éviter OpenAI
-Utilise Real-ESRGAN ou des méthodes avancées d'upscaling
+Super-Resolution Optimized for MTG Card OCR
+Advanced upscaling with parallel processing support
 """
 import cv2
 import numpy as np
 from PIL import Image, ImageFilter, ImageEnhance
-import easyocr
+import sys
+import argparse
+import os
+from concurrent.futures import ThreadPoolExecutor
+import time
 
-class FreeSupeResolution:
-    def __init__(self):
-        self.reader = easyocr.Reader(['en'], gpu=False, verbose=False)
+class OptimizedSuperResolution:
+    def __init__(self, use_gpu=False):
+        self.use_gpu = use_gpu
+        self.target_width = 2400  # Default target for OCR
         
-    def advanced_upscale(self, img, target_width=2400):
+    def advanced_upscale(self, img, target_width=None):
         """
         Upscaling avancé GRATUIT pour atteindre une résolution optimale
         Objectif: Passer de 1575x749 à 2400x1140 (ou plus)
         """
+        if target_width is None:
+            target_width = self.target_width
+        
         h, w = img.shape[:2]
-        scale = target_width / w
         
-        print(f"📐 Résolution actuelle: {w}x{h}")
-        print(f"🎯 Objectif: {target_width}x{int(h*scale)}")
-        print(f"🔍 Facteur d'agrandissement: {scale:.2f}x")
+        # Intelligent scaling based on original resolution
+        if w >= 1200:
+            # Already good resolution, minimal upscaling
+            scale = min(1.5, target_width / w)
+        elif w >= 800:
+            # Medium resolution, moderate upscaling
+            scale = min(3.0, target_width / w)
+        else:
+            # Low resolution, aggressive upscaling
+            scale = min(4.0, target_width / w)
         
-        # Étape 1: EDSR-style upscaling (sans le modèle, mais avec les techniques)
-        print("\n⚡ Étape 1: Multi-scale upscaling...")
+        print(f"📐 Current resolution: {w}x{h}")
+        print(f"🎯 Target: {int(w*scale)}x{int(h*scale)}")
+        print(f"🔍 Scale factor: {scale:.2f}x")
+        
+        # Step 1: Progressive multi-scale upscaling
+        print("\n⚡ Step 1: Multi-scale upscaling...")
         
         # Upscale progressif pour meilleure qualité
         current = img.copy()
@@ -47,25 +65,19 @@ class FreeSupeResolution:
             current = cv2.addWeighted(current, 0.8, linear, 0.2, 0)
             
             current_scale *= step_scale
-            print(f"  • Upscale à {current.shape[1]}x{current.shape[0]}")
+            print(f"  • Upscaled to {current.shape[1]}x{current.shape[0]}")
         
-        # Étape 2: Edge Enhancement (améliorer les contours du texte)
-        print("\n🔪 Étape 2: Amélioration des contours...")
+        # Step 2: Advanced edge enhancement for text
+        print("\n🔪 Step 2: Edge enhancement...")
         
-        # Convertir en PIL pour filtres avancés
-        pil_img = Image.fromarray(cv2.cvtColor(current, cv2.COLOR_BGR2RGB))
+        # Apply parallel processing for large images
+        if current.shape[0] * current.shape[1] > 2000000:  # > 2MP
+            enhanced = self.parallel_edge_enhancement(current)
+        else:
+            enhanced = self.sequential_edge_enhancement(current)
         
-        # Unsharp mask pour améliorer la netteté
-        pil_img = pil_img.filter(ImageFilter.UnsharpMask(radius=2, percent=150, threshold=3))
-        
-        # Edge enhance
-        pil_img = pil_img.filter(ImageFilter.EDGE_ENHANCE_MORE)
-        
-        # Retour en OpenCV
-        enhanced = cv2.cvtColor(np.array(pil_img), cv2.COLOR_RGB2BGR)
-        
-        # Étape 3: Contrast Enhancement spécifique au texte
-        print("\n🎨 Étape 3: Optimisation du contraste pour OCR...")
+        # Step 3: Contrast enhancement optimized for MTG cards
+        print("\n🎨 Step 3: Contrast optimization for OCR...")
         
         # CLAHE sur chaque canal
         lab = cv2.cvtColor(enhanced, cv2.COLOR_BGR2LAB)
@@ -78,14 +90,14 @@ class FreeSupeResolution:
         enhanced = cv2.merge([l, a, b])
         enhanced = cv2.cvtColor(enhanced, cv2.COLOR_LAB2BGR)
         
-        # Étape 4: Denoising intelligent
-        print("\n🧹 Étape 4: Réduction du bruit...")
+        # Step 4: Intelligent denoising
+        print("\n🧹 Step 4: Noise reduction...")
         
         # Bilateral filter préserve les edges
         denoised = cv2.bilateralFilter(enhanced, 9, 75, 75)
         
-        # Étape 5: Text-specific enhancement
-        print("\n📝 Étape 5: Optimisation spécifique au texte MTG...")
+        # Step 5: MTG-specific text enhancement
+        print("\n📝 Step 5: MTG-specific text optimization...")
         
         # Convertir en gris pour analyse
         gray = cv2.cvtColor(denoised, cv2.COLOR_BGR2GRAY)
@@ -109,137 +121,144 @@ class FreeSupeResolution:
         text_mask_3ch = cv2.cvtColor(text_mask, cv2.COLOR_GRAY2BGR) / 255.0
         final = (sharpened * text_mask_3ch + denoised * (1 - text_mask_3ch)).astype(np.uint8)
         
-        print(f"\n✅ Résolution finale: {final.shape[1]}x{final.shape[0]}")
-        print(f"📈 Amélioration: {final.shape[1]/w:.1f}x")
+        print(f"\n✅ Final resolution: {final.shape[1]}x{final.shape[0]}")
+        print(f"📈 Improvement: {final.shape[1]/w:.1f}x")
         
         return final
+    
+    def sequential_edge_enhancement(self, img):
+        """Standard edge enhancement"""
+        pil_img = Image.fromarray(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+        pil_img = pil_img.filter(ImageFilter.UnsharpMask(radius=2, percent=150, threshold=3))
+        pil_img = pil_img.filter(ImageFilter.EDGE_ENHANCE_MORE)
+        return cv2.cvtColor(np.array(pil_img), cv2.COLOR_RGB2BGR)
+    
+    def parallel_edge_enhancement(self, img):
+        """Parallel edge enhancement for large images"""
+        h, w = img.shape[:2]
+        tile_size = 512
+        tiles = []
         
-    def extract_with_free_sr(self, image_path):
-        """Pipeline complet avec Super-Résolution gratuite"""
+        # Split image into tiles
+        for y in range(0, h, tile_size):
+            for x in range(0, w, tile_size):
+                tile = img[y:min(y+tile_size, h), x:min(x+tile_size, w)]
+                tiles.append((x, y, tile))
         
+        # Process tiles in parallel
+        with ThreadPoolExecutor(max_workers=4) as executor:
+            processed_tiles = list(executor.map(self.process_tile, tiles))
+        
+        # Reconstruct image
+        result = np.zeros_like(img)
+        for x, y, tile in processed_tiles:
+            h_tile, w_tile = tile.shape[:2]
+            result[y:y+h_tile, x:x+w_tile] = tile
+        
+        return result
+    
+    def process_tile(self, tile_data):
+        """Process a single tile"""
+        x, y, tile = tile_data
+        enhanced = self.sequential_edge_enhancement(tile)
+        return (x, y, enhanced)
+    
+    def process_image(self, input_path, output_path=None):
+        """Process image with optimized super-resolution"""
+        start_time = time.time()
+        
+        # Load image
+        img = cv2.imread(input_path)
+        if img is None:
+            raise ValueError(f"Could not load image: {input_path}")
+        
+        h, w = img.shape[:2]
+        print(f"\n📊 Input: {w}x{h}")
+        
+        # Check if super-resolution is needed
+        if w < 1200:
+            print(f"  ⚠️ Low resolution detected")
+            print(f"  ➡️ Applying super-resolution...")
+            
+            # Apply super-resolution
+            img = self.advanced_upscale(img)
+            
+            # Save output
+            if output_path:
+                cv2.imwrite(output_path, img)
+                print(f"\n💾 Saved to: {output_path}")
+            else:
+                # Default output path
+                base_name = os.path.splitext(os.path.basename(input_path))[0]
+                output_path = f"{base_name}_sr.png"
+                cv2.imwrite(output_path, img)
+                print(f"\n💾 Saved to: {output_path}")
+        else:
+            print(f"  ✅ Resolution sufficient, minimal processing")
+            # Apply minimal enhancement
+            img = self.sequential_edge_enhancement(img)
+            if output_path:
+                cv2.imwrite(output_path, img)
+        
+        elapsed = time.time() - start_time
+        print(f"\n⏱️ Processing time: {elapsed:.2f}s")
+        
+        return output_path if output_path else input_path
+
+def main():
+    """Main entry point for command-line usage"""
+    parser = argparse.ArgumentParser(description='MTG Card Image Super-Resolution')
+    parser.add_argument('input', help='Input image path')
+    parser.add_argument('output', nargs='?', help='Output image path (optional)')
+    parser.add_argument('--target-width', type=int, default=2400, help='Target width (default: 2400)')
+    parser.add_argument('--gpu', action='store_true', help='Use GPU acceleration if available')
+    
+    args = parser.parse_args()
+    
+    if not os.path.exists(args.input):
+        print(f"❌ Error: Input file not found: {args.input}")
+        sys.exit(1)
+    
+    # Create processor
+    processor = OptimizedSuperResolution(use_gpu=args.gpu)
+    processor.target_width = args.target_width
+    
+    try:
         print("\n" + "="*60)
-        print("🚀 EXTRACTION AVEC SUPER-RÉSOLUTION GRATUITE")
+        print("🚀 MTG CARD IMAGE SUPER-RESOLUTION")
         print("="*60)
         
-        # Charger l'image
-        img = cv2.imread(image_path)
-        h, w = img.shape[:2]
+        # Process image
+        output = processor.process_image(args.input, args.output)
         
-        # Analyser la qualité
-        text_height = h // 15 // 3
-        print(f"\n📊 Analyse initiale:")
-        print(f"  • Résolution: {w}x{h}")
-        print(f"  • Taille texte estimée: {text_height}px")
+        print("\n✅ Success!")
+        print(f"💾 Output: {output}")
         
-        if text_height < 20:
-            print(f"  ⚠️ Texte trop petit ({text_height}px < 20px)")
-            print(f"  ➡️ Super-résolution requise")
-            
-            # Appliquer la super-résolution
-            img = self.advanced_upscale(img, target_width=2400)
-            
-            # Sauvegarder pour debug
-            cv2.imwrite('/tmp/super_res_free.png', img)
-            print(f"\n💾 Image améliorée sauvée: /tmp/super_res_free.png")
-        else:
-            print(f"  ✅ Résolution suffisante")
-            
-        # Extraire sideboard (partie droite)
-        sideboard_x = int(img.shape[1] * 0.70)
-        sideboard = img[:, sideboard_x:]
+        # Show improvements
+        input_img = cv2.imread(args.input)
+        output_img = cv2.imread(output)
         
-        # OCR avec EasyOCR
-        print("\n🤖 OCR avec EasyOCR sur image améliorée...")
-        results = self.reader.readtext(sideboard, paragraph=False)
-        
-        # Parser les résultats
-        cards = []
-        for bbox, text, conf in results:
-            text = text.strip()
+        if input_img is not None and output_img is not None:
+            input_h, input_w = input_img.shape[:2]
+            output_h, output_w = output_img.shape[:2]
             
-            # Ignorer UI
-            if len(text) < 3 or text.lower() in ['sideboard', 'done', 'cards']:
-                continue
-                
-            # Parser quantité
-            quantity = 1
-            card_name = text
+            print("\n📊 Statistics:")
+            print(f"  • Input:  {input_w}x{input_h}")
+            print(f"  • Output: {output_w}x{output_h}")
+            print(f"  • Scale:  {output_w/input_w:.2f}x")
             
-            if 'x' in text.lower():
-                parts = text.replace('X', 'x').split('x')
-                if len(parts) == 2:
-                    if parts[0].strip().isdigit():
-                        quantity = int(parts[0].strip())
-                        card_name = parts[1].strip()
-                        
-            cards.append({
-                'name': card_name,
-                'quantity': quantity,
-                'confidence': conf
-            })
-            
-        return cards
-
-def test_comparison():
-    """Compare avec et sans super-résolution"""
-    
-    sr = FreeSupeResolution()
-    
-    # Test 1: Sans super-résolution (direct)
-    print("\n" + "="*60)
-    print("TEST 1: OCR DIRECT (sans amélioration)")
-    print("="*60)
-    
-    img = cv2.imread("/Volumes/DataDisk/_Projects/screen to deck/image2.webp")
-    sideboard = img[:, int(img.shape[1] * 0.70):]
-    
-    reader = easyocr.Reader(['en'], gpu=False, verbose=False)
-    results_direct = reader.readtext(sideboard, paragraph=False)
-    
-    cards_direct = []
-    for _, text, conf in results_direct:
-        text = text.strip()
-        if len(text) > 3 and text.lower() not in ['sideboard', 'done', 'cards']:
-            cards_direct.append(text)
-            
-    print(f"✅ Cartes détectées: {len(cards_direct)}")
-    for i, card in enumerate(cards_direct[:5], 1):
-        print(f"  {i}. {card}")
-    if len(cards_direct) > 5:
-        print(f"  ... et {len(cards_direct)-5} autres")
+            # Calculate file sizes
+            input_size = os.path.getsize(args.input) / 1024
+            output_size = os.path.getsize(output) / 1024
+            print(f"\n📁 File sizes:")
+            print(f"  • Input:  {input_size:.1f} KB")
+            print(f"  • Output: {output_size:.1f} KB")
         
-    # Test 2: Avec super-résolution
-    print("\n" + "="*60)
-    print("TEST 2: OCR AVEC SUPER-RÉSOLUTION GRATUITE")
-    print("="*60)
-    
-    cards_sr = sr.extract_with_free_sr("/Volumes/DataDisk/_Projects/screen to deck/image2.webp")
-    
-    print(f"\n✅ Cartes détectées: {len(cards_sr)}")
-    for i, card in enumerate(cards_sr, 1):
-        print(f"  {i}. {card['quantity']}x {card['name']} ({card['confidence']:.0%})")
+        return 0
         
-    # Comparaison
-    print("\n" + "="*60)
-    print("📊 COMPARAISON DES RÉSULTATS")
-    print("="*60)
-    
-    print(f"Sans SR: {len(cards_direct)} cartes")
-    print(f"Avec SR: {len(cards_sr)} cartes")
-    print(f"Amélioration: +{len(cards_sr) - len(cards_direct)} cartes")
-    
-    # Vérifier si on a les cartes clés
-    key_cards = ["Fire Magic", "Spectral Denial", "Negate", "Ghost Vacuum"]
-    
-    print("\n🎯 Détection des cartes clés:")
-    for key in key_cards:
-        found = any(key.lower() in str(card).lower() for card in cards_sr)
-        print(f"  • {key}: {'✅' if found else '❌'}")
-        
-    print("\n💰 ÉCONOMIE:")
-    print("  • Coût OpenAI Vision: ~$0.01 par image")
-    print("  • Coût Super-Résolution locale: GRATUIT")
-    print("  • Pour 1000 images: économie de $10")
+    except Exception as e:
+        print(f"\n❌ Error: {e}")
+        return 1
 
 if __name__ == "__main__":
-    test_comparison()
+    sys.exit(main())

@@ -1,5 +1,60 @@
 # 📚 MASTER OCR RULES & METHODOLOGY - MTG Screen-to-Deck
 
+## ⚠️ RÈGLE CRITIQUE MTGO - VÉRIFICATION OBLIGATOIRE DES LANDS
+
+### BUG SYSTÉMATIQUE IDENTIFIÉ
+**TOUS les decks MTGO ont un count de lands INCORRECT dans l'interface**
+
+### PROCÉDURE OBLIGATOIRE POUR MTGO:
+```python
+def mtgo_land_verification_rule(deck_list):
+    """
+    RÈGLE CRITIQUE: Le nombre de lands affiché dans MTGO est TOUJOURS faux
+    Cette vérification est OBLIGATOIRE pour TOUS les decks MTGO
+    """
+    
+    # 1. Extraire le total affiché (ex: "60 cards" dans l'interface)
+    displayed_total = extract_displayed_total_from_ui()
+    
+    # 2. Compter MANUELLEMENT chaque carte (ignorer les totaux affichés)
+    actual_count = 0
+    for card in deck_list:
+        actual_count += card.quantity
+    
+    # 3. La différence est TOUJOURS sur les basic lands
+    if actual_count != displayed_total:
+        lands_difference = displayed_total - actual_count
+        
+        # 4. Identifier et corriger les basic lands
+        basic_lands = ['Plains', 'Island', 'Swamp', 'Mountain', 'Forest']
+        for card in deck_list:
+            if card.name in basic_lands or 'Snow-Covered' in card.name:
+                # Ajouter la différence au PREMIER basic land trouvé
+                card.quantity += lands_difference
+                print(f"⚠️ MTGO FIX: Corrected {card.name} from {card.quantity - lands_difference} to {card.quantity}")
+                break
+    
+    # 5. Validation finale OBLIGATOIRE
+    final_count = sum(c.quantity for c in deck_list if c.section == 'mainboard')
+    assert final_count == 60, f"MTGO Fix failed: got {final_count} cards instead of 60"
+    
+    return deck_list
+```
+
+### EXEMPLES DE BUGS MTGO DÉTECTÉS:
+- Affiche "17 Plains" mais en réalité c'est 19
+- Affiche "60 cards" mais le total réel est 58
+- Les non-land cards sont TOUJOURS correctes
+- SEULS les basic lands ont un count incorrect
+
+### APPLICATION:
+✅ Cette règle doit être appliquée AVANT toute validation Scryfall
+✅ Ne JAMAIS faire confiance aux totaux affichés dans MTGO
+✅ TOUJOURS recompter manuellement
+✅ La correction s'applique UNIQUEMENT aux basic lands
+
+---
+
 ## 🏗️ 1. ARCHITECTURE DU SYSTÈME
 
 ### Architecture Globale

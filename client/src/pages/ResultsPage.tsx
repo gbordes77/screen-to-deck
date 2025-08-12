@@ -18,6 +18,7 @@ export const ResultsPage: React.FC = () => {
   const [selectedFormat, setSelectedFormat] = useState<ExportFormat>('mtga');
   const [exportContent, setExportContent] = useState<string>('');
   const [copied, setCopied] = useState(false);
+  const [initialAutoCopyDone, setInitialAutoCopyDone] = useState(false);
 
   // Calculate deck statistics
   const stats = useMemo<DeckStats>(() => {
@@ -71,6 +72,35 @@ export const ResultsPage: React.FC = () => {
     };
   }, [cards]);
 
+  // Generate MTGA format for a given set of cards
+  const generateMTGAFormat = useCallback((cardList: MTGCard[]): string => {
+    return cardList
+      .map(card => `${card.quantity} ${card.name}`)
+      .join('\n');
+  }, []);
+
+  // Auto-generate and set MTGA format when cards are loaded
+  useEffect(() => {
+    if (cards.length > 0 && !exportContent && !initialAutoCopyDone) {
+      const mtgaContent = generateMTGAFormat(cards);
+      setExportContent(mtgaContent);
+      setSelectedFormat('mtga');
+      
+      // Auto-copy if we came from the converter with autocopied flag
+      if (location.state?.autocopied) {
+        setInitialAutoCopyDone(true);
+        // Show a subtle reminder that it's already copied
+        toast(
+          <div className="flex items-center gap-2">
+            <CheckCircle className="w-5 h-5 text-green-600" />
+            <span>Deck already in clipboard - paste in MTGA!</span>
+          </div>,
+          { duration: 3000, icon: null }
+        );
+      }
+    }
+  }, [cards, exportContent, generateMTGAFormat, location.state?.autocopied, initialAutoCopyDone]);
+
   // Load cards from process ID if not provided via state
   useEffect(() => {
     if (!processId || cards.length > 0) return;
@@ -84,7 +114,27 @@ export const ResultsPage: React.FC = () => {
         
         if (!cancelled && response.success && response.data) {
           if (response.data.status === 'completed' && response.data.result?.cards) {
-            setCards(response.data.result.cards);
+            const loadedCards = response.data.result.cards;
+            setCards(loadedCards);
+            
+            // Auto-generate MTGA format and copy
+            const mtgaContent = generateMTGAFormat(loadedCards);
+            setExportContent(mtgaContent);
+            setSelectedFormat('mtga');
+            
+            // Auto-copy to clipboard
+            try {
+              await navigator.clipboard.writeText(mtgaContent);
+              toast.success(
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="w-5 h-5" />
+                  <span>✅ Deck copied! Ready to paste in MTGA</span>
+                </div>,
+                { duration: 4000 }
+              );
+            } catch (error) {
+              console.error('Failed to auto-copy:', error);
+            }
           } else if (response.data.status === 'failed') {
             toast.error('Failed to load results');
             navigate('/converter');
@@ -103,7 +153,7 @@ export const ResultsPage: React.FC = () => {
     })();
     
     return () => { cancelled = true; };
-  }, [processId, cards.length, navigate]);
+  }, [processId, cards.length, navigate, generateMTGAFormat]);
 
   const handleExport = useCallback(async () => {
     if (!cards.length) return;
@@ -114,7 +164,21 @@ export const ResultsPage: React.FC = () => {
       
       if (response.success && response.data) {
         setExportContent(response.data.content);
-        toast.success(`Exported to ${selectedFormat.toUpperCase()} format`);
+        
+        // Auto-copy the new format to clipboard
+        try {
+          await navigator.clipboard.writeText(response.data.content);
+          setCopied(true);
+          toast.success(
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-5 h-5" />
+              <span>Exported and copied to clipboard!</span>
+            </div>
+          );
+          setTimeout(() => setCopied(false), 2000);
+        } catch (error) {
+          toast.success(`Exported to ${selectedFormat.toUpperCase()} format`);
+        }
       }
     } catch (error) {
       toast.error('Failed to export deck');
@@ -128,7 +192,12 @@ export const ResultsPage: React.FC = () => {
     
     navigator.clipboard.writeText(exportContent).then(() => {
       setCopied(true);
-      toast.success('Copied to clipboard!');
+      toast.success(
+        <div className="flex items-center gap-2">
+          <CheckCircle className="w-5 h-5" />
+          <span>Copied to clipboard!</span>
+        </div>
+      );
       setTimeout(() => setCopied(false), 2000);
     }).catch(() => {
       toast.error('Failed to copy to clipboard');
@@ -271,9 +340,16 @@ export const ResultsPage: React.FC = () => {
             <button
               onClick={handleExport}
               disabled={exporting}
-              className="btn-primary w-full mb-4"
+              className="btn-primary w-full mb-4 flex items-center justify-center gap-2"
             >
-              {exporting ? 'Exporting...' : 'Generate Export'}
+              {exporting ? (
+                'Exporting...'
+              ) : (
+                <>
+                  <Copy className="w-4 h-4" />
+                  Generate & Copy
+                </>
+              )}
             </button>
 
             {/* Export Content */}
@@ -289,16 +365,17 @@ export const ResultsPage: React.FC = () => {
                   <button
                     onClick={handleCopy}
                     className="btn-secondary flex-1 flex items-center justify-center gap-2"
+                    title="Copy deck list to clipboard"
                   >
                     {copied ? (
                       <>
-                        <CheckCircle className="w-4 h-4" />
+                        <CheckCircle className="w-4 h-4 text-green-600" />
                         Copied!
                       </>
                     ) : (
                       <>
                         <Copy className="w-4 h-4" />
-                        Copy
+                        Copy Again
                       </>
                     )}
                   </button>

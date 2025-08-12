@@ -1,16 +1,45 @@
 import React, { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, FileImage, Wand2 } from 'lucide-react';
+import { ArrowRight, FileImage, Wand2, Copy, CheckCircle } from 'lucide-react';
+import { toast } from 'react-hot-toast';
 import { SimpleImageUpload } from '@/components/SimpleImageUpload';
 import { ProcessingIndicator } from '@/components/LoadingStates';
 import { CardDisplay } from '@/components/CardDisplay';
 import { useOCRProcess } from '@/hooks/useOCRProcess';
-// import { MTGCard } from '@/types'; // unused
+import { MTGCard } from '@/types';
 
 export const ConverterPage: React.FC = () => {
   const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [autocopied, setAutocopied] = useState(false);
   
+  // Helper function to generate MTGA format
+  const generateMTGAFormat = (cards: MTGCard[]): string => {
+    return cards
+      .map(card => `${card.quantity} ${card.name}`)
+      .join('\n');
+  };
+
+  // Auto-copy function
+  const autoCopyToClipboard = useCallback(async (cards: MTGCard[]) => {
+    try {
+      const mtgaFormat = generateMTGAFormat(cards);
+      await navigator.clipboard.writeText(mtgaFormat);
+      setAutocopied(true);
+      toast.success(
+        <div className="flex items-center gap-2">
+          <CheckCircle className="w-5 h-5" />
+          <span>✅ Deck copied! Ready to paste in MTGA</span>
+        </div>,
+        { duration: 4000 }
+      );
+      setTimeout(() => setAutocopied(false), 3000);
+    } catch (error) {
+      console.error('Failed to auto-copy:', error);
+      toast.error('Could not copy automatically. Please use the copy button.');
+    }
+  }, []);
+
   const {
     isLoading,
     progress,
@@ -19,10 +48,14 @@ export const ConverterPage: React.FC = () => {
     uploadImage,
     reset,
   } = useOCRProcess({
-    onSuccess: (cards) => {
-      // Navigate to results page with cards data
+    onSuccess: async (cards) => {
+      // Auto-copy to clipboard first
       if (cards.length > 0) {
-        navigate('/results', { state: { cards } });
+        await autoCopyToClipboard(cards);
+        // Then navigate to results page with cards data
+        setTimeout(() => {
+          navigate('/results', { state: { cards, autocopied: true } });
+        }, 1500);
       }
     },
   });
@@ -38,6 +71,7 @@ export const ConverterPage: React.FC = () => {
 
   const handleReset = useCallback(() => {
     setSelectedFile(null);
+    setAutocopied(false);
     reset();
   }, [reset]);
 
@@ -108,6 +142,26 @@ export const ConverterPage: React.FC = () => {
       {/* Results Preview */}
       {!isLoading && cards.length > 0 && (
         <div className="space-y-6">
+          {/* Success Banner */}
+          {autocopied && (
+            <div className="bg-green-50 border border-green-200 rounded-lg p-4 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <CheckCircle className="w-6 h-6 text-green-600" />
+                <div>
+                  <p className="font-semibold text-green-900">Deck copied to clipboard!</p>
+                  <p className="text-sm text-green-700">You can now paste it directly into MTG Arena</p>
+                </div>
+              </div>
+              <button
+                onClick={() => autoCopyToClipboard(cards)}
+                className="btn-secondary flex items-center gap-2"
+              >
+                <Copy className="w-4 h-4" />
+                Copy Again
+              </button>
+            </div>
+          )}
+          
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-semibold text-gray-900">
               Found {cards.length} cards
