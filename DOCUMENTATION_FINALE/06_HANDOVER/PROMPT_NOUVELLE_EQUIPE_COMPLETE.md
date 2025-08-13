@@ -1,5 +1,12 @@
 # 🎯 PROMPT DE PASSATION - MTG Screen-to-Deck v2.1.0
 
+## ⚠️ AVERTISSEMENT IMPORTANT
+**LA WEB APP N'A PAS ENCORE ÉTÉ TESTÉE AVEC DE VRAIES IMAGES !**
+- Le code est complet mais les tests réels n'ont pas été effectués
+- Commencez OBLIGATOIREMENT par tester la web app
+- Documentez tous les problèmes rencontrés
+- Le taux de 100% OCR est théorique et doit être validé
+
 ## 🤖 VOTRE RÔLE ET MISSION
 
 Vous êtes le nouveau responsable technique du projet **MTG Screen-to-Deck v2.1.0**, un système de reconnaissance OCR pour Magic: The Gathering avec **100% de précision garantie** sur les screenshots MTGA/MTGO.
@@ -63,18 +70,18 @@ npm run validate:real                   # Test avec vraies images
 
 ## ✅ CHECKLIST DE VALIDATION OBLIGATOIRE
 
-### 1. TEST WEB APPLICATION (http://localhost:5173)
+### 1. TEST WEB APPLICATION (http://localhost:5173) - ⚠️ NON TESTÉ !
 
 ```markdown
-[ ] Installation et démarrage sans erreur
-[ ] Upload image MTGA: validated_decklists/MTGA deck list 3_1835x829.jpeg
-[ ] Vérifier: Temps < 4 secondes
-[ ] Vérifier: Exactement 60 mainboard + 15 sideboard
-[ ] Vérifier: Auto-clipboard fonctionne (essayer de coller)
-[ ] Tester export MTGA format
-[ ] Upload image MTGO: validated_decklists/MTGO_deck_list.png
-[ ] Vérifier: Correction automatique du bug lands MTGO
-[ ] Vérifier: Total = 60 cartes après correction
+[ ] ⚠️ PREMIÈRE FOIS - Installation et démarrage sans erreur
+[ ] ⚠️ PREMIÈRE FOIS - Upload image MTGA: validated_decklists/MTGA deck list 3_1835x829.jpeg
+[ ] ⚠️ À VALIDER - Temps < 4 secondes
+[ ] ⚠️ À VALIDER - Exactement 60 mainboard + 15 sideboard
+[ ] ⚠️ À VALIDER - Auto-clipboard fonctionne (essayer de coller)
+[ ] ⚠️ À VALIDER - Tester export MTGA format
+[ ] ⚠️ PREMIÈRE FOIS - Upload image MTGO: validated_decklists/MTGO_deck_list.png
+[ ] ⚠️ À VALIDER - Correction automatique du bug lands MTGO
+[ ] ⚠️ À VALIDER - Total = 60 cartes après correction
 ```
 
 ### 2. TEST DISCORD BOT
@@ -308,12 +315,22 @@ Une fois tous les tests validés, confirmer:
 
 ## 🎯 VOTRE PREMIÈRE MISSION
 
-1. **Installer et configurer** l'environnement complet
-2. **Lancer les tests E2E** et confirmer 100% de succès
-3. **Tester manuellement** avec au moins 3 images MTGA et 2 images MTGO
-4. **Documenter** tout problème rencontré
-5. **Valider** que le clipboard fonctionne sur web et Discord
-6. **Confirmer** la passation une fois tout vérifié
+### ⚠️ IMPORTANT - LA WEB APP N'A PAS ENCORE ÉTÉ TESTÉE !
+
+1. **PRIORITÉ #1 : TESTER LA WEB APP**
+   - ⚠️ **La web app n'a PAS été testée avec de vraies images**
+   - Installer et configurer l'environnement
+   - Lancer `npm run dev` 
+   - Tester avec les images dans `validated_decklists/`
+   - Vérifier que l'OCR fonctionne vraiment à 100%
+   - Documenter TOUS les problèmes rencontrés
+
+2. **Ensuite seulement :**
+   - Lancer les tests E2E et confirmer 100% de succès
+   - Tester manuellement avec au moins 3 images MTGA et 2 images MTGO
+   - Valider que le clipboard fonctionne sur web
+   - Tester le Discord bot (après la web app)
+   - Confirmer la passation une fois tout vérifié
 
 ---
 
