@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MTGA Deck - Click to Copy</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        #deck-list {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            margin: 20px 0;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        .success {
+            color: green;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>📋 MTGA Deck List</h1>
+    <button onclick="copyDeck()">📋 Copy Deck to Clipboard</button>
+    <div class="success" id="success">✅ Deck copied! Ready to paste in MTGA</div>
+    
+    <div id="deck-list">Deck
+4 Thoughtseize
+4 Fatal Push
+3 Traverse the Ulvenwald
+4 Grim Flayer
+4 Malevolent Rumble
+4 Assassin's Trophy
+3 Omniscience
+1 Approach of the Second Sun
+2 Haywire Mite
+3 Bond of Insight
+2 Mastermind's Acquisition
+3 Mana Confluence
+3 Breeding Pool
+2 Chromatic Orrery
+4 Overgrown Tomb
+4 Watery Grave
+4 Zagoth Triome
+2 Island
+2 Swamp
+2 Forest
+
+Sideboard
+2 Fatal Push
+1 Haywire Mite
+1 Bond of Insight
+2 Mastermind's Acquisition
+1 Approach of the Second Sun
+2 Surgical Extraction
+1 Emperor of Bones
+2 Abrupt Decay
+3 Culling Ritual</div>
+
+    <script>
+        function copyDeck() {
+            const deckText = document.getElementById('deck-list').innerText;
+            navigator.clipboard.writeText(deckText).then(function() {
+                document.getElementById('success').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('success').style.display = 'none';
+                }, 3000);
+            });
+        }
+        
+        // Auto-copy on page load (optional)
+        // window.onload = () => copyDeck();
+    </script>
+</body>
+</html>

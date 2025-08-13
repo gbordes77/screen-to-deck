@@ -1,0 +1,350 @@
+{
+  "summary": {
+    "totalTests": 9,
+    "successfulTests": 0,
+    "overallSuccessRate": 0,
+    "avgProcessingTime": 0,
+    "avgMemoryUsage": 0,
+    "avgOcrAccuracy": 0,
+    "allMatch60_15": false
+  },
+  "byCategory": {
+    "MTGA": [
+      {
+        "category": "MTGA",
+        "file": "MTGA deck list 4_1920x1080.jpeg",
+        "description": "High resolution MTGA",
+        "success": false,
+        "processingTime": 0,
+        "memoryUsage": 0,
+        "mainboardCount": 0,
+        "sideboardCount": 0,
+        "totalCards": 0,
+        "exportFormats": {},
+        "apiCalls": 0,
+        "uploadSize": 0,
+        "responseSize": 0,
+        "errors": [
+          "Image not found: /Volumes/DataDisk/_Projects/validated_decklists/MTGA deck list 4_1920x1080.jpeg"
+        ]
+      },
+      {
+        "category": "MTGA",
+        "file": "MTGA deck list special_1334x886.jpeg",
+        "description": "Special case MTGA",
+        "success": false,
+        "processingTime": 0,
+        "memoryUsage": 0,
+        "mainboardCount": 0,
+        "sideboardCount": 0,
+        "totalCards": 0,
+        "exportFormats": {},
+        "apiCalls": 0,
+        "uploadSize": 0,
+        "responseSize": 0,
+        "errors": [
+          "Image not found: /Volumes/DataDisk/_Projects/validated_decklists/MTGA deck list special_1334x886.jpeg"
+        ]
+      }
+    ],
+    "MTGO": [
+      {
+        "category": "MTGO",
+        "file": "MTGO deck list usual_1763x791.jpeg",
+        "description": "Standard MTGO",
+        "success": false,
+        "processingTime": 0,
+        "memoryUsage": 0,
+        "mainboardCount": 0,
+        "sideboardCount": 0,
+        "totalCards": 0,
+        "exportFormats": {},
+        "apiCalls": 0,
+        "uploadSize": 0,
+        "responseSize": 0,
+        "errors": [
+          "Image not found: /Volumes/DataDisk/_Projects/validated_decklists/MTGO deck list usual_1763x791.jpeg"
+        ]
+      },
+      {
+        "category": "MTGO",
+        "file": "MTGO deck list usual 4_1254x432.jpeg",
+        "description": "Low height MTGO",
+        "success": false,
+        "processingTime": 0,
+        "memoryUsage": 0,
+        "mainboardCount": 0,
+        "sideboardCount": 0,
+        "totalCards": 0,
+        "exportFormats": {},
+        "apiCalls": 0,
+        "uploadSize": 0,
+        "responseSize": 0,
+        "errors": [
+          "Image not found: /Volumes/DataDisk/_Projects/validated_decklists/MTGO deck list usual 4_1254x432.jpeg"
+        ]
+      }
+    ],
+    "MTGGoldfish": [
+      {
+        "category": "MTGGoldfish",
+        "file": "mtggoldfish deck list 2_1383x1518.jpg",
+        "description": "High res MTGGoldfish",
+        "success": false,
+        "processingTime": 0,
+        "memoryUsage": 0,
+        "mainboardCount": 0,
+        "sideboardCount": 0,
+        "totalCards": 0,
+        "exportFormats": {},
+        "apiCalls": 0,
+        "uploadSize": 0,
+        "responseSize": 0,
+        "errors": [
+          "Image not found: /Volumes/DataDisk/_Projects/validated_decklists/mtggoldfish deck list 2_1383x1518.jpg"
+        ]
+      },
+      {
+        "category": "MTGGoldfish",
+        "file": "mtggoldfish deck list 10_1239x1362.jpg",
+        "description": "Standard MTGGoldfish",
+        "success": false,
+        "processingTime": 0,
+        "memoryUsage": 0,
+        "mainboardCount": 0,
+        "sideboardCount": 0,
+        "totalCards": 0,
+        "exportFormats": {},
+        "apiCalls": 0,
+        "uploadSize": 0,
+        "responseSize": 0,
+        "errors": [
+          "Image not found: /Volumes/DataDisk/_Projects/validated_decklists/mtggoldfish deck list 10_1239x1362.jpg"
+        ]
+      }
+    ],
+    "Paper": [
+      {
+        "category": "Paper",
+        "file": "real deck paper cards 4_2336x1098.jpeg",
+        "description": "Physical cards photo",
+        "success": false,
+        "processingTime": 0,
+        "memoryUsage": 0,
+        "mainboardCount": 0,
+        "sideboardCount": 0,
+        "totalCards": 0,
+        "exportFormats": {},
+        "apiCalls": 0,
+        "uploadSize": 0,
+        "responseSize": 0,
+        "errors": [
+          "Image not found: /Volumes/DataDisk/_Projects/validated_decklists/real deck paper cards 4_2336x1098.jpeg"
+        ]
+      },
+      {
+        "category": "Paper",
+        "file": "real deck cartes cachés_2048x1542.jpeg",
+        "description": "Partially hidden cards",
+        "success": false,
+        "processingTime": 0,
+        "memoryUsage": 0,
+        "mainboardCount": 0,
+        "sideboardCount": 0,
+        "totalCards": 0,
+        "exportFormats": {},
+        "apiCalls": 0,
+        "uploadSize": 0,
+        "responseSize": 0,
+        "errors": [
+          "Image not found: /Volumes/DataDisk/_Projects/validated_decklists/real deck cartes cachés_2048x1542.jpeg"
+        ]
+      }
+    ],
+    "Website": [
+      {
+        "category": "Website",
+        "file": "web site  deck list_2300x2210.jpeg",
+        "description": "Large website screenshot",
+        "success": false,
+        "processingTime": 0,
+        "memoryUsage": 0,
+        "mainboardCount": 0,
+        "sideboardCount": 0,
+        "totalCards": 0,
+        "exportFormats": {},
+        "apiCalls": 0,
+        "uploadSize": 0,
+        "responseSize": 0,
+        "errors": [
+          "Image not found: /Volumes/DataDisk/_Projects/validated_decklists/web site  deck list_2300x2210.jpeg"
+        ]
+      }
+    ]
+  },
+  "detailedMetrics": [
+    {
+      "category": "MTGA",
+      "file": "MTGA deck list 4_1920x1080.jpeg",
+      "description": "High resolution MTGA",
+      "success": false,
+      "processingTime": 0,
+      "memoryUsage": 0,
+      "mainboardCount": 0,
+      "sideboardCount": 0,
+      "totalCards": 0,
+      "exportFormats": {},
+      "apiCalls": 0,
+      "uploadSize": 0,
+      "responseSize": 0,
+      "errors": [
+        "Image not found: /Volumes/DataDisk/_Projects/validated_decklists/MTGA deck list 4_1920x1080.jpeg"
+      ]
+    },
+    {
+      "category": "MTGA",
+      "file": "MTGA deck list special_1334x886.jpeg",
+      "description": "Special case MTGA",
+      "success": false,
+      "processingTime": 0,
+      "memoryUsage": 0,
+      "mainboardCount": 0,
+      "sideboardCount": 0,
+      "totalCards": 0,
+      "exportFormats": {},
+      "apiCalls": 0,
+      "uploadSize": 0,
+      "responseSize": 0,
+      "errors": [
+        "Image not found: /Volumes/DataDisk/_Projects/validated_decklists/MTGA deck list special_1334x886.jpeg"
+      ]
+    },
+    {
+      "category": "MTGO",
+      "file": "MTGO deck list usual_1763x791.jpeg",
+      "description": "Standard MTGO",
+      "success": false,
+      "processingTime": 0,
+      "memoryUsage": 0,
+      "mainboardCount": 0,
+      "sideboardCount": 0,
+      "totalCards": 0,
+      "exportFormats": {},
+      "apiCalls": 0,
+      "uploadSize": 0,
+      "responseSize": 0,
+      "errors": [
+        "Image not found: /Volumes/DataDisk/_Projects/validated_decklists/MTGO deck list usual_1763x791.jpeg"
+      ]
+    },
+    {
+      "category": "MTGO",
+      "file": "MTGO deck list usual 4_1254x432.jpeg",
+      "description": "Low height MTGO",
+      "success": false,
+      "processingTime": 0,
+      "memoryUsage": 0,
+      "mainboardCount": 0,
+      "sideboardCount": 0,
+      "totalCards": 0,
+      "exportFormats": {},
+      "apiCalls": 0,
+      "uploadSize": 0,
+      "responseSize": 0,
+      "errors": [
+        "Image not found: /Volumes/DataDisk/_Projects/validated_decklists/MTGO deck list usual 4_1254x432.jpeg"
+      ]
+    },
+    {
+      "category": "MTGGoldfish",
+      "file": "mtggoldfish deck list 2_1383x1518.jpg",
+      "description": "High res MTGGoldfish",
+      "success": false,
+      "processingTime": 0,
+      "memoryUsage": 0,
+      "mainboardCount": 0,
+      "sideboardCount": 0,
+      "totalCards": 0,
+      "exportFormats": {},
+      "apiCalls": 0,
+      "uploadSize": 0,
+      "responseSize": 0,
+      "errors": [
+        "Image not found: /Volumes/DataDisk/_Projects/validated_decklists/mtggoldfish deck list 2_1383x1518.jpg"
+      ]
+    },
+    {
+      "category": "MTGGoldfish",
+      "file": "mtggoldfish deck list 10_1239x1362.jpg",
+      "description": "Standard MTGGoldfish",
+      "success": false,
+      "processingTime": 0,
+      "memoryUsage": 0,
+      "mainboardCount": 0,
+      "sideboardCount": 0,
+      "totalCards": 0,
+      "exportFormats": {},
+      "apiCalls": 0,
+      "uploadSize": 0,
+      "responseSize": 0,
+      "errors": [
+        "Image not found: /Volumes/DataDisk/_Projects/validated_decklists/mtggoldfish deck list 10_1239x1362.jpg"
+      ]
+    },
+    {
+      "category": "Paper",
+      "file": "real deck paper cards 4_2336x1098.jpeg",
+      "description": "Physical cards photo",
+      "success": false,
+      "processingTime": 0,
+      "memoryUsage": 0,
+      "mainboardCount": 0,
+      "sideboardCount": 0,
+      "totalCards": 0,
+      "exportFormats": {},
+      "apiCalls": 0,
+      "uploadSize": 0,
+      "responseSize": 0,
+      "errors": [
+        "Image not found: /Volumes/DataDisk/_Projects/validated_decklists/real deck paper cards 4_2336x1098.jpeg"
+      ]
+    },
+    {
+      "category": "Paper",
+      "file": "real deck cartes cachés_2048x1542.jpeg",
+      "description": "Partially hidden cards",
+      "success": false,
+      "processingTime": 0,
+      "memoryUsage": 0,
+      "mainboardCount": 0,
+      "sideboardCount": 0,
+      "totalCards": 0,
+      "exportFormats": {},
+      "apiCalls": 0,
+      "uploadSize": 0,
+      "responseSize": 0,
+      "errors": [
+        "Image not found: /Volumes/DataDisk/_Projects/validated_decklists/real deck cartes cachés_2048x1542.jpeg"
+      ]
+    },
+    {
+      "category": "Website",
+      "file": "web site  deck list_2300x2210.jpeg",
+      "description": "Large website screenshot",
+      "success": false,
+      "processingTime": 0,
+      "memoryUsage": 0,
+      "mainboardCount": 0,
+      "sideboardCount": 0,
+      "totalCards": 0,
+      "exportFormats": {},
+      "apiCalls": 0,
+      "uploadSize": 0,
+      "responseSize": 0,
+      "errors": [
+        "Image not found: /Volumes/DataDisk/_Projects/validated_decklists/web site  deck list_2300x2210.jpeg"
+      ]
+    }
+  ],
+  "timestamp": "2025-08-10T17:27:06.098Z"
+}

@@ -1,0 +1,458 @@
+{
+  "version": "2.1.0",
+  "platforms": {
+    "mtga": {
+      "name": "MTG Arena",
+      "detection_method": "visual_grid",
+      "resolutions": {
+        "1920x1080": {
+          "zones": {
+            "mainDeck": {
+              "x": 0.15,
+              "y": 0.2,
+              "width": 0.65,
+              "height": 0.55,
+              "grid": {
+                "rows": 10,
+                "cols": 7,
+                "maxCards": 60
+              },
+              "description": "Main deck area with card grid layout"
+            },
+            "sideboard": {
+              "x": 0.82,
+              "y": 0.2,
+              "width": 0.15,
+              "height": 0.55,
+              "grid": {
+                "rows": 15,
+                "cols": 1,
+                "maxCards": 15
+              },
+              "description": "Sideboard area on the right side"
+            },
+            "deckName": {
+              "x": 0.15,
+              "y": 0.1,
+              "width": 0.65,
+              "height": 0.08,
+              "type": "text",
+              "description": "Deck name/title area"
+            },
+            "cardPreview": {
+              "x": 0.82,
+              "y": 0.78,
+              "width": 0.15,
+              "height": 0.2,
+              "type": "preview",
+              "description": "Card preview hover area"
+            }
+          },
+          "cardDetection": {
+            "cardWidth": 0.09,
+            "cardHeight": 0.11,
+            "overlap": 0.3,
+            "borderRadius": 8,
+            "shadowDetection": true
+          }
+        },
+        "2560x1440": {
+          "zones": {
+            "mainDeck": {
+              "x": 0.15,
+              "y": 0.2,
+              "width": 0.65,
+              "height": 0.55,
+              "grid": {
+                "rows": 10,
+                "cols": 7,
+                "maxCards": 60
+              }
+            },
+            "sideboard": {
+              "x": 0.82,
+              "y": 0.2,
+              "width": 0.15,
+              "height": 0.55,
+              "grid": {
+                "rows": 15,
+                "cols": 1,
+                "maxCards": 15
+              }
+            },
+            "deckName": {
+              "x": 0.15,
+              "y": 0.1,
+              "width": 0.65,
+              "height": 0.08,
+              "type": "text"
+            }
+          },
+          "cardDetection": {
+            "cardWidth": 0.09,
+            "cardHeight": 0.11,
+            "overlap": 0.3,
+            "borderRadius": 10
+          }
+        },
+        "3840x2160": {
+          "zones": {
+            "mainDeck": {
+              "x": 0.15,
+              "y": 0.2,
+              "width": 0.65,
+              "height": 0.55,
+              "grid": {
+                "rows": 10,
+                "cols": 7,
+                "maxCards": 60
+              }
+            },
+            "sideboard": {
+              "x": 0.82,
+              "y": 0.2,
+              "width": 0.15,
+              "height": 0.55,
+              "grid": {
+                "rows": 15,
+                "cols": 1,
+                "maxCards": 15
+              }
+            },
+            "deckName": {
+              "x": 0.15,
+              "y": 0.1,
+              "width": 0.65,
+              "height": 0.08,
+              "type": "text"
+            }
+          },
+          "cardDetection": {
+            "cardWidth": 0.09,
+            "cardHeight": 0.11,
+            "overlap": 0.3,
+            "borderRadius": 12
+          }
+        },
+        "1280x720": {
+          "zones": {
+            "mainDeck": {
+              "x": 0.16,
+              "y": 0.22,
+              "width": 0.63,
+              "height": 0.53,
+              "grid": {
+                "rows": 10,
+                "cols": 7,
+                "maxCards": 60
+              }
+            },
+            "sideboard": {
+              "x": 0.81,
+              "y": 0.22,
+              "width": 0.16,
+              "height": 0.53,
+              "grid": {
+                "rows": 15,
+                "cols": 1,
+                "maxCards": 15
+              }
+            },
+            "deckName": {
+              "x": 0.16,
+              "y": 0.12,
+              "width": 0.63,
+              "height": 0.09,
+              "type": "text"
+            }
+          },
+          "cardDetection": {
+            "cardWidth": 0.088,
+            "cardHeight": 0.108,
+            "overlap": 0.32,
+            "borderRadius": 6
+          }
+        }
+      },
+      "visualPatterns": {
+        "background": {
+          "type": "gradient",
+          "colors": ["#2c1810", "#1a0f08"],
+          "direction": "vertical"
+        },
+        "cardFrame": {
+          "border": "rounded",
+          "shadow": true,
+          "glowOnHover": true
+        },
+        "textColor": "#ffffff",
+        "quantityBadge": {
+          "position": "bottom-right",
+          "background": "#1a1a1a",
+          "textColor": "#ffffff"
+        }
+      }
+    },
+    "mtgo": {
+      "name": "MTG Online",
+      "detection_method": "text_list",
+      "resolutions": {
+        "1920x1080": {
+          "zones": {
+            "mainDeck": {
+              "x": 0.05,
+              "y": 0.25,
+              "width": 0.43,
+              "height": 0.65,
+              "type": "list",
+              "description": "Main deck list area"
+            },
+            "sideboard": {
+              "x": 0.52,
+              "y": 0.25,
+              "width": 0.43,
+              "height": 0.65,
+              "type": "list",
+              "description": "Sideboard list area"
+            },
+            "deckHeader": {
+              "x": 0.05,
+              "y": 0.18,
+              "width": 0.43,
+              "height": 0.06,
+              "type": "header",
+              "expectedText": "Deck",
+              "description": "Deck section header"
+            },
+            "sideboardHeader": {
+              "x": 0.52,
+              "y": 0.18,
+              "width": 0.43,
+              "height": 0.06,
+              "type": "header",
+              "expectedText": "Sideboard",
+              "description": "Sideboard section header"
+            },
+            "deckStats": {
+              "x": 0.05,
+              "y": 0.91,
+              "width": 0.9,
+              "height": 0.08,
+              "type": "stats",
+              "description": "Deck statistics area"
+            }
+          },
+          "textDetection": {
+            "lineHeight": 0.022,
+            "fontSize": 12,
+            "fontFamily": "Arial",
+            "columnFormat": ["quantity", "name", "set", "collector"],
+            "columnSeparator": "space",
+            "quantityPattern": "^\\d+$",
+            "namePattern": "^[\\w\\s,'-]+$"
+          }
+        },
+        "2560x1440": {
+          "zones": {
+            "mainDeck": {
+              "x": 0.05,
+              "y": 0.25,
+              "width": 0.43,
+              "height": 0.65,
+              "type": "list"
+            },
+            "sideboard": {
+              "x": 0.52,
+              "y": 0.25,
+              "width": 0.43,
+              "height": 0.65,
+              "type": "list"
+            },
+            "deckHeader": {
+              "x": 0.05,
+              "y": 0.18,
+              "width": 0.43,
+              "height": 0.06,
+              "type": "header",
+              "expectedText": "Deck"
+            },
+            "sideboardHeader": {
+              "x": 0.52,
+              "y": 0.18,
+              "width": 0.43,
+              "height": 0.06,
+              "type": "header",
+              "expectedText": "Sideboard"
+            }
+          },
+          "textDetection": {
+            "lineHeight": 0.022,
+            "fontSize": 14,
+            "columnFormat": ["quantity", "name", "set", "collector"]
+          }
+        },
+        "3840x2160": {
+          "zones": {
+            "mainDeck": {
+              "x": 0.05,
+              "y": 0.25,
+              "width": 0.43,
+              "height": 0.65,
+              "type": "list"
+            },
+            "sideboard": {
+              "x": 0.52,
+              "y": 0.25,
+              "width": 0.43,
+              "height": 0.65,
+              "type": "list"
+            },
+            "deckHeader": {
+              "x": 0.05,
+              "y": 0.18,
+              "width": 0.43,
+              "height": 0.06,
+              "type": "header",
+              "expectedText": "Deck"
+            },
+            "sideboardHeader": {
+              "x": 0.52,
+              "y": 0.18,
+              "width": 0.43,
+              "height": 0.06,
+              "type": "header",
+              "expectedText": "Sideboard"
+            }
+          },
+          "textDetection": {
+            "lineHeight": 0.021,
+            "fontSize": 16,
+            "columnFormat": ["quantity", "name", "set", "collector"]
+          }
+        },
+        "1280x720": {
+          "zones": {
+            "mainDeck": {
+              "x": 0.06,
+              "y": 0.26,
+              "width": 0.42,
+              "height": 0.63,
+              "type": "list"
+            },
+            "sideboard": {
+              "x": 0.52,
+              "y": 0.26,
+              "width": 0.42,
+              "height": 0.63,
+              "type": "list"
+            },
+            "deckHeader": {
+              "x": 0.06,
+              "y": 0.19,
+              "width": 0.42,
+              "height": 0.06,
+              "type": "header",
+              "expectedText": "Deck"
+            },
+            "sideboardHeader": {
+              "x": 0.52,
+              "y": 0.19,
+              "width": 0.42,
+              "height": 0.06,
+              "type": "header",
+              "expectedText": "Sideboard"
+            }
+          },
+          "textDetection": {
+            "lineHeight": 0.023,
+            "fontSize": 11,
+            "columnFormat": ["quantity", "name", "set", "collector"]
+          }
+        }
+      },
+      "visualPatterns": {
+        "background": {
+          "type": "solid",
+          "color": "#f5f5f5"
+        },
+        "listStyle": {
+          "alternatingRows": true,
+          "rowColors": ["#ffffff", "#f9f9f9"],
+          "borderColor": "#cccccc"
+        },
+        "textColor": "#333333",
+        "headerStyle": {
+          "background": "#e0e0e0",
+          "textColor": "#000000",
+          "fontWeight": "bold"
+        },
+        "selectionHighlight": "#3498db"
+      }
+    }
+  },
+  "preprocessing": {
+    "enhanceContrast": {
+      "enabled": true,
+      "alpha": 1.5,
+      "beta": 0
+    },
+    "denoise": {
+      "enabled": true,
+      "h": 10,
+      "templateWindowSize": 7,
+      "searchWindowSize": 21
+    },
+    "sharpen": {
+      "enabled": true,
+      "kernel": [
+        [0, -1, 0],
+        [-1, 5, -1],
+        [0, -1, 0]
+      ]
+    },
+    "resize": {
+      "enabled": false,
+      "targetWidth": 1920,
+      "maintainAspectRatio": true
+    },
+    "colorCorrection": {
+      "enabled": true,
+      "gammaCorrection": 1.2
+    }
+  },
+  "detection": {
+    "confidence_threshold": 0.7,
+    "min_text_height": 10,
+    "max_text_height": 100,
+    "text_padding": 5,
+    "batch_size": 5,
+    "parallel_processing": true,
+    "cache_results": true,
+    "fallback_methods": ["tesseract", "template_matching"]
+  },
+  "landCorrection": {
+    "enabled": true,
+    "patterns": {
+      "plains": ["Plain", "Plai", "Pla ins", "P lains"],
+      "island": ["Islan", "Is land", "lsland", "I sland"],
+      "swamp": ["Swam", "S wamp", "Sw amp", "5wamp"],
+      "mountain": ["Mountai", "M ountain", "Mount ain", "Mounta in"],
+      "forest": ["Fore st", "F orest", "For est", "Fores t"]
+    },
+    "confidence_boost": 0.15
+  },
+  "validation": {
+    "scryfall_api": true,
+    "fuzzy_matching": true,
+    "min_similarity": 0.75,
+    "cache_duration": 86400,
+    "retry_attempts": 3,
+    "timeout": 5000
+  },
+  "export": {
+    "formats": ["mtga", "moxfield", "archidekt", "tappedout", "json", "csv"],
+    "default_format": "mtga",
+    "include_metadata": true,
+    "compress_output": false
+  }
+}
