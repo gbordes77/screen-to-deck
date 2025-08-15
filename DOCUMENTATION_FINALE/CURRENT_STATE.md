@@ -2,18 +2,18 @@
 
 **Date de mise à jour**: 11 Août 2025  
 **Version**: 2.1.0  
-**Statut**: ✅ **PRODUCTION READY**
+**Statut**: 🔧 **EN DÉVELOPPEMENT**
 
 ---
 
-## 🎯 MÉTRIQUES ACTUELLES CONFIRMÉES
+## 🎯 OBJECTIFS DE PERFORMANCE
 
 ### Performance OCR
-- **Précision**: **100%** sur tous les screenshots MTGA/MTGO
-- **Temps de traitement**: **3.2 secondes** en moyenne
-- **Cache hit rate**: **95%**
-- **Decks validés**: **14/14** avec succès total
-- **Memory usage**: **320MB** (optimisé de 800MB)
+- **Objectif précision**: Haute précision sur screenshots MTGA/MTGO
+- **Objectif temps**: < 5 secondes
+- **Objectif cache**: > 90% hit rate
+- **Tests**: En cours de validation avec images réelles
+- **Memory usage**: ~ 320MB
 
 ### Architecture
 - **Type**: Application **open source** auto-hébergeable
@@ -21,31 +21,31 @@
 - **Stack**: React + Express + Python Discord Bot
 - **OCR**: OpenAI Vision (web) + EasyOCR (Discord)
 
-### Les 6 Règles OCR Critiques
+### Les 6 Règles OCR d'Optimisation
 1. ✅ **Correction MTGO Lands** - Fix du bug systématique
 2. ✅ **Super-Résolution 4x** - Pour images < 1200px
 3. ✅ **Détection de Zones** - Mainboard/Sideboard
-4. ✅ **Cache Intelligent** - 95% hit rate
-5. ✅ **Traitement Parallèle** - 40% plus rapide
-6. ✅ **Validation Scryfall + Never Give Up Mode™** - Garantie 60+15
+4. ✅ **Cache Intelligent** - Avec fuzzy matching
+5. ✅ **Traitement Parallèle** - Optimisé pour HD
+6. ✅ **Validation Scryfall** - Raffinement itératif pour 60+15 cartes
 
 ---
 
 ## ⚠️ CLARIFICATIONS IMPORTANTES
 
-### Ce qui est VRAI
-- OCR fonctionne à 100% sur MTGA/MTGO
-- Projet est production-ready pour usage immédiat
+### Ce qui est IMPLÉMENTÉ
+- OCR fonctionnel pour MTGA/MTGO
 - Auto-copie presse-papier fonctionnelle
 - Export multi-format opérationnel
-- Tests complets validés sur 14 decks
+- Architecture modulaire et extensible
+- Tests unitaires (mocks à remplacer par images réelles)
 
-### Ce qui est OBSOLÈTE
-- Plans SaaS et monétisation (abandonnés)
-- Architecture multi-tenant (non implémentée)
-- Taux de succès < 100% (anciens documents)
-- Temps de traitement > 3.2s (anciennes mesures)
-- Problèmes de sécurité (tous résolus)
+### Ce qui est EN COURS
+- Validation avec images réelles (clés API requises)
+- Mesures de performance réelles
+- Tests E2E complets
+- Configuration Redis pour production
+- Documentation des métriques réelles
 
 ---
 
@@ -63,10 +63,11 @@ Pour information à jour, consultez UNIQUEMENT :
 
 ## 🚀 PROCHAINES ÉTAPES
 
-1. Déploiement production immédiat possible
-2. Monitoring des performances en conditions réelles
-3. Collection feedback utilisateurs
-4. Optimisations mineures si nécessaire
+1. Configurer les clés API (OpenAI, Discord)
+2. Exécuter tests avec images réelles
+3. Valider les métriques de performance
+4. Documenter les résultats réels
+5. Préparer le déploiement après validation
 
 ---
 

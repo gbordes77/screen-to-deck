@@ -4,10 +4,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-MTG Screen-to-Deck v2.1.0 - Production-ready AI-powered Magic: The Gathering deck scanner with **100% OCR accuracy guarantee** on MTGA/MTGO screenshots (60 mainboard + 15 sideboard cards). The project consists of three main components:
+MTG Screen-to-Deck v2.1.0 - AI-powered Magic: The Gathering deck scanner for MTGA/MTGO screenshots (60 mainboard + 15 sideboard cards). 
+
+**Current Status**: 🔧 In Development - Requires validation before production deployment  
+**See**: `VALIDATION_WORKFLOW.md` for required validation steps
+
+The project consists of three main components:
 - **Web Application**: React/TypeScript frontend with Express backend, automatic clipboard copy
 - **Discord Bot**: Python bot with EasyOCR, Scryfall integration, and clipboard service
-- **API Server**: Node.js/Express server with enhanced OCR pipeline and Never Give Up Mode™
+- **API Server**: Node.js/Express server with enhanced OCR pipeline
 
 ## 📚 DOCUMENTATION RULES - IMPORTANT
 
@@ -21,7 +26,7 @@ La documentation est **100% complète et organisée** dans `/DOCUMENTATION_FINAL
 ```
 DOCUMENTATION_FINALE/
 ├── 01_QUICK_START/      # Guides démarrage (USER_GUIDE, ADMIN_GUIDE)
-├── 02_OCR_RULES/        # 6 règles OCR = 100% succès
+├── 02_OCR_RULES/        # 6 règles OCR optimisées
 ├── 03_ARCHITECTURE/     # Specs techniques (API, Discord, Web)
 ├── 04_DEPLOYMENT/       # Guides déploiement
 ├── 05_DEVELOPMENT/      # Pour contributeurs
@@ -35,7 +40,7 @@ DOCUMENTATION_FINALE/
 2. **Toujours mettre à jour** plutôt que créer un nouveau document
 3. **Utiliser CURRENT_STATE.md** comme source de vérité pour les métriques
 4. **Ajouter warnings** sur les documents obsolètes dans ARCHIVES
-5. **Maintenir la cohérence** - 100% OCR, 3.2s temps, v2.1.0 partout
+5. **Maintenir la cohérence** - v2.1.0 partout
 
 ### Documents de Référence
 - **Métriques actuelles**: `CURRENT_STATE.md`
@@ -135,9 +140,9 @@ docker-compose down              # Stop services
 5. Multiple export formats available (MTGA, Moxfield, Archidekt, TappedOut)
 
 ### Key Services
-- **enhancedOcrServiceGuaranteed.ts**: Production service with 60+15 guarantee and Never Give Up Mode™
+- **enhancedOcrServiceGuaranteed.ts**: Service OCR avec détection 60+15 cartes
 - **optimizedOcrService.ts**: Parallel pipelines with super-resolution and zone detection
-- **scryfallService.ts**: Smart caching with fuzzy matching (95% hit rate)
+- **scryfallService.ts**: Smart caching with fuzzy matching
 - **clipboardService.ts**: Auto-copy to clipboard on web and Discord
 - **ocr_parser_easyocr.py**: Discord bot's OCR with MTGO land fix
 - **mtgo_land_correction_rule.py**: Critical fix for systematic MTGO bug
@@ -151,23 +156,31 @@ Required environment variables:
 - Optional: Redis, Cloudflare R2, Supabase credentials
 
 ### Testing & Validation
-- **Backend**: Jest tests with REAL images (no mocks) - **100% success on all 14 MTGA/MTGO test decks**
+
+⚠️ **IMPORTANT**: No production claims should be made without completing the validation workflow.
+
+- **Backend**: Jest tests (currently using mocks - MUST be replaced with real images)
 - **Frontend**: Component tests with Vite
 - **Discord Bot**: pytest with async support + clipboard tests
-- **E2E Validation**: `npm run validate:real` - Tests with actual screenshots
-- **Performance**: Average 3.2s per deck (from 8.5s)
-- **Cache Hit Rate**: 95% on repeated cards
-- Run `npm run test:e2e` for production validation
-- Python tests in `discord-bot/tests/` directory
-- Validation script: `node validate-production.js`
+- **E2E Validation**: Pending implementation with real MTGA/MTGO screenshots
+- **Performance**: Target < 5s per deck (to be validated)
+- **Cache Hit Rate**: Target > 90% on repeated cards (to be measured)
 
-### OCR Optimization Rules - 100% Success Rate Achieved
+**Required before production**:
+1. Configure real API keys (OpenAI, Discord)
+2. Run tests with actual screenshots (20+ images)
+3. Measure and document real performance metrics
+4. Complete all phases in `VALIDATION_WORKFLOW.md`
+
+See `VALIDATION_WORKFLOW.md` for complete validation process.
+
+### OCR Optimization Rules - Target Objectives
 1. **MTGO Land Fix**: Automatic correction of systematic land count bug (critical)
 2. **Super-Resolution**: 4x upscaling for images < 1200px width
 3. **Zone Detection**: Adaptive zone extraction for mainboard/sideboard
-4. **Smart Cache**: 95% hit rate with fuzzy matching (Levenshtein, Jaro-Winkler, Phonetic)
-5. **Parallel Processing**: 40% faster on HD images (3.2s average)
-6. **Never Give Up Mode™**: Guarantees exactly 60+15 cards through iterative refinement
+4. **Smart Cache**: Fuzzy matching with Levenshtein, Jaro-Winkler, Phonetic algorithms
+5. **Parallel Processing**: Optimized for HD images
+6. **Iterative Refinement**: Targets 60+15 cards detection through multiple attempts
 7. **Auto-Clipboard**: Deck automatically copied on successful OCR
 - See `NOUVELLES_REGLES_OCR_100_POURCENT.md` for complete documentation
 
@@ -177,14 +190,14 @@ Required environment variables:
 3. Discord bot can run independently or connect to backend API
 4. All components support hot reload in development mode
 5. Use concurrent development with `npm run dev` for full stack
-6. Test with real images: `npm run test:e2e` (no mocks)
-7. Validate production readiness: `npm run validate:real`
+6. **IMPORTANT**: Follow `VALIDATION_WORKFLOW.md` before claiming production ready
+7. Test with real images: `npm run test:e2e` (currently using mocks - needs update)
 8. **Check documentation rules**: See DOCUMENTATION_FINALE/DOCUMENTATION_RULES.md before modifying docs
 
-### Production Features
-- **100% OCR Accuracy**: Guaranteed on MTGA/MTGO screenshots
+### Features
+- **OCR Processing**: For MTGA/MTGO screenshots
 - **Auto-Clipboard Copy**: Instant paste into MTG Arena
 - **Multi-Format Export**: MTGA, Moxfield, Archidekt, TappedOut, JSON
-- **Smart Caching**: 95% hit rate, 30-minute TTL
-- **Performance**: 3.2s average processing time
+- **Smart Caching**: With 30-minute TTL
+- **Performance**: Target < 5s processing time
 - **Discord Integration**: Slash commands, ephemeral messages, clipboard service

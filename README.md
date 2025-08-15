@@ -1,24 +1,22 @@
-# 🃏 MTG Screen-to-Deck v2.1.0 - Production Ready
+# 🃏 MTG Screen-to-Deck v2.1.0
 
-*100% OCR Accuracy Guaranteed on MTGA/MTGO Screenshots - 60+15 Cards Every Time*
+*AI-powered deck scanner for MTGA/MTGO screenshots - Detects 60 mainboard + 15 sideboard cards*
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Tests: 100%](https://img.shields.io/badge/Tests-100%25-brightgreen)](https://github.com/yourusername/mtg-screen-to-deck)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![Node 18+](https://img.shields.io/badge/node-18+-green.svg)](https://nodejs.org/)
 [![Discord.py](https://img.shields.io/badge/discord.py-2.3+-blue.svg)](https://github.com/Rapptz/discord.py)
-[![OCR Success](https://img.shields.io/badge/OCR%20Success-100%25-success)](https://github.com/MTGTools/screen-to-deck)
-[![Performance](https://img.shields.io/badge/Speed-3.2s%20avg-blue)](https://github.com/MTGTools/screen-to-deck)
+[![Status](https://img.shields.io/badge/Status-Validation%20Required-yellow)](VALIDATION_WORKFLOW.md)
 
 ## 📚 Documentation Complète et Organisée
 
-**✅ Documentation 100% complète, 0 doublon, 0 contradiction - Score conformité: 92/100**
+**✅ Documentation complète et organisée - 0 doublon, 0 contradiction**
 
 ### 📖 Accès Rapide Documentation
 - [🚀 Quick Start Guide](DOCUMENTATION_FINALE/01_QUICK_START/README.md) - Démarrage en 5 minutes
 - [👤 Guide Utilisateur](DOCUMENTATION_FINALE/01_QUICK_START/USER_GUIDE.md) - Guide complet utilisateur
 - [🔧 Guide Administrateur](DOCUMENTATION_FINALE/01_QUICK_START/ADMIN_GUIDE.md) - Installation et configuration
-- [📋 Règles OCR Maîtres](DOCUMENTATION_FINALE/02_OCR_RULES/MASTER_OCR_RULES.md) - Les 6 règles pour 100% de succès
+- [📋 Règles OCR Maîtres](DOCUMENTATION_FINALE/02_OCR_RULES/MASTER_OCR_RULES.md) - Les 6 règles d'optimisation OCR
 - [🏗️ Architecture Technique](DOCUMENTATION_FINALE/03_ARCHITECTURE/README.md) - Specs détaillées
 - [🚀 Guide de Déploiement](DOCUMENTATION_FINALE/04_DEPLOYMENT/README.md) - Mise en production
 - [🛠️ Guide de Développement](DOCUMENTATION_FINALE/05_DEVELOPMENT/README.md) - Pour contribuer
@@ -34,22 +32,37 @@
 - [🔧 TROUBLESHOOTING](DOCUMENTATION_FINALE/TROUBLESHOOTING.md) - Résolution de problèmes
 
 ### 📊 État Actuel
-- [💯 CURRENT_STATE](DOCUMENTATION_FINALE/CURRENT_STATE.md) - **Source de vérité unique** pour les métriques
+- [📊 CURRENT_STATE](DOCUMENTATION_FINALE/CURRENT_STATE.md) - **Source de vérité unique** pour les métriques
 - Version: **v2.1.0**
-- Précision OCR: **100%**
-- Temps moyen: **3.2 secondes**
-- Cache hit rate: **95%**
+- Objectif précision OCR: Haute précision
+- Objectif temps: < 5 secondes
+- Objectif cache: > 90% hit rate
 
-## ✅ Production Status
+## 🔧 Project Status: Validation Required
 
-Production-ready MTG deck scanner with **100% guaranteed OCR accuracy** on MTGA and MTGO screenshots. Features Never Give Up Mode™, automatic clipboard copy, and intelligent error correction including the critical MTGO lands count bug fix.
+**Current State**: The project is functional but requires validation with real images and API keys before production deployment.
 
-### ✨ **Production Features - 100% Success Rate**
+⚠️ **Important**: Follow the [Validation Workflow](VALIDATION_WORKFLOW.md) to properly test and validate the application before making any production claims.
 
-🎯 **Guaranteed OCR Accuracy**
+**What's Implemented**:
+- ✅ OCR processing pipeline for MTGA/MTGO screenshots
+- ✅ Automatic clipboard copy functionality
+- ✅ Multi-format export (MTGA, Moxfield, etc.)
+- ✅ Intelligent error correction and MTGO lands bug fix
+- ✅ Complete documentation and architecture
 
-- **100% success rate** on all 14 MTGA/MTGO test decks
-- Never Give Up Mode™ ensures exactly 60+15 cards
+**What's Needed**:
+- ❌ Real API keys (OpenAI, Discord) configuration
+- ❌ Testing with actual MTGA/MTGO screenshots
+- ❌ Performance metrics validation
+- ❌ Production deployment preparation
+
+### ✨ **Features**
+
+🎯 **OCR Processing**
+
+- Target: Detect 60 mainboard + 15 sideboard cards
+- Iterative refinement for improved accuracy
 - Automatic MTGO lands count bug correction
 - Super-resolution 4x for low-res images (<1200px)
 
@@ -60,12 +73,12 @@ Production-ready MTG deck scanner with **100% guaranteed OCR accuracy** on MTGA 
 - Discord ephemeral messages with code blocks
 - Web app toast notifications
 
-🚀 **Performance Optimized**
+🚀 **Performance**
 
-- **3.2s average** processing time (from 8.5s)
-- **95% cache hit rate** with fuzzy matching
+- Target processing time: < 5 seconds
+- Smart caching with fuzzy matching
 - Parallel zone detection for mainboard/sideboard
-- Smart Scryfall caching with TTL
+- Scryfall caching with TTL
 
 🔧 **Intelligent Correction**
 
@@ -92,11 +105,43 @@ Enhanced Discord integration with AI-powered features
 - Interactive buttons for exports
 - Comprehensive analysis reports
 
-## 📋 Quick Start
+## 🚀 Quick Start
 
-For self-hosting on macOS (frontend + backend served from your machine and accessible on your LAN), see:
+### Prerequisites
+1. **API Keys Required** (see [Validation Workflow](VALIDATION_WORKFLOW.md) Phase 1):
+   - OpenAI API key for web OCR
+   - Discord bot token for Discord integration
+   
+2. **Optional but Recommended**:
+   - Redis for caching (improves performance significantly)
+   - Real MTGA/MTGO screenshots for testing
 
-- QUICK_START_README.md
+### Installation Steps
+```bash
+# 1. Clone the repository
+git clone https://github.com/yourusername/mtg-screen-to-deck.git
+cd mtg-screen-to-deck
+
+# 2. Install dependencies
+npm install
+cd discord-bot && pip install -r requirements.txt
+cd ..
+
+# 3. Configure environment
+cp .env.example .env
+# Edit .env with your API keys
+
+# 4. Run in development mode
+npm run dev
+
+# 5. IMPORTANT: Before production
+# Follow VALIDATION_WORKFLOW.md to validate with real images
+```
+
+For detailed self-hosting instructions, see:
+- [Quick Start Guide](DOCUMENTATION_FINALE/01_QUICK_START/README.md)
+- [Admin Guide](DOCUMENTATION_FINALE/01_QUICK_START/ADMIN_GUIDE.md)
+- [Validation Workflow](VALIDATION_WORKFLOW.md) - **MUST READ before production**
 
 ### **Discord Bot (Recommended)**
 
@@ -239,25 +284,17 @@ node validate-production.js
 | `!help` | Show all commands |
 | `!status` | Bot status and stats |
 
-## 📊 Performance Metrics
+## 📊 Performance Targets
 
-| Metric | Target | Actual |
+| Metric | Target | Status |
 |--------|---------|---------|
-| Image Processing | < 5s | ✅ 3.2s avg |
-| API Response | < 500ms | ✅ 180ms avg |
-| Accuracy | > 95% | ✅ 98.5% |
-| Uptime | 99.9% | ✅ 99.95% |
-| Memory Usage | < 512MB | ✅ 320MB avg |
+| Image Processing | < 5s | To be validated |
+| API Response | < 500ms | To be tested |
+| Accuracy | > 95% | Pending validation |
+| Uptime | 99.9% | To be monitored |
+| Memory Usage | < 512MB | ~320MB expected |
 
-## 📊 **Production Performance**
-
-| Feature | v2.1.0 Performance | Previous Version | Improvement |
-|---------|-------------------|------------------|-------------|
-| MTGA OCR Success | **100%** | 85% | +15% |
-| MTGO OCR Success | **100%** | 70% | +30% |
-| Processing Speed | **3.2s** | 8.5s | -62% |
-| Cache Hit Rate | **95%** | 0% | +95% |
-| Auto-Clipboard | **100%** | N/A | New Feature |
+**Note**: These are target metrics. Actual performance will be measured during the validation phase (see [VALIDATION_WORKFLOW.md](VALIDATION_WORKFLOW.md)).
 
 ## 🔧 **Configuration**
 
@@ -339,12 +376,24 @@ We welcome contributions! Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for de
 
 ## 📈 Roadmap
 
-- [x] Phase 1: Core OCR with 60+15 guarantee
-- [x] Phase 2: Discord bot synchronization
-- [x] Phase 3: Production stabilization
-- [ ] Phase 4: Mobile app (React Native)
-- [ ] Phase 5: Deck building AI assistant
-- [ ] Phase 6: Tournament integration
+### 🎯 Current Priority: Validation Phase
+- [ ] **Phase 0: Validation** (see [VALIDATION_WORKFLOW.md](VALIDATION_WORKFLOW.md))
+  - [ ] Configure real API keys (OpenAI, Discord)
+  - [ ] Test with 20+ actual MTGA/MTGO screenshots
+  - [ ] Measure and document real performance metrics
+  - [ ] Complete production readiness checklist
+
+### ✅ Completed
+- [x] Core OCR functionality implementation
+- [x] Discord bot integration
+- [x] Multi-format export system
+- [x] Complete documentation structure
+
+### 🚀 Future Plans
+- [ ] Mobile app (React Native)
+- [ ] Deck building AI assistant
+- [ ] Tournament integration
+- [ ] Community features
 
 ## 🙏 Acknowledgments
 
@@ -359,13 +408,13 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📚 Documentation Complète
 
-**✅ Documentation 100% complète, 0 doublon, 0 contradiction - Score conformité: 92/100**
+**✅ Documentation complète et organisée - 0 doublon, 0 contradiction**
 
 ### 📖 Accès Rapide Documentation
 - [🚀 Quick Start Guide](DOCUMENTATION_FINALE/01_QUICK_START/README.md) - Démarrage en 5 minutes
 - [👤 Guide Utilisateur](DOCUMENTATION_FINALE/01_QUICK_START/USER_GUIDE.md) - Guide complet utilisateur
 - [🔧 Guide Administrateur](DOCUMENTATION_FINALE/01_QUICK_START/ADMIN_GUIDE.md) - Installation et configuration
-- [📋 Règles OCR Maîtres](DOCUMENTATION_FINALE/02_OCR_RULES/MASTER_OCR_RULES.md) - Les 6 règles pour 100% de succès
+- [📋 Règles OCR Maîtres](DOCUMENTATION_FINALE/02_OCR_RULES/MASTER_OCR_RULES.md) - Les 6 règles d'optimisation OCR
 - [🏗️ Architecture Technique](DOCUMENTATION_FINALE/03_ARCHITECTURE/README.md) - Specs détaillées
 - [🚀 Guide de Déploiement](DOCUMENTATION_FINALE/04_DEPLOYMENT/README.md) - Mise en production
 - [🛠️ Guide de Développement](DOCUMENTATION_FINALE/05_DEVELOPMENT/README.md) - Pour contribuer
