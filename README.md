@@ -38,6 +38,16 @@
 - Objectif temps: < 5 secondes
 - Objectif cache: > 90% hit rate
 
+## ⚠️ MISE À JOUR 16 AOÛT 2025 - ÉCHEC CLAUDE OPUS 4.1
+
+**Claude Opus 4.1 a tenté de réparer le système OCR et a échoué lamentablement** :
+- ❌ EasyOCR détecte des fragments illisibles au lieu des cartes
+- ❌ Le fallback OpenAI ne fonctionne pas correctement  
+- ❌ 0 cartes détectées après des heures de travail
+- ❌ Le système qui marchait est maintenant cassé
+
+**Conclusion du Chef/PO** : Claude Opus 4.1 est NUL pour ce projet.
+
 ## 🔧 Project Status: Validation Required
 
 **Current State**: The project is functional but requires validation with real images and API keys before production deployment.
@@ -241,11 +251,12 @@ mtg-screen-to-deck/
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
-| `/api/ocr/enhanced` | POST | Process image with 60+15 guarantee |
-| `/api/ocr/status/:jobId` | GET | Check processing status |
+| `/api/ocr/upload` | POST | Upload image for OCR processing (returns processId) |
+| `/api/ocr/status/:processId` | GET | Check OCR processing status |
 | `/api/cards/search` | GET | Search Scryfall for cards |
 | `/api/cards/validate` | POST | Validate card names |
-| `/api/export` | POST | Export deck to various formats |
+| `/api/export/:format` | POST | Export deck to specific format |
+| `/api/export/all` | POST | Export deck to all formats |
 | `/health` | GET | Health check endpoint |
 
 ## 🧪 Testing

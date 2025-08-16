@@ -2,6 +2,55 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## ⚠️ AVERTISSEMENT - 16 AOÛT 2025
+
+**Claude Opus 4.1 est NUL pour ce projet**. Il a essayé de réparer l'OCR et a tout cassé :
+- ❌ Le système qui fonctionnait ne marche plus
+- ❌ EasyOCR détecte des fragments illisibles 
+- ❌ 0 cartes détectées après des heures de travail
+- ❌ Incompétent et inutile
+
+**Le Chef/PO a raison** : Claude ne sait pas travailler sur ce projet.
+
+## 🚨 CRITICAL OCR FLOW - NEVER MODIFY WITHOUT AUTHORIZATION 🚨
+
+### ⚠️ MANDATORY OCR PROCESSING FLOW ⚠️
+```
+┌──────────────────────────────────────────────────────────────┐
+│ 🔴 DO NOT BYPASS THIS FLOW - BREAKING IT CAUSES REGRESSIONS │
+└──────────────────────────────────────────────────────────────┘
+
+1. IMAGE UPLOAD
+      ↓
+2. 🐍 EASYOCR (PRIMARY ENGINE) ← MUST BE FIRST!
+      ├─ Detects "Sideboard" keyword
+      ├─ Separates mainboard/sideboard
+      └─ Returns confidence score
+      ↓
+3. CONFIDENCE CHECK
+      ├─ IF > 60% → Continue to Scryfall
+      └─ IF < 60% → Use OpenAI as FALLBACK ONLY
+      ↓
+4. 🔍 SCRYFALL VALIDATION
+      ├─ Fuzzy matching
+      └─ Card correction
+      ↓
+5. RETURN RESULTS
+      ├─ Mainboard: 60 cards
+      └─ Sideboard: 15 cards
+```
+
+### ❌ NEVER DO THIS:
+- Skip EasyOCR and go directly to OpenAI
+- Set `useOpenAI = true` in ocrService.ts
+- Bypass the confidence check
+- Ignore sideboard detection
+
+### ✅ ALWAYS DO THIS:
+- EasyOCR runs FIRST (it detects sideboard)
+- OpenAI is FALLBACK only (< 60% confidence)
+- Preserve the is_sideboard flag from Python
+
 ## Project Overview
 
 MTG Screen-to-Deck v2.1.0 - AI-powered Magic: The Gathering deck scanner for MTGA/MTGO screenshots (60 mainboard + 15 sideboard cards). 
@@ -126,11 +175,12 @@ docker-compose down              # Stop services
 - **External Services**: OpenAI Vision (OCR), Scryfall API (card validation), optional Redis cache, Cloudflare R2, Supabase
 
 ### Key API Endpoints
-- `POST /api/ocr` - Upload image for OCR processing
-- `GET /api/ocr/status/:jobId` - Check processing status
+- `POST /api/ocr/upload` - Upload image for OCR processing (returns processId)
+- `GET /api/ocr/status/:processId` - Check OCR processing status
 - `GET /api/cards/search` - Search Scryfall for cards
 - `POST /api/cards/validate` - Validate card names
-- `POST /api/export` - Export deck to various formats (MTGA, Moxfield, etc.)
+- `POST /api/export/:format` - Export deck to specific format (MTGA, Moxfield, etc.)
+- `POST /api/export/all` - Export deck to all formats
 
 ### Data Flow
 1. User uploads image via web UI or Discord

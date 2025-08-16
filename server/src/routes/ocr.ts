@@ -9,7 +9,10 @@ import { z } from 'zod';
 import { asyncHandler, createError } from '../middleware/errorHandler';
 import { budgetGuard } from '../middleware/budgetGuard';
 import { APIResponse, ProcessingStatus } from '../types';
-import ocrService from '../services/enhancedOcrServiceGuaranteed';
+// ⚠️ CRITICAL: Use ocrService.ts which implements EasyOCR → OpenAI flow
+// DO NOT use enhancedOcrServiceGuaranteed - it bypasses EasyOCR!
+// See DO_NOT_BREAK_OCR_FLOW.md for why this is mandatory
+import ocrService from '../services/ocrService';
 import { ocrQueue } from '../queue/ocr.queue';
 import scryfallService from '../services/scryfallService';
 

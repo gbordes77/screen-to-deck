@@ -64,11 +64,11 @@ security:
 
 ### OCR Operations
 
-#### POST /api/ocr
+#### POST /api/ocr/upload
 
 ```yaml
 paths:
-  /api/ocr:
+  /api/ocr/upload:
     post:
       tags:
         - OCR
@@ -123,7 +123,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  jobId:
+                  processId:
                     type: string
                     format: uuid
                     example: "550e8400-e29b-41d4-a716-446655440000"
@@ -153,10 +153,10 @@ paths:
           $ref: '#/components/responses/InternalServerError'
 ```
 
-#### GET /api/ocr/status/{jobId}
+#### GET /api/ocr/status/{processId}
 
 ```yaml
-  /api/ocr/status/{jobId}:
+  /api/ocr/status/{processId}:
     get:
       tags:
         - OCR
@@ -167,7 +167,7 @@ paths:
       operationId: getOcrStatus
       
       parameters:
-        - name: jobId
+        - name: processId
           in: path
           required: true
           schema:
@@ -202,14 +202,14 @@ paths:
               examples:
                 processing:
                   value:
-                    jobId: "550e8400-e29b-41d4-a716-446655440000"
+                    processId: "550e8400-e29b-41d4-a716-446655440000"
                     status: "processing"
                     progress: 65
                     currentStep: "Validating cards with Scryfall"
                     startedAt: "2025-01-08T10:30:00Z"
                 completed:
                   value:
-                    jobId: "550e8400-e29b-41d4-a716-446655440000"
+                    processId: "550e8400-e29b-41d4-a716-446655440000"
                     status: "completed"
                     result:
                       mainboard:
@@ -490,10 +490,10 @@ paths:
 
 ### Export Operations
 
-#### POST /api/export
+#### POST /api/export/{format}
 
 ```yaml
-  /api/export:
+  /api/export/{format}:
     post:
       tags:
         - Export
@@ -904,7 +904,7 @@ components:
     OcrProcessing:
       type: object
       properties:
-        jobId:
+        processId:
           type: string
           format: uuid
         status:
@@ -929,7 +929,7 @@ components:
     OcrCompleted:
       type: object
       properties:
-        jobId:
+        processId:
           type: string
           format: uuid
         status:
@@ -980,7 +980,7 @@ components:
     OcrFailed:
       type: object
       properties:
-        jobId:
+        processId:
           type: string
           format: uuid
         status:
@@ -1365,7 +1365,7 @@ const api = new ScreenToDeckAPI({
 async function scanDeck(imagePath: string) {
   try {
     // 1. Upload image for OCR
-    const { jobId } = await api.ocr.create({
+    const { processId } = await api.ocr.create({
       image: fs.createReadStream(imagePath),
       options: {
         format: 'auto',
@@ -1374,7 +1374,7 @@ async function scanDeck(imagePath: string) {
     });
     
     // 2. Wait for completion
-    const result = await api.ocr.waitForCompletion(jobId, {
+    const result = await api.ocr.waitForCompletion(processId, {
       timeout: 30000,
       pollInterval: 1000
     });
@@ -1422,7 +1422,7 @@ async def scan_deck(image_path: str):
         
         # 2. Wait for completion
         result = await api.ocr.wait_for_completion(
-            job['jobId'],
+            job['processId'],
             timeout=30,
             poll_interval=1
         )
@@ -1454,7 +1454,7 @@ curl -X POST https://api.screentodeck.com/v2/api/ocr \
   -F "image=@deck_screenshot.png" \
   -F 'options={"format":"auto","enhance":true}'
 
-# Response: {"jobId":"550e8400-e29b-41d4-a716-446655440000","status":"processing"}
+# Response: {"processId":"550e8400-e29b-41d4-a716-446655440000","status":"processing"}
 
 # 2. Check status
 curl -X GET https://api.screentodeck.com/v2/api/ocr/status/550e8400-e29b-41d4-a716-446655440000 \

@@ -22,10 +22,10 @@
         "totalCards": 0,
         "exportFormats": {},
         "apiCalls": 0,
-        "uploadSize": 0,
+        "uploadSize": 323925,
         "responseSize": 0,
         "errors": [
-          "Image not found: /Volumes/DataDisk/_Projects/validated_decklists/MTGA deck list 4_1920x1080.jpeg"
+          "Request failed with status code 404"
         ]
       },
       {
@@ -40,10 +40,10 @@
         "totalCards": 0,
         "exportFormats": {},
         "apiCalls": 0,
-        "uploadSize": 0,
+        "uploadSize": 259091,
         "responseSize": 0,
         "errors": [
-          "Image not found: /Volumes/DataDisk/_Projects/validated_decklists/MTGA deck list special_1334x886.jpeg"
+          "Request failed with status code 404"
         ]
       }
     ],
@@ -60,10 +60,10 @@
         "totalCards": 0,
         "exportFormats": {},
         "apiCalls": 0,
-        "uploadSize": 0,
+        "uploadSize": 290436,
         "responseSize": 0,
         "errors": [
-          "Image not found: /Volumes/DataDisk/_Projects/validated_decklists/MTGO deck list usual_1763x791.jpeg"
+          "Request failed with status code 404"
         ]
       },
       {
@@ -78,10 +78,10 @@
         "totalCards": 0,
         "exportFormats": {},
         "apiCalls": 0,
-        "uploadSize": 0,
+        "uploadSize": 193827,
         "responseSize": 0,
         "errors": [
-          "Image not found: /Volumes/DataDisk/_Projects/validated_decklists/MTGO deck list usual 4_1254x432.jpeg"
+          "Request failed with status code 404"
         ]
       }
     ],
@@ -98,10 +98,10 @@
         "totalCards": 0,
         "exportFormats": {},
         "apiCalls": 0,
-        "uploadSize": 0,
+        "uploadSize": 528248,
         "responseSize": 0,
         "errors": [
-          "Image not found: /Volumes/DataDisk/_Projects/validated_decklists/mtggoldfish deck list 2_1383x1518.jpg"
+          "Request failed with status code 404"
         ]
       },
       {
@@ -116,10 +116,10 @@
         "totalCards": 0,
         "exportFormats": {},
         "apiCalls": 0,
-        "uploadSize": 0,
+        "uploadSize": 434680,
         "responseSize": 0,
         "errors": [
-          "Image not found: /Volumes/DataDisk/_Projects/validated_decklists/mtggoldfish deck list 10_1239x1362.jpg"
+          "Request failed with status code 404"
         ]
       }
     ],
@@ -136,10 +136,10 @@
         "totalCards": 0,
         "exportFormats": {},
         "apiCalls": 0,
-        "uploadSize": 0,
+        "uploadSize": 634247,
         "responseSize": 0,
         "errors": [
-          "Image not found: /Volumes/DataDisk/_Projects/validated_decklists/real deck paper cards 4_2336x1098.jpeg"
+          "Request failed with status code 404"
         ]
       },
       {
@@ -154,10 +154,10 @@
         "totalCards": 0,
         "exportFormats": {},
         "apiCalls": 0,
-        "uploadSize": 0,
+        "uploadSize": 852962,
         "responseSize": 0,
         "errors": [
-          "Image not found: /Volumes/DataDisk/_Projects/validated_decklists/real deck cartes cachés_2048x1542.jpeg"
+          "Request failed with status code 404"
         ]
       }
     ],
@@ -174,10 +174,10 @@
         "totalCards": 0,
         "exportFormats": {},
         "apiCalls": 0,
-        "uploadSize": 0,
+        "uploadSize": 969695,
         "responseSize": 0,
         "errors": [
-          "Image not found: /Volumes/DataDisk/_Projects/validated_decklists/web site  deck list_2300x2210.jpeg"
+          "Request failed with status code 404"
         ]
       }
     ]
@@ -195,10 +195,10 @@
       "totalCards": 0,
       "exportFormats": {},
       "apiCalls": 0,
-      "uploadSize": 0,
+      "uploadSize": 323925,
       "responseSize": 0,
       "errors": [
-        "Image not found: /Volumes/DataDisk/_Projects/validated_decklists/MTGA deck list 4_1920x1080.jpeg"
+        "Request failed with status code 404"
       ]
     },
     {
@@ -213,10 +213,10 @@
       "totalCards": 0,
       "exportFormats": {},
       "apiCalls": 0,
-      "uploadSize": 0,
+      "uploadSize": 259091,
       "responseSize": 0,
       "errors": [
-        "Image not found: /Volumes/DataDisk/_Projects/validated_decklists/MTGA deck list special_1334x886.jpeg"
+        "Request failed with status code 404"
       ]
     },
     {
@@ -231,10 +231,10 @@
       "totalCards": 0,
       "exportFormats": {},
       "apiCalls": 0,
-      "uploadSize": 0,
+      "uploadSize": 290436,
       "responseSize": 0,
       "errors": [
-        "Image not found: /Volumes/DataDisk/_Projects/validated_decklists/MTGO deck list usual_1763x791.jpeg"
+        "Request failed with status code 404"
       ]
     },
     {
@@ -249,10 +249,10 @@
       "totalCards": 0,
       "exportFormats": {},
       "apiCalls": 0,
-      "uploadSize": 0,
+      "uploadSize": 193827,
       "responseSize": 0,
       "errors": [
-        "Image not found: /Volumes/DataDisk/_Projects/validated_decklists/MTGO deck list usual 4_1254x432.jpeg"
+        "Request failed with status code 404"
       ]
     },
     {
@@ -267,10 +267,10 @@
       "totalCards": 0,
       "exportFormats": {},
       "apiCalls": 0,
-      "uploadSize": 0,
+      "uploadSize": 528248,
       "responseSize": 0,
       "errors": [
-        "Image not found: /Volumes/DataDisk/_Projects/validated_decklists/mtggoldfish deck list 2_1383x1518.jpg"
+        "Request failed with status code 404"
       ]
     },
     {
@@ -285,10 +285,10 @@
       "totalCards": 0,
       "exportFormats": {},
       "apiCalls": 0,
-      "uploadSize": 0,
+      "uploadSize": 434680,
       "responseSize": 0,
       "errors": [
-        "Image not found: /Volumes/DataDisk/_Projects/validated_decklists/mtggoldfish deck list 10_1239x1362.jpg"
+        "Request failed with status code 404"
       ]
     },
     {
@@ -303,10 +303,10 @@
       "totalCards": 0,
       "exportFormats": {},
       "apiCalls": 0,
-      "uploadSize": 0,
+      "uploadSize": 634247,
       "responseSize": 0,
       "errors": [
-        "Image not found: /Volumes/DataDisk/_Projects/validated_decklists/real deck paper cards 4_2336x1098.jpeg"
+        "Request failed with status code 404"
       ]
     },
     {
@@ -321,10 +321,10 @@
       "totalCards": 0,
       "exportFormats": {},
       "apiCalls": 0,
-      "uploadSize": 0,
+      "uploadSize": 852962,
       "responseSize": 0,
       "errors": [
-        "Image not found: /Volumes/DataDisk/_Projects/validated_decklists/real deck cartes cachés_2048x1542.jpeg"
+        "Request failed with status code 404"
       ]
     },
     {
@@ -339,12 +339,12 @@
       "totalCards": 0,
       "exportFormats": {},
       "apiCalls": 0,
-      "uploadSize": 0,
+      "uploadSize": 969695,
       "responseSize": 0,
       "errors": [
-        "Image not found: /Volumes/DataDisk/_Projects/validated_decklists/web site  deck list_2300x2210.jpeg"
+        "Request failed with status code 404"
       ]
     }
   ],
-  "timestamp": "2025-08-10T17:27:06.098Z"
+  "timestamp": "2025-08-15T22:00:29.427Z"
 }

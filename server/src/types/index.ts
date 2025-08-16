@@ -38,7 +38,9 @@ export interface DeckList {
 // OCR result structure
 export interface OCRResult {
   success: boolean;
-  cards: MTGCard[];
+  cards: MTGCard[]; // Legacy field for compatibility
+  mainboard?: MTGCard[]; // Cartes du mainboard (60 cartes)
+  sideboard?: MTGCard[]; // Cartes du sideboard (15 cartes)
   confidence: number;
   processing_time: number;
   format?: string; // Added for format detection (arena/mtgo/paper)

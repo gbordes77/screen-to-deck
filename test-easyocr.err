@@ -1,0 +1,2 @@
+/Users/guillaumebordes/Library/Python/3.13/lib/python/site-packages/torch/utils/data/dataloader.py:684: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, then device pinned memory won't be used.
+  warnings.warn(warn_msg)

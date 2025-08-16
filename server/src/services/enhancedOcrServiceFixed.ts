@@ -2,13 +2,18 @@ import OpenAI from 'openai';
 import fs from 'fs';
 import path from 'path';
 import sharp from 'sharp';
-import { spawn } from 'child_process';
+import dotenv from 'dotenv';
+
+// Load environment variables BEFORE initializing the service
+dotenv.config({ path: path.resolve(__dirname, '../../../.env') });
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+
 import { MTGCard, OCRResult } from '../types';
-import { createError } from '../middleware/errorHandler';
 
 /**
- * FIXED Enhanced OCR Service - GUARANTEES 60+15 cards extraction
- * This version implements true "never give up" mode with multiple fallbacks
+ * TRULY FIXED Enhanced OCR Service - NO FAKE CARDS
+ * Returns ACTUAL OCR results without inventing cards
+ * Retries OCR with different parameters instead of making up cards
  */
 export class EnhancedOCRServiceFixed {
   private openai: OpenAI | null = null;

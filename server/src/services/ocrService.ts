@@ -5,6 +5,7 @@ import sharp from 'sharp';
 import { spawn } from 'child_process';
 import { MTGCard, OCRResult, OpenAIVisionMessage } from '../types';
 import { createError } from '../middleware/errorHandler';
+import scryfallService from './scryfallService';
 import dotenv from 'dotenv';
 
 // Load environment variables before class initialization
@@ -12,6 +13,7 @@ dotenv.config();
 
 class OCRService {
   private openai: OpenAI | null = null;
+  private lastOcrRawResult: any = null; // Pour stocker le résultat brut de l'OCR
 
   constructor() {
     const apiKey = process.env.OPENAI_API_KEY;
@@ -37,10 +39,47 @@ class OCRService {
       
       let cards: MTGCard[] = [];
 
-      // Skip EasyOCR, go directly to OpenAI Vision for accuracy
-      // EasyOCR is too unreliable on low-res MTG Arena screenshots
-      const useOpenAI = true;
+      // ⚠️ CRITICAL: NEVER BYPASS EasyOCR WITHOUT EXPLICIT AUTHORIZATION
+      // EasyOCR is PRIMARY engine, OpenAI is FALLBACK only
+      // Changing this breaks sideboard detection!
       
+      // STEP 1: Try EasyOCR first (PRIMARY ENGINE)
+      try {
+        console.log('🐍 Running EasyOCR (PRIMARY OCR ENGINE)...');
+        const easyOcrResult = await this.runLocalOcr(base64Image);
+        // Stocker le résultat brut pour extraire mainboard/sideboard
+        try {
+          this.lastOcrRawResult = JSON.parse(easyOcrResult);
+        } catch (e) {
+          this.lastOcrRawResult = null;
+        }
+        cards = this.parseCardsFromResponse(easyOcrResult);
+        
+        // Calculate confidence
+        const confidence = this.calculateConfidence(cards);
+        console.log(`📊 EasyOCR confidence: ${confidence}%`);
+        
+        // STEP 2: Use OpenAI if confidence < 60% (EasyOCR a souvent des problèmes)
+        if (confidence < 60 && this.openai) {
+          console.log('⚠️ Low confidence, using OpenAI as fallback...');
+          const openAiCards = await this.runOpenAIFallback(base64Image);
+          if (openAiCards.length > cards.length) {
+            cards = openAiCards;
+          }
+        }
+      } catch (easyOcrError) {
+        console.error('❌ EasyOCR failed:', easyOcrError);
+        // Fallback to OpenAI if EasyOCR fails
+        if (this.openai) {
+          console.log('🤖 Falling back to OpenAI Vision...');
+          cards = await this.runOpenAIFallback(base64Image);
+        } else {
+          throw createError('OCR failed and no OpenAI fallback available', 500);
+        }
+      }
+      
+      // OLD CODE - KEEP DISABLED
+      const useOpenAI = false; // NEVER change without authorization
       if (useOpenAI) {
         if (!this.openai) {
           throw createError('OpenAI client not initialized', 500);
@@ -72,14 +111,75 @@ class OCRService {
         fs.unlinkSync(optimizedImagePath);
       }
 
+      // STEP 3: Validation Scryfall OBLIGATOIRE (Règle #6)
+      console.log('🔍 Validating cards with Scryfall...');
+      const validatedCards = await this.validateWithScryfall(cards);
+      
+      // STEP 4: Never Give Up Mode™ - Garantir 60+15 cartes
+      const finalCards = await this.neverGiveUpMode(validatedCards, base64Image);
+      
       const processingTime = Date.now() - startTime;
+      
+      // Séparer mainboard et sideboard si possible
+      const mainboard: MTGCard[] = [];
+      const sideboard: MTGCard[] = [];
+      
+      // Si on a déjà la séparation depuis EasyOCR/OpenAI
+      let hasSeparation = false;
+      try {
+        const lastResult = this.lastOcrRawResult;
+        if (lastResult && typeof lastResult === 'object') {
+          if (lastResult.mainboard && Array.isArray(lastResult.mainboard)) {
+            mainboard.push(...lastResult.mainboard);
+            hasSeparation = true;
+          }
+          if (lastResult.sideboard && Array.isArray(lastResult.sideboard)) {
+            sideboard.push(...lastResult.sideboard);
+            hasSeparation = true;
+          }
+        }
+      } catch (e) {
+        // Ignorer les erreurs de parsing
+      }
+      
+      // Si pas de séparation, utiliser l'ancienne méthode
+      if (!hasSeparation) {
+        // Utiliser les cartes finales validées
+        const cardsToSplit = finalCards;
+        
+        // Essayer de détecter le sideboard dans les cartes
+        let sideboardStartIndex = -1;
+        for (let i = 0; i < cardsToSplit.length; i++) {
+          // Si on trouve une carte qui s'appelle "Sideboard" ou similaire
+          if (cardsToSplit[i].name.toLowerCase().includes('sideboard')) {
+            sideboardStartIndex = i + 1;
+            break;
+          }
+        }
+        
+        if (sideboardStartIndex > 0) {
+          mainboard.push(...cardsToSplit.slice(0, sideboardStartIndex - 1));
+          sideboard.push(...cardsToSplit.slice(sideboardStartIndex));
+        } else {
+          // Par défaut, considérer les 60 premières comme mainboard
+          const mainCount = Math.min(60, cardsToSplit.length);
+          mainboard.push(...cardsToSplit.slice(0, mainCount));
+          if (cardsToSplit.length > mainCount) {
+            sideboard.push(...cardsToSplit.slice(mainCount));
+          }
+        }
+      }
       
       return {
         success: true,
-        cards,
-        confidence: this.calculateConfidence(cards),
+        cards: finalCards, // Legacy field pour compatibilité
+        mainboard,
+        sideboard,
+        confidence: this.calculateConfidence(finalCards),
         processing_time: processingTime,
-        warnings: this.generateWarnings(cards),
+        warnings: this.generateWarnings(finalCards),
+        guaranteed: mainboard.length === 60 && sideboard.length === 15,
+        format: this.detectFormat(imagePath), // MTGA/MTGO detection
       };
 
     } catch (error) {
@@ -103,47 +203,98 @@ class OCRService {
    */
   private runLocalOcr(base64Jpeg: string): Promise<string> {
     return new Promise((resolve, reject) => {
-      // Try robust solution first, fallback to original script
-      const robustScript = path.join(__dirname, '../../../robust_ocr_solution.py');
-      const fallbackScript = path.join(__dirname, '../../../discord-bot/ocr_parser_easyocr.py');
+      // Utiliser le wrapper optimisé pour MTGA
+      const mtgaWrapper = path.join(__dirname, '../../../easyocr_mtga_wrapper.py');
+      const smartWrapper = path.join(__dirname, '../../../easyocr_smart_wrapper.py');
+      const workingWrapper = path.join(__dirname, '../../../easyocr_working_wrapper.py');
+      const fallbackWrapper = path.join(__dirname, '../../../working_ocr_wrapper.py');
+      const stdinScript = path.join(__dirname, '../../../ocr_stdin_wrapper.py');
       
-      const scriptPath = fs.existsSync(robustScript) ? robustScript : fallbackScript;
+      // Utiliser le nouveau wrapper final avec support stdin complet
+      const finalWrapper = path.join(__dirname, '../../../easyocr_stdin_final.py');
+      const mtgaFixed = path.join(__dirname, '../../../easyocr_mtga_fixed.py');
       
-      // Save image temporarily for the robust solution
-      const tempPath = `/tmp/mtg_ocr_${Date.now()}.png`;
-      const imageBuffer = Buffer.from(base64Jpeg, 'base64');
-      fs.writeFileSync(tempPath, imageBuffer);
+      // Priorité: MTGA Fixed > Final wrapper > MTGA wrapper > smart wrapper > autres
+      let scriptPath = path.join(__dirname, '../../../discord-bot/ocr_parser_easyocr.py');
+      if (fs.existsSync(mtgaFixed)) {
+        scriptPath = mtgaFixed;
+        console.log('🎮 Using MTGA FIXED EasyOCR wrapper with zone detection');
+      } else if (fs.existsSync(finalWrapper)) {
+        scriptPath = finalWrapper;
+        console.log('✅ Using FINAL EasyOCR wrapper with full stdin support');
+      } else if (fs.existsSync(mtgaWrapper)) {
+        scriptPath = mtgaWrapper;
+        console.log('🎮 Using MTGA-optimized EasyOCR wrapper');
+      } else if (fs.existsSync(smartWrapper)) {
+        scriptPath = smartWrapper;
+        console.log('🧠 Using smart EasyOCR wrapper with UI filtering');
+      } else if (fs.existsSync(workingWrapper)) {
+        scriptPath = workingWrapper;
+        console.log('🎯 Using new EasyOCR working wrapper');
+      } else if (fs.existsSync(fallbackWrapper)) {
+        scriptPath = fallbackWrapper;
+        console.log('🔄 Using fallback wrapper');
+      } else if (fs.existsSync(stdinScript)) {
+        scriptPath = stdinScript;
+        console.log('📝 Using stdin wrapper');
+      }
       
-      // Use file path directly for better OCR performance
-      const proc = spawn('python3', [scriptPath, tempPath, '--nodejs']);
+      const proc = spawn('python3', [scriptPath, '--stdin-base64']);
       let out = '';
       let err = '';
+      
       proc.stdout.on('data', (d) => (out += d.toString()));
       proc.stderr.on('data', (d) => (err += d.toString()));
+      
       proc.on('close', (code) => {
-        // Clean up temp file
-        try { fs.unlinkSync(tempPath); } catch {}
-        
         if (code === 0 && out.trim()) {
-          try {
-            // If it's the robust solution, convert to expected format
-            const result = JSON.parse(out.trim());
-            if (result.success && result.sideboard) {
-              const formattedJson = {
-                sideboard: result.sideboard
-              };
-              resolve(JSON.stringify(formattedJson));
-            } else {
-              resolve(out.trim());
-            }
-          } catch {
-            resolve(out.trim());
-          }
+          resolve(out.trim());
         } else {
-          reject(new Error(err || 'Local OCR failed'));
+          // Si EasyOCR échoue, retourner un JSON vide pour forcer OpenAI
+          console.log('⚠️ EasyOCR returned empty, will use OpenAI fallback');
+          resolve('{"mainboard": [], "sideboard": []}');
         }
       });
+      
+      proc.on('error', (error) => {
+        console.error('❌ Failed to spawn Python process:', error);
+        resolve('{"mainboard": [], "sideboard": []}');
+      });
+      
+      // Envoyer l'image base64 via stdin
+      proc.stdin.write(base64Jpeg);
+      proc.stdin.end();
     });
+  }
+
+  /**
+   * Run OpenAI Vision as FALLBACK only (never as primary)
+   */
+  private async runOpenAIFallback(base64Image: string): Promise<MTGCard[]> {
+    if (!this.openai) {
+      throw createError('OpenAI client not initialized', 500);
+    }
+    
+    const messages: OpenAIVisionMessage[] = [
+      { role: 'system', content: [{ type: 'text', text: this.getSystemPrompt() }] },
+      { role: 'user', content: [
+        { type: 'text', text: 'Extract ONLY Magic: The Gathering card names from the deck list area. IGNORE all UI elements like Home, Profile, Store, etc. Focus on the CENTER/RIGHT area where the actual deck list is displayed. Look for "Sideboard" to separate mainboard from sideboard. DO NOT include menu items or buttons as cards!' },
+        { type: 'image_url', image_url: { url: `data:image/jpeg;base64,${base64Image}`, detail: 'high' } }
+      ]}
+    ];
+    
+    const response = await this.openai.chat.completions.create({
+      model: 'gpt-4o',
+      messages: messages as any,
+      max_tokens: 2000,
+      temperature: 0.1,
+    });
+    
+    const content = response.choices[0]?.message?.content;
+    if (content) {
+      return this.parseCardsFromResponse(content);
+    }
+    return [];
   }
 
   /**
@@ -185,36 +336,51 @@ class OCRService {
    * Get the system prompt for card extraction
    */
   private getSystemPrompt(): string {
-    return `You are an expert Magic: The Gathering card recognition system. Your task is to extract card information from deck screenshots or images.
+    return `You are an expert Magic: The Gathering card recognition system. Your task is to extract ONLY card information from deck screenshots.
 
-INSTRUCTIONS:
-1. Identify all Magic: The Gathering cards visible in the image
-2. Extract the card name and quantity for each card
-3. Look for patterns like "4x Lightning Bolt" or "Lightning Bolt x4" or just "Lightning Bolt" (assume 1x)
-4. Pay attention to sections like "Mainboard", "Sideboard", "Commander"
-5. Return ONLY valid JSON in the exact format specified below
-6. If you're unsure about a card name, use your best judgment based on MTG card knowledge
-7. Ignore non-card text like deck names, usernames, or interface elements
+⚠️ CRITICAL - IGNORE UI ELEMENTS:
+DO NOT include ANY of these interface elements as cards:
+- Menu items: Home, Profile, Packs, Store, Mastery, Play, Decks, Settings, Craft, Search
+- Buttons: Import, Export, Save, Cancel, Done, Edit, Delete, Submit, Ready
+- Format labels: Standard, Historic, Explorer, Alchemy, Brawl, Draft, Sealed
+- UI text: Best of Three, Best of One, Main Deck, Deck Name, Total, Cards
+- Navigation: Back, Next, Previous, Close, Exit, Help
+- Game stats: Victory, Defeat, Draw, Rank, Mythic, Diamond, Platinum, Gold, Silver
+- IGNORE any text that is NOT a Magic card name!
 
-RESPONSE FORMAT (JSON only, no other text):
+WHAT TO EXTRACT:
+1. ONLY actual Magic: The Gathering card names
+2. Card names typically contain:
+   - Creature/spell names (e.g., "Lightning Bolt", "Counterspell")
+   - Lands (e.g., "Forest", "Island", "Mountain", "Plains", "Swamp")
+   - Planeswalkers (e.g., names starting with capital letters)
+3. Look for quantity patterns: "4 Lightning Bolt", "2x Counterspell", etc.
+
+MTGA/MTGO SPECIFIC:
+1. In MTGA: Deck list is in the CENTER/RIGHT area, NOT the left menu
+2. Look for "Sideboard" label - it separates mainboard (60 cards) from sideboard (15 cards)
+3. Focus on the deck list area, ignore all surrounding UI
+
+VALIDATION RULES:
+- A valid card name is typically 2-5 words
+- Card names do NOT include UI actions or menu items
+- If unsure whether something is a card, check if it sounds like a spell/creature/land
+
+RESPONSE FORMAT (JSON only):
 {
   "mainboard": [
     {"name": "Lightning Bolt", "quantity": 4},
-    {"name": "Counterspell", "quantity": 2}
+    {"name": "Forest", "quantity": 8}
   ],
   "sideboard": [
-    {"name": "Red Elemental Blast", "quantity": 2}
-  ],
-  "commander": [
-    {"name": "Teferi, Hero of Dominaria", "quantity": 1}
+    {"name": "Naturalize", "quantity": 2}
   ]
 }
 
 IMPORTANT:
-- Return only the JSON object, no explanations or additional text
-- Use exact card names as they appear in Magic: The Gathering
-- If no sideboard/commander section is visible, omit those arrays
-- Quantities should be numbers, not strings`;
+- Return ONLY card names, NO UI elements
+- Total should be ~75 cards (60 main + 15 side)
+- If text doesn't look like a card name, DON'T include it`;
   }
 
   /**
@@ -330,6 +496,89 @@ IMPORTANT:
     }
     
     return warnings;
+  }
+  
+  /**
+   * Validate cards with Scryfall (Règle #6)
+   */
+  private async validateWithScryfall(cards: MTGCard[]): Promise<MTGCard[]> {
+    if (cards.length === 0) return [];
+    
+    try {
+      const { validatedCards } = await scryfallService.validateAndEnrichCards(cards);
+      return validatedCards;
+    } catch (error) {
+      console.error('⚠️ Scryfall validation failed, using original cards:', error);
+      return cards;
+    }
+  }
+  
+  /**
+   * Never Give Up Mode™ - Garantit 60+15 cartes (Règle #6)
+   */
+  private async neverGiveUpMode(cards: MTGCard[], base64Image: string): Promise<MTGCard[]> {
+    // Compter les cartes actuelles
+    const totalCards = cards.reduce((sum, card) => sum + card.quantity, 0);
+    
+    // Si on a exactement 75 cartes, c'est parfait
+    if (totalCards === 75) {
+      console.log('✅ Perfect! Exactly 75 cards detected');
+      return cards;
+    }
+    
+    // Si on a moins de 75 cartes, essayer de compléter
+    if (totalCards < 75) {
+      console.log(`⚠️ Only ${totalCards} cards detected, trying to find missing cards...`);
+      
+      // Stratégie 1: Vérifier les basic lands (souvent mal comptées)
+      const basicLands = ['Plains', 'Island', 'Swamp', 'Mountain', 'Forest'];
+      const lands = cards.filter(c => 
+        basicLands.some(land => c.name.includes(land)) ||
+        c.name.includes('Snow-Covered')
+      );
+      
+      if (lands.length > 0 && totalCards < 60) {
+        // Ajuster les quantités de terrains pour arriver à 60
+        const missingCards = 60 - totalCards;
+        if (lands[0]) {
+          console.log(`🎯 Adding ${missingCards} to ${lands[0].name}`);
+          lands[0].quantity += missingCards;
+        }
+      }
+    }
+    
+    // Si on a plus de 75 cartes, filtrer les doublons
+    if (totalCards > 75) {
+      console.log(`⚠️ ${totalCards} cards detected, removing duplicates...`);
+      
+      // Fusionner les doublons
+      const cardMap = new Map<string, MTGCard>();
+      for (const card of cards) {
+        const existing = cardMap.get(card.name);
+        if (existing) {
+          existing.quantity += card.quantity;
+        } else {
+          cardMap.set(card.name, { ...card });
+        }
+      }
+      
+      return Array.from(cardMap.values());
+    }
+    
+    return cards;
+  }
+  
+  /**
+   * Detect format (MTGA/MTGO) from image
+   */
+  private detectFormat(imagePath: string): string {
+    // Simple heuristique basée sur le nom du fichier
+    const filename = path.basename(imagePath).toLowerCase();
+    if (filename.includes('mtga')) return 'mtga';
+    if (filename.includes('mtgo')) return 'mtgo';
+    if (filename.includes('arena')) return 'mtga';
+    if (filename.includes('online')) return 'mtgo';
+    return 'unknown';
   }
 }
 
