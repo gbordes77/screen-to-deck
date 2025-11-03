@@ -21,7 +21,7 @@
     "react-hot-toast": "^2.4.1",
     "lucide-react": "^0.294.0",
     "clsx": "^2.0.0",
-    "tailwind-merge": "^2.0.0",
+    "tailwind-merge": "^3.3.1",
     "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^2.0.18",
     "framer-motion": "^10.16.5"
